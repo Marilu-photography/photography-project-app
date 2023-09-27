@@ -1,7 +1,10 @@
+import ImageSliderComponent from "../../componets/Slider/Slider";
+
 const Home = () => {
   return (
     <div className="Home">
-        <h1>Home</h1>
+     <ImageSliderComponent/>
+        
       
     </div>
   );
