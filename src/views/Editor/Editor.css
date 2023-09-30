@@ -1,0 +1,19 @@
+.editor-output img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+    display: flex;
+    border: 1px solid #ccc;
+  }
+  
+  .col-md-4 {
+    flex: 1;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .col-md-4:last-child {
+    border-right: none;
+  }
