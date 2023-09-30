@@ -1,3 +1,6 @@
 import http from "./BaseServices";
 
-export const getHome = () => http.get("/");
+
+export const getProductList = () => http.get('/');
+
+export const getProductDetails = (id) => http.get(`/${id}`);
