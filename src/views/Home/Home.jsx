@@ -1,5 +1,5 @@
 
-import ImageSliderComponent from "../../componets/Slider/Slider";
+import ImageSliderComponent from "../../components/Slider/Slider";
 import ProductsList from '../Products/ProductsList';
 
 
