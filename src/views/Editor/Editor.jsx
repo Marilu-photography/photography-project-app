@@ -27,6 +27,11 @@ const Editor = () => {
     const [textSize, setTextSize] = useState(100);
     const [textColor, setTextColor] = useState("#000000")
 
+    const handleButtonClick = (button) => {
+        setActiveButton(button);
+
+    };
+
 
     const effectsMap = {
         generativeReplace: (imageR, itemToReplace, newItem) => {
@@ -34,13 +39,21 @@ const Editor = () => {
         },
         pad: (imageR, width, height) => {
             return imageR.resize(pad().w(width).h(height))
+        },
+        textOverlay: (imageR, text, font, size, color) => {
+            const textStyle = new TextStyle(font, size)
+                .fontWeight("normal")
+                .textAlignment("left");
+
+            const textSource = text(text, textStyle).textColor(color);
+
+            const overlayAction = source(textSource).position(new Position().gravity(compass("center")));
+
+            return imageR.overlay(overlayAction);
         }
     }
 
-    const handleButtonClick = (button) => {
-        setActiveButton(button);
-
-    };
+    
 
     const effectSubmitsMap = {
         generativeReplace: () => {
@@ -55,10 +68,16 @@ const Editor = () => {
         pad: () => {
             if (fromText && toText) {
             setActions([...actions, { name: "pad", value: [fromText, toText]  }]);
-        }}
+        }},
+
+        textOverlay : () => {
+            if(textOverlay && textFont && textSize && textColor) {
+        
+            setActions([...actions, { name: "textOverlay", value: [textOverlay, textFont, textSize, textColor] }]);
+        }},
     }
 
-    const applyTextOverlayEffect = () => {
+    /*const applyTextOverlayEffect = () => {
         const textStyle = new TextStyle(textFont, textSize)
             .fontWeight("normal")
             .textAlignment("left");
@@ -69,7 +88,7 @@ const Editor = () => {
     
         setActions([...actions, { name: "textOverlay", value: overlayAction }]);
     };
-
+*/
 
     const imageToRender = useMemo(() => new CloudinaryImage(image, { cloudName: 'dy2v6iwv8' }), [image])
 
@@ -188,7 +207,7 @@ const Editor = () => {
                                     value={textColor}
                                     onChange={(e) => setTextColor(e.target.value)}
                                 />
-                                <button onClick={() => applyTextOverlayEffect()}>Apply</button>
+                                <button onClick={() => effectSubmitsMap["textOverlay"]()}>Apply</button>
                             </>
                         )}
                         {activeButton === "pad" && (
