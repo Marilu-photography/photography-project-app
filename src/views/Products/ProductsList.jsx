@@ -27,6 +27,8 @@ const ProductsList = () => {
     return <p>No products found 🥺</p>;
   }
 
+
+
   return (
     <div className="Store">
       <h1>Store</h1>

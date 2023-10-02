@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../stores/AccessTokenStore';
 
 
-const pages = ['Cameras', 'Lens', 'Accessories', 'Editor', 'Login', 'Register'];
+const pages = ['Cameras', 'Lens', 'Accessories', 'Editor', 'Login', 'Register', 'Cart'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 function ResponsiveAppBar() {
