@@ -1,7 +1,9 @@
 
+import './ProductDetails.css';
 import { getProductDetails } from "../../services/ProductsServices";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import ProductCardDetail from '../../components/ProductCardDetail/ProductCardDetail';
 
 const Message = ({ message }) => (
     <section>
@@ -59,21 +61,26 @@ const Message = ({ message }) => (
       return <p>Product not found 🥺</p>;
     }
   
-    const { name, description, image, price } = product;
   
     return message ? (
       <Message message={message} />
     ) : (
-      <div>
-        <img src={image} alt={name} width="200" />
-        <h1>{name}</h1>
-        <p>{description}</p>
-        <p>{price} €</p>
-  
-        <button className="btn btn-primary" onClick={handleCheckout}>
-          Checkout
-        </button>
+      <>
+      <div className=" container row ProductDetails"> 
+      <div className="Banner">
+      <Link to="/editor"> 
+      <img src='/public/img/muestra.png' alt="muestro" className="muestra" /> 
+      </Link>
+
       </div>
+      <div>
+  
+        
+        <ProductCardDetail product={product} />
+        
+      </div>
+      </div>
+      </>
     );
   }
   
