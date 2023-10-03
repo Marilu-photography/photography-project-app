@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
 
 function Cart() {
@@ -42,6 +43,13 @@ function Cart() {
   return (
     <div className="container flex flex-column">
       <div className="row">
+      <div className="Banner">
+      <Link to="/editor"> 
+      <img src='/public/img/muestra.png' alt="muestro" className="muestra" /> 
+      </Link>
+
+      </div>
+
         <div className="col-md-12">
           <h1 className="my-4">Cart ({totalUniqueItems})</h1>
         </div>
