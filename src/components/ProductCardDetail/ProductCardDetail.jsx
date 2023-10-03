@@ -1,7 +1,8 @@
 
 import "./ProductCardDetail.css";
 
-const ProductCardDetail = ({ product }) => {
+
+const ProductCardDetail = ({ product, onCheckout  }) => {
 
   if (!product) {
     console.error("Warning: 'product' prop is missing in ProductCard!");
@@ -51,7 +52,7 @@ const ProductCardDetail = ({ product }) => {
             <p className="card-text">
               <span className="fw-bold">Price:</span> {price} €
             </p>
-            <button className="btnDetails" onClick={handleCheckout}>Add to cart</button>
+            <button className="btnDetails" onClick={onCheckout}>Add to cart</button>
 
           </div>
         </div>
