@@ -41,9 +41,9 @@ const Register = () => {
       formData.append('surname', values.surname);
       formData.append('username', values.username);
 
-      if (values.profilePicture) {
-        console.log('values.profilePicture: ', values.profilePicture);
-        formData.append('profilePicture', values.profilePicture);
+      if (values.avatar) {
+        console.log('values.avatar: ', values.avatar);
+        formData.append('avatar', values.avatar);
       }
 
       register(formData)
