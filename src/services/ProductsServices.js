@@ -1,8 +1,9 @@
 import createHttp from "./BaseServices";
 const http = createHttp(true);
 
-
 export const getProductList = () => http.get('/');  
+
+export const createProduct = (product) => http.post('/create', product);
 
 export const getProductDetails = (id) => http.get(`/products/${id}`);
 
