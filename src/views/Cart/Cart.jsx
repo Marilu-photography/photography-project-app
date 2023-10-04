@@ -1,6 +1,8 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
+import {buyProduct} from '../../services/ProductsServices';
+import { useState } from "react";
 
 function Cart() {
   const {
@@ -11,31 +13,19 @@ function Cart() {
     removeItem,
     cartTotal,
   } = useCart();
+  const [message, setMessage] = useState("");
 
-  const handleCheckout = async () => {
-    console.log("Starting checkout process...");
   
-    await fetch("http://localhost:5173/products/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ products: items }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log("Response from server:", res);
-  
-        if (res.url) {
-          console.log("Redirecting to checkout...");
-          window.location.assign(res.url);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during checkout:", error);
-      });
+    const handleCheckout = async () => {
+      buyProduct(items)
+        .then((session) => {
+          window.location.href = session.url;
+        })
+        .catch((error) => {
+          console.error(error);
+          setMessage("Something went wrong 😭");
+        });
+    
   };
 
   if (isEmpty) return <p>Your cart is empty</p>;

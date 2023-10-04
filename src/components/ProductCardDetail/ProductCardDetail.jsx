@@ -21,16 +21,7 @@ const ProductCardDetail = ({ product, onCheckout  }) => {
     accessoryType,
   } = product;
 
-  const handleCheckout = async () => {
-    buyProduct(product)
-      .then((session) => {
-        window.location.href = session.url;
-      })
-      .catch((error) => {
-        console.error(error);
-        setMessage("Something went wrong 😭");
-      });
-  }
+
 
   return (
     <div className="ProductCardDetail container">

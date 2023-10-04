@@ -73,7 +73,7 @@ const Message = ({ message }) => (
         <div>
           <ProductCardDetail product={product} onCheckout={handleCheckout} />
         </div>
-        <form>
+        {/*<form>
           <div className="mb-3">
             <label htmlFor="comment" className="form-label">Escribe tu comentario</label>
             <textarea
@@ -99,7 +99,7 @@ const Message = ({ message }) => (
               </li>
  
           </ul>
-        </div>
+    </div>*/}
       </div>
     );
   };
