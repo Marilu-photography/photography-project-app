@@ -1,8 +1,8 @@
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import {buyProduct} from '../../services/ProductsServices';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Cart() {
   const {
@@ -14,8 +14,21 @@ function Cart() {
     cartTotal,
   } = useCart();
   const [message, setMessage] = useState("");
-
+  const { clearCartMetadata } = useCart();
+  const navigate = useNavigate();
+  const { emptyCart } = useCart();
   
+  
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const successParam = searchParams.get("success");
+
+    if (successParam === "true") {
+      emptyCart();
+ 
+    }
+  }, []);
+
     const handleCheckout = async () => {
       buyProduct(items)
         .then((session) => {
@@ -97,6 +110,9 @@ function Cart() {
             <h3>Total: {cartTotal.toFixed(2)} €</h3>
             <Button variant="primary" onClick={handleCheckout}>
               Checkout
+            </Button>
+            <Button variant="primary" onClick={emptyCart}>
+              delete
             </Button>
           </div>
         </div>
