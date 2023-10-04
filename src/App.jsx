@@ -11,6 +11,7 @@ import Register from './views/Register/Register'
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { CartProvider } from 'react-use-cart'
+import CreateProducts from './views/CreateProducts/CreateProducts'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         
         <Route path="/" element = { <ProtectedRoute/>}>
           <Route path="/editor" element={<Editor />} />
+          <Route path="/create" element={<CreateProducts />} />
         </Route>
 
       </Routes>
