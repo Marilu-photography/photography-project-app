@@ -14,12 +14,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { logout } from '../../stores/AccessTokenStore';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 
 const pages = ['Cameras', 'Lens', 'Accessories', 'Editor', 'Login', 'Register', 'Cart'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 function ResponsiveAppBar() {
+
+  const {user} = useAuthContext();
+  const isAdmin = user?.isAdmin || false;
+  
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -45,6 +51,7 @@ function ResponsiveAppBar() {
     
     handleCloseUserMenu();
   };
+
 
 
   return (
@@ -141,7 +148,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user?.name || 'Guest'} src={user?.avatar || "/static/images/default-avatar.jpg"}  />
               </IconButton>
             </Tooltip>
             <Menu
@@ -160,6 +167,19 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+             {isAdmin && (
+             
+            <MenuItem>
+              <Typography
+              component={Link}
+              to="/create"
+              sx={{ textDecoration: 'none', color: 'inherit' }}
+              textAlign="center">
+              Create Products
+              </Typography>
+            </MenuItem>
+          
+          )}
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
