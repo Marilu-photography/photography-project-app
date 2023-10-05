@@ -1,8 +1,12 @@
 
 import "./ProductCardDetail.css";
+import { useCart } from 'react-use-cart';
+
 
 
 const ProductCardDetail = ({ product, onCheckout  }) => {
+
+  const { addItem } = useCart();
 
   if (!product) {
     console.error("Warning: 'product' prop is missing in ProductCard!");
@@ -43,7 +47,7 @@ const ProductCardDetail = ({ product, onCheckout  }) => {
             <p className="card-text">
               <span className="fw-bold">Price:</span> {price} €
             </p>
-            <button className="btnDetails" onClick={onCheckout}>Add to cart</button>
+            <button className="btnDetails" onClick={() => addItem({...product, id: product._id})}>Add to cart</button>
 
           </div>
         </div>
