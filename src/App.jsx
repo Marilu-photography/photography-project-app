@@ -8,6 +8,7 @@ import ProductDetails from "./views/ProductDetails/ProductDetails";
 import { useAuthContext } from "./contexts/AuthContext";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
+import Images from "./views/Images/Images";
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { CartProvider } from 'react-use-cart'
 import CreateProducts from './views/CreateProducts/CreateProducts'
@@ -29,6 +30,7 @@ function App() {
       
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/images" element={<Images />} />
         
         <Route path="/" element = { <ProtectedRoute/>}>
           <Route path="/editor" element={<Editor />} />
