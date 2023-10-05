@@ -118,11 +118,11 @@ const Register = () => {
           placeholder="Enter your password"
         />
         <InputGroup
-          label="Profile picture"
-          name="profilePicture"
+          label="profile picture"
+          name="avatar"
           type="file"
           onChange={(event) => {
-            setFieldValue("profilePicture", event.currentTarget.files[0]);
+            setFieldValue("avatar", event.currentTarget.files[0]);
           }}
           placeholder="Upload your profile picture"
         />
