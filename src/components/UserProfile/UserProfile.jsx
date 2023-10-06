@@ -76,6 +76,7 @@ const UserProfilePage = ({ user }) => {
             <div className="card-body p-4 text-black">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <p className="lead fw-normal mb-0">Recent photos</p>
+                
                 <p className="mb-0">
                   <a href="#!" className="text-muted">
                     Show all

@@ -34,7 +34,7 @@ function App() {
             <Route path="/users/:id" element={<UserProfile />} />
 
             <Route path="/" element={<ProtectedRoute />}>
-              <Route path="/editor" element={<Editor />} />
+              <Route path="/editor/:id" element={<Editor />} />
               <Route path="/create" element={<CreateProducts />} />
             </Route>
           </Routes>
