@@ -11,12 +11,14 @@ import { text } from "@cloudinary/url-gen/qualifiers/source";
 import { Position } from "@cloudinary/url-gen/qualifiers/position";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
+import { useParams } from "react-router-dom";
 
 
 
 
 const Editor = () => {
-    const [image, setImage] = useState('amigos');
+    const { imageId } = useParams();
+    const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(true)
     const [actions, setActions] = useState([]);
     const [fromText, setFromText] = useState("");
@@ -31,6 +33,23 @@ const Editor = () => {
         setActiveButton(button);
 
     };
+
+    useEffect(() => {
+        setLoading(true);
+        
+        // Aquí debes cargar la imagen usando el ID de la imagen desde la URL
+        // Puedes utilizar una función o servicio para obtener la imagen en función de su ID
+        // Por ejemplo, si tienes una función getImageById, puedes hacer lo siguiente:
+        getImageById(imageId)
+            .then((imageData) => {
+                setImage(imageData);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error al cargar la imagen:", error);
+                setLoading(false);
+            });
+    }, [imageId]);
 
 
     const effectsMap = {

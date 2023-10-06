@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getImagesList } from "../../services/ImagesServices";
+import './ImagesList.css';
+import ImagesCard from "../../components/ImagesCard/ImagesCard";
 
 const ImagesList = () => {
-  const [imagesData, setImagesData] = useState([]);
+  const [images, setImagesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -17,32 +19,27 @@ const ImagesList = () => {
       });
   }, []);
 
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (!imagesData.length) {
+  if (!images.length) {
     return <p>No products found 🥺</p>;
   }
 
+return (
+  <div>
+    <h1>Image Gallery</h1>
 
-
-  return (
-    <div className="Store">
-      <h1>Gallery</h1>
-
-      <div className="row">
-        {imagesData.map((image) => (
-            <div key={image._id} className="col-lg-4 col-sm-6" >
-				<div className="thumbnail">
-					<img src={image.imageUrl} />
-				</div>
-
-            </div>
-        ))}
-      </div>
+    <div className="row">
+      {images.map((image) => (
+          <div key={image._id} className="col-lg-4 col-md-6 mb-4" >
+          <ImagesCard image={image} />
+          </div>
+      ))}
     </div>
-  );
+  </div>
+);
 };
-
 export default ImagesList;
