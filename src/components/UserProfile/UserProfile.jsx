@@ -41,8 +41,8 @@ const UserProfilePage = ({ user }) => {
                 <img
                   src={avatar}
                   alt={username}
-                  className="img-fluid img-thumbnail mt-1 mb-2"
-                  style={{ width: "300px", zIndex: 1 }}
+                  className="img-thumbnail mt-5 mb-2"
+                  style={{ width: "200px", height:"200px", zIndex: 1, objectFit: "cover" }}
                 />
                 {currentUser && currentUser._id === user._id && (
                   <button
@@ -55,7 +55,7 @@ const UserProfilePage = ({ user }) => {
                   </button>
                 )}
               </div>
-              <div className="ms-3" style={{ marginTop: "60px" }}>
+              <div className="ms-1" style={{ marginTop: "120px" }}>
                 <h5>@{username}</h5>
                 <p>
                   {name} {surname}

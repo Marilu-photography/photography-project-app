@@ -11,6 +11,7 @@ const initialValues = {
   username: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
 const Register = () => {
@@ -34,6 +35,13 @@ const Register = () => {
     validateOnChange: false,
     validationSchema: registerSchema,
     onSubmit: (values) => {
+
+      if (values.password !== values.confirmPassword) {
+        setFieldError('confirmPassword', 'Passwords do not match');
+        setSubmitting(false);
+        return;
+      }
+
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('email', values.email);
@@ -116,6 +124,16 @@ const Register = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Enter your password"
+        />
+        <InputGroup
+          label="Repeat Password"
+          name="confirmPassword"
+          type="password"
+          value={values.confirmPassword}
+          error={touched.confirmPassword && errors.confirmPassword}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Repeat your password"
         />
         <InputGroup
           label="profile picture"
