@@ -1,0 +1,30 @@
+
+.avatar-container {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    margin-left: 1041px;
+  }
+  .avatar-img {
+    width: 40px; /* Ajusta el tamaño según tu diseño */
+    height: 40px; /* Ajusta el tamaño según tu diseño */
+    border-radius: 50%; /* Para crear una imagen redonda */
+    object-fit: cover;
+  }
+
+  a.dropdown-item:hover {
+    background-color: rgb(251,173,25) !important;
+  }
+
+  .navbar {
+    background-color: rgb(0,0,0) !important;
+  }
+
+  a.text-warning:hover {
+    color: white !important;
+   
+  }
+
+  a.nav-link {
+    color: rgb(251,173,25)!important;
+  }
