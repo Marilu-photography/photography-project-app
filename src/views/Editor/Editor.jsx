@@ -1,22 +1,22 @@
 import { CloudinaryImage } from "@cloudinary/url-gen";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { AdvancedImage } from "@cloudinary/react";
 import { generativeReplace, grayscale } from "@cloudinary/url-gen/actions/effect";
 import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
-
 import './Editor.css'
 import { source } from "@cloudinary/url-gen/actions/overlay";
 import { text } from "@cloudinary/url-gen/qualifiers/source";
 import { Position } from "@cloudinary/url-gen/qualifiers/position";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
+import { getImage } from "../../services/ImagesServices";
+import { useParams } from "react-router-dom";
 
+const EditorTool = () => {
+    const { id } = useParams();
 
-
-
-const Editor = () => {
-    const [image, setImage] = useState('amigos');
+    const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(true)
     const [actions, setActions] = useState([]);
     const [fromText, setFromText] = useState("");
@@ -26,6 +26,19 @@ const Editor = () => {
     const [textFont, setTextFont] = useState("arial");
     const [textSize, setTextSize] = useState(100);
     const [textColor, setTextColor] = useState("#000000")
+
+    useEffect(() => {
+        getImage(id)
+            .then((res) => {
+                console.log(res);
+                setImage(res.name);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                setLoading(false);
+            });
+    }, [id]);
 
     const handleButtonClick = (button) => {
         setActiveButton(button);
@@ -76,19 +89,6 @@ const Editor = () => {
             setActions([...actions, { name: "textOverlay", value: [textOverlay, textFont, textSize, textColor] }]);
         }},
     }
-
-    /*const applyTextOverlayEffect = () => {
-        const textStyle = new TextStyle(textFont, textSize)
-            .fontWeight("normal")
-            .textAlignment("left");
-    
-        const textSource = text(textOverlay, textStyle).textColor(textColor);
-    
-        const overlayAction = source(textSource).position(new Position().gravity(compass("center")));
-    
-        setActions([...actions, { name: "textOverlay", value: overlayAction }]);
-    };
-*/
 
     const imageToRender = useMemo(() => new CloudinaryImage(image, { cloudName: 'dy2v6iwv8' }), [image])
 
@@ -242,4 +242,4 @@ const Editor = () => {
 
 }
 
-export default Editor
+export default EditorTool

@@ -1,6 +1,7 @@
 
 import ImageSliderComponent from "../../components/Slider/Slider";
 import ProductsList from '../Products/ProductsList';
+import ImagesList from './../Images/ImagesList';
 
 
 const Message = ({ message }) => (
@@ -14,6 +15,7 @@ const Home = () => {
     <div className="Home">
      <ImageSliderComponent/>
      <ProductsList />
+     <ImagesList />
     
 
         

@@ -16,7 +16,9 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../stores/AccessTokenStore';
 import { useAuthContext } from '../../contexts/AuthContext';
 
-const pages = ['Cameras', 'Lens', 'Accessories', 'Editor', 'Login', 'Register', 'Cart'];
+
+const pages = ['Cameras', 'Lens', 'Accessories', 'Editor', 'Login', 'Register', 'Cart', 'Images'];
+
 const settings = ['Profile', 'Account', 'Logout'];
 
 function ResponsiveAppBar() {

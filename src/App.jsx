@@ -8,14 +8,17 @@ import ProductDetails from "./views/ProductDetails/ProductDetails";
 import { useAuthContext } from "./contexts/AuthContext";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
-import { CartProvider } from 'react-use-cart'
-import CreateProducts from './views/CreateProducts/CreateProducts'
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { CartProvider } from "react-use-cart";
+import CreateProducts from "./views/CreateProducts/CreateProducts";
+import ImagesList from "./views/Images/ImagesList";
+import UserProfile from "./views/User/UserProfile";
 import EditProduct from "./views/EditProducts/EditProducts";
 import CameraList from "./views/Camera/Camera";
 import LensList from './views/Lens/Lens';
 import AccessoriesList from "./views/Accessories/Accessories";
 import Nav from "./components/Nav/Nav";
+
 
 function App() {
   const { isAuthenticationFetched } = useAuthContext();
@@ -28,6 +31,7 @@ function App() {
         <p>Loading...</p>
       ) : (
         <CartProvider>
+
         <Routes>
         <Route path="/" element={ <Home />} />
         <Route path= "/cameras" element={ <CameraList/>} />
@@ -35,17 +39,18 @@ function App() {
       <Route path="/lens" element={<LensList />} />
       <Route path="/accessories" element={<AccessoriesList />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-      
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+          <Route path="/images" element={<ImagesList />} />
+            <Route path="/users/:id" element={<UserProfile />} />
         <Route path="/" element = { <ProtectedRoute/>}>
-          <Route path="/editor" element={<Editor />} />
+         <Route path="/editor/:id" element={<Editor />} />
           <Route path="/create" element={<CreateProducts />} />
           <Route path="/edit-product/:productId" element={<EditProduct />} />
          
 
         </Route>
+
           </Routes>
         </CartProvider>
       )}
