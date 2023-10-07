@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "../../services/UserServices";
 import ImagesCard from "../ImagesCard/ImagesCard";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { Button } from "react-bootstrap";
+import UploadModal from "../UploadModal/UploadModal";
 
-const UserProfilePage = ({ user }) => {
+const UserProfilePage = ({ user, getUser }) => {
   const { username, name, surname, avatar, images } = user;
   const [isLoading, setIsLoading] = useState(true);
   const { user: currentUser } = useAuthContext();
+  const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-            setIsLoading(false);
-    }, []);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
-  
+
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  console.log(user.id);
-  console.log(currentUser.id);
-
   return (
     <div>
       <div className="row d-flex justify-content-center align-items-center h-100 mt-5">
@@ -37,10 +36,12 @@ const UserProfilePage = ({ user }) => {
                   src={avatar}
                   alt={username}
                   className="img-thumbnail mt-5 mb-2"
-                  style={{ width: "200px", height:"200px", zIndex: 1, objectFit: "cover" }}
+                  style={{ width: "200px", height: "200px", zIndex: 1, objectFit: "cover" }}
                 />
                 {currentUser && currentUser.id === user.id && (
-                  <button
+                  <div className="flex-row">
+                   
+                    <button
                     type="button"
                     className="btn btn-outline-dark mb-3"
                     data-mdb-ripple-color="dark"
@@ -48,6 +49,26 @@ const UserProfilePage = ({ user }) => {
                   >
                     Edit profile
                   </button>
+                
+                    
+                   
+                      <Button
+                        variant="outline-dark"
+                        className="mb-3"
+                        style={{ width: "150px", zIndex: 1 }}
+                        onClick={() => setShowModal(true)}
+                      >
+                        Upload Image
+                      </Button>
+
+                      <UploadModal
+                        show={showModal}
+                        onHide={() => setShowModal(false)}
+                        getUser={getUser}
+                      />
+                    
+                  </div>
+
                 )}
               </div>
               <div className="ms-1" style={{ marginTop: "120px" }}>
@@ -71,7 +92,7 @@ const UserProfilePage = ({ user }) => {
             <div className="card-body p-4 text-black">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <p className="lead fw-normal mb-0">Recent photos</p>
-                
+
                 <p className="mb-0">
                   <a href="#!" className="text-muted">
                     Show all
@@ -82,7 +103,7 @@ const UserProfilePage = ({ user }) => {
                 {images && images.length > 0 ? (
                   images.map((image) => (
                     <div key={image._id} className="col">
-                      <ImagesCard image={image} currentUser={currentUser}/>
+                      <ImagesCard image={image} currentUser={currentUser} />
                     </div>
                   ))
                 ) : (

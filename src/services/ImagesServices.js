@@ -5,4 +5,6 @@ export const getImagesList = () => http.get('/images');
 
 export const getImage = (id) => http.get(`/editor/${id}`);
 
-export const createImage = (data) => http.post('/images/upload', data);
+export const createImage = (image) => http.post('/images/upload', image);
+
+export const deleteImage = (id) => http.delete(`/images/${id}`);

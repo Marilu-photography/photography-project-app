@@ -1,11 +1,24 @@
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
+import { deleteImage } from "../../services/ImagesServices";
 
-const ImagesCard = ({ image, currentUser }) => {
+const ImagesCard = ({ image, currentUser, getUser }) => {
   const { _id, name, price, imageUrl, author } = image;
 
   const { addItem } = useCart();
-  console.log(image);
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this image?')) {
+      deleteImage(image._id)
+        .then(() => {
+          getUser();
+          console.log('Image deleted');
+        })
+        .catch(error => {
+          console.error('Error deleting image:', error);
+        });
+    }
+  };
 
   return (
     <div className="card">
@@ -13,7 +26,7 @@ const ImagesCard = ({ image, currentUser }) => {
       <div className="card-body">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">
-          Author: <Link to={`/users/${author.id}`}>{author.username}</Link>
+          Author: <Link to={`/profile/${author.id}`}>{author.username}</Link>
         </p>
         <p className="card-text">Price: {price} €</p>
         {currentUser && currentUser.id === author.id ? (
@@ -21,7 +34,7 @@ const ImagesCard = ({ image, currentUser }) => {
             <Link to={`/editor/${_id}`} className="btn btn-primary">
               Edit
             </Link>
-            <button className="btn btn-danger">Delete</button>
+            <Link className="btnDetails" onClick={handleDelete} to={`/profile/${author.id}`}> Delete </Link>
           </>
         ) : (
           <>

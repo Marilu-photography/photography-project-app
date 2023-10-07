@@ -25,31 +25,31 @@ function App() {
 
   return (
     <>
-     
+
       <Nav />
       {!isAuthenticationFetched ? (
         <p>Loading...</p>
       ) : (
         <CartProvider>
 
-        <Routes>
-        <Route path="/" element={ <Home />} />
-        <Route path= "/cameras" element={ <CameraList/>} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/lens" element={<LensList />} />
-      <Route path="/accessories" element={<AccessoriesList />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-          <Route path="/images" element={<ImagesList />} />
-            <Route path="/users/:id" element={<UserProfile />} />
-        <Route path="/" element = { <ProtectedRoute/>}>
-         <Route path="/editor/:id" element={<Editor />} />
-          <Route path="/create" element={<CreateProducts />} />
-          <Route path="/edit-product/:productId" element={<EditProduct />} />
-         
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cameras" element={<CameraList />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/lens" element={<LensList />} />
+            <Route path="/accessories" element={<AccessoriesList />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/images" element={<ImagesList />} />
+            <Route path="/profile/:id" element={<UserProfile />} />
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path="/editor/:id" element={<Editor />} />
+              <Route path="/create" element={<CreateProducts />} />
+              <Route path="/edit-product/:productId" element={<EditProduct />} />
 
-        </Route>
+
+            </Route>
 
           </Routes>
         </CartProvider>

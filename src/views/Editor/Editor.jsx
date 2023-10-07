@@ -6,12 +6,13 @@ import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
 import './Editor.css'
 import { source } from "@cloudinary/url-gen/actions/overlay";
-import { text } from "@cloudinary/url-gen/qualifiers/source";
 import { Position } from "@cloudinary/url-gen/qualifiers/position";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { getImage } from "../../services/ImagesServices";
 import { useParams } from "react-router-dom";
+import { text } from "@cloudinary/url-gen/qualifiers/source";
+
 
 const EditorTool = () => {
     const { id } = useParams();
@@ -27,11 +28,15 @@ const EditorTool = () => {
     const [textSize, setTextSize] = useState(100);
     const [textColor, setTextColor] = useState("#000000")
 
-    useEffect(() => {
+   useEffect(() => {
         getImage(id)
             .then((res) => {
                 console.log(res);
-                setImage(res.name);
+                const imageUrlData = res.imageUrl.split("/");
+                const fileName = imageUrlData[imageUrlData.length - 1];
+                const imageName = fileName.split(".")[0];
+                console.log(imageName)
+                setImage(`/marilu-photography/${imageName}`);
                 setLoading(false);
             })
             .catch((error) => {
@@ -53,20 +58,18 @@ const EditorTool = () => {
         pad: (imageR, width, height) => {
             return imageR.resize(pad().w(width).h(height))
         },
-        textOverlay: (imageR, text, font, size, color) => {
+        textOverlay: (textContent, font, size, color) => {
             const textStyle = new TextStyle(font, size)
                 .fontWeight("normal")
                 .textAlignment("left");
 
-            const textSource = text(text, textStyle).textColor(color);
-
+            const textSource = text(textContent, textStyle).textColor(color);
             const overlayAction = source(textSource).position(new Position().gravity(compass("center")));
 
-            return imageR.overlay(overlayAction);
+            return overlayAction;
         }
     }
 
-    
 
     const effectSubmitsMap = {
         generativeReplace: () => {
@@ -80,14 +83,16 @@ const EditorTool = () => {
         },
         pad: () => {
             if (fromText && toText) {
-            setActions([...actions, { name: "pad", value: [fromText, toText]  }]);
-        }},
+                setActions([...actions, { name: "pad", value: [fromText, toText] }]);
+            }
+        },
 
-        textOverlay : () => {
-            if(textOverlay && textFont && textSize && textColor) {
-        
-            setActions([...actions, { name: "textOverlay", value: [textOverlay, textFont, textSize, textColor] }]);
-        }},
+        textOverlay: () => {
+            if (textOverlay && textFont && textSize && textColor) {
+
+                setActions([...actions, { name: "textOverlay", value: [textOverlay, textFont, textSize, textColor] }]);
+            }
+        },
     }
 
     const imageToRender = useMemo(() => new CloudinaryImage(image, { cloudName: 'dy2v6iwv8' }), [image])
@@ -98,11 +103,11 @@ const EditorTool = () => {
         actions.forEach((currentAction) => {
             if (currentAction.name === "generativeReplace") {
                 const [from, to] = currentAction.value;
-                result = result.effect(generativeReplace().from(from).to(to));
+                result = result.effect(eff);
             } else if (currentAction.name === "grayscale") {
                 result = result.effect(grayscale());
             } else if (currentAction.name === "textOverlay") {
-                result = result.overlay(currentAction.value);
+                result = result.overlay(effectsMap["textOverlay"](...currentAction.value ));
             } else if (currentAction.name === "pad") {
                 const [width, height] = currentAction.value;
                 result = result.resize(pad().width(width).height(height).background(generativeFill())
@@ -224,7 +229,7 @@ const EditorTool = () => {
                                     value={toText}
                                     onChange={(e) => setToText(e.target.value)}
                                 />
-                               
+
                                 <button onClick={() => effectSubmitsMap["pad"]()}>Apply</button>
                             </>
                         )}

@@ -9,17 +9,21 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getUser = () => {
+    getUserProfile(id)
+    .then((user) => {
+        setUser(user);
+        setIsLoading(false);
+    })
+    .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+    });
+  }
+
     useEffect(() => {
-        getUserProfile(id)
-        .then((user) => {
-            setUser(user);
-            setIsLoading(false);
-        })
-        .catch((error) => {
-            console.error(error);
-            setIsLoading(false);
-        });
-    }, [id]);
+      getUser()
+    }, [getUser]);
 
     if (!user) {
         return <p>User not found 🥺</p>;
@@ -27,7 +31,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <UserProfilePage user={user} />
+      <UserProfilePage user={user} getUser={getUser}/>
     </div>
   );
 };
