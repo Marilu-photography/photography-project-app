@@ -1,10 +1,24 @@
 
 import "./ProductCardDetail.css";
 import { useCart } from 'react-use-cart';
+import { Link } from 'react-router-dom';
+import { deleteProduct } from "../../services/ProductsServices";
 
 
 
-const ProductCardDetail = ({ product, onCheckout  }) => {
+const ProductCardDetail = ({ product  }) => {
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      deleteProduct(product._id)
+        .then(() => {
+          console.log('Product deleted');
+        })
+        .catch(error => {
+          console.error('Error deleting product:', error);
+        });
+    }
+  };
 
   const { addItem } = useCart();
 
@@ -28,7 +42,7 @@ const ProductCardDetail = ({ product, onCheckout  }) => {
 
 
   return (
-    <div className="ProductCardDetail container">
+    <div className="ProductCardDetail">
       <div className="row">
         <div className="col-md-6">
           <div className="img-product">
@@ -48,6 +62,9 @@ const ProductCardDetail = ({ product, onCheckout  }) => {
               <span className="fw-bold">Price:</span> {price} €
             </p>
             <button className="btnDetails" onClick={() => addItem({...product, id: product._id})}>Add to cart</button>
+            
+            <Link className="btnDetails" to={`/edit-product/${product._id}`}> Edit </Link>
+            <Link className="btnDetails" onClick={handleDelete} to={'/'}> Delete </Link>
 
           </div>
         </div>
