@@ -30,6 +30,7 @@ const EditorTool = () => {
     useEffect(() => {
         getImage(id)
             .then((res) => {
+                console.log(res);
                 setImage(res.name);
                 setLoading(false);
             })
