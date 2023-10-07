@@ -52,8 +52,8 @@ const EditorTool = () => {
 
 
     const effectsMap = {
-        generativeReplace: (imageR, itemToReplace, newItem) => {
-            return imageR.effect(generativeReplace().from(itemToReplace).to(newItem))
+        generativeReplace: ( itemToReplace, newItem) => {
+            return generativeReplace().from(itemToReplace).to(newItem)
         },
         pad: (imageR, width, height) => {
             return imageR.resize(pad().w(width).h(height))
@@ -103,7 +103,7 @@ const EditorTool = () => {
         actions.forEach((currentAction) => {
             if (currentAction.name === "generativeReplace") {
                 const [from, to] = currentAction.value;
-                result = result.effect(eff);
+                result = result.effect(effectsMap["generativeReplace"](...currentAction.value ));
             } else if (currentAction.name === "grayscale") {
                 result = result.effect(grayscale());
             } else if (currentAction.name === "textOverlay") {
