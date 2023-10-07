@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../../services/UserServices";
 import ImagesCard from "../ImagesCard/ImagesCard";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const UserProfilePage = ({ user }) => {
   const { username, name, surname, avatar, images } = user;
   const [isLoading, setIsLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
+  const { user: currentUser } = useAuthContext();
 
     useEffect(() => {
-        getCurrentUser()
-        .then((res) => {
-            setCurrentUser(res);
             setIsLoading(false);
-        })
-        .catch((error) => {
-            console.error(error);
-            setIsLoading(false);
-        });
     }, []);
 
   
@@ -24,6 +17,8 @@ const UserProfilePage = ({ user }) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+  console.log(user.id);
+  console.log(currentUser.id);
 
   return (
     <div>
@@ -44,7 +39,7 @@ const UserProfilePage = ({ user }) => {
                   className="img-thumbnail mt-5 mb-2"
                   style={{ width: "200px", height:"200px", zIndex: 1, objectFit: "cover" }}
                 />
-                {currentUser && currentUser._id === user._id && (
+                {currentUser && currentUser.id === user.id && (
                   <button
                     type="button"
                     className="btn btn-outline-dark mb-3"
