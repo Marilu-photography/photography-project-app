@@ -64,7 +64,7 @@ const Message = ({ message }) => (
   
   
     return (
-      <div className="container row ProductDetails">
+      <div className="row ProductDetails">
         <div className="Banner">
           <Link to="/editor">
             <img src="/public/img/muestra.png" alt="muestra" className="muestra" />
@@ -73,33 +73,6 @@ const Message = ({ message }) => (
         <div>
           <ProductCardDetail product={product} onCheckout={handleCheckout} />
         </div>
-        {/*<form>
-          <div className="mb-3">
-            <label htmlFor="comment" className="form-label">Escribe tu comentario</label>
-            <textarea
-              className="form-control"
-              id="comment"
-              value="comment"
-              placeholder="Escribe tu comentario"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">Enviar comentario</button>
-        </form>
-        <div className="comment-list">
-          <h2>Comentarios</h2>
-          <ul className="list-group">
-            
-              <li className="list-group-item">
-                <div className="comment-info">
-                  <p>comentario </p>
-                  <p>Fecha: fecha</p>
-                 
-                    <button className="btn btn-danger">Borrar</button>
-                </div>
-              </li>
- 
-          </ul>
-    </div>*/}
       </div>
     );
   };
