@@ -5,6 +5,7 @@ const ImagesCard = ({ image, currentUser }) => {
   const { _id, name, price, imageUrl, author } = image;
 
   const { addItem } = useCart();
+  console.log(image);
 
   return (
     <div className="card">
@@ -15,7 +16,7 @@ const ImagesCard = ({ image, currentUser }) => {
           Author: <Link to={`/users/${author.id}`}>{author.username}</Link>
         </p>
         <p className="card-text">Price: {price} €</p>
-        {currentUser && currentUser._id === author._id ? (
+        {currentUser && currentUser.id === author.id ? (
           <>
             <Link to={`/editor/${_id}`} className="btn btn-primary">
               Edit
