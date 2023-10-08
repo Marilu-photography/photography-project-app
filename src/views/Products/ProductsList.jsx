@@ -30,12 +30,12 @@ const ProductsList = () => {
 
 
   return (
-    <div className="Store">
-      <h1>Store</h1>
+    <div className="container Store  d-flex align-items-center flex-column">
+      <h1 className="mb-4">Store</h1>
 
-      <div className="row">
+      <div className="row mb-4">
         {products.map((product) => (
-            <div key={product._id} className="col-12 col-md-6 col-lg-4" >
+            <div key={product._id} className="col-xl-3 col-lg-4 col-sm-6" >
             <ProductsCard product={product} />
             </div>
         ))}
