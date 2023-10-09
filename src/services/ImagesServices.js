@@ -9,4 +9,4 @@ export const createImage = (image) => http.post('/images/upload', image);
 
 export const deleteImage = (id) => http.delete(`/images/${id}`);
 
-//export const editImage = (id, image) => http.post(`/images/${id}/edited`, image);
+export const editImage = (id, image) => http.post(`/images/${id}/edited-image`, image);

@@ -103,7 +103,7 @@ const UserProfilePage = ({ user, getUser }) => {
                 {images && images.length > 0 ? (
                   images.map((image) => (
                     <div key={image._id} className="col">
-                      <ImagesCard image={image} currentUser={currentUser} />
+                      <ImagesCard image={image} currentUser={currentUser} getUser={getUser}/>
                     </div>
                   ))
                 ) : (

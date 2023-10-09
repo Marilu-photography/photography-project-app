@@ -25,6 +25,11 @@
     font-size: 0.8rem;
 }
 
+.category-item:hover {
+  color: rgb(251, 173, 25)
+  
+}
+
 .category-item:hover img {
     opacity: 0.7
 }

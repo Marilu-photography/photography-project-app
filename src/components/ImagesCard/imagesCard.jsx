@@ -3,7 +3,7 @@ import { useCart } from "react-use-cart";
 import { deleteImage } from "../../services/ImagesServices";
 
 const ImagesCard = ({ image, currentUser, getUser }) => {
-  const { _id, name, price, imageUrl, author } = image;
+  const { _id, name, price, imageUrl, author, editedImageUrl } = image;
 
   const { addItem } = useCart();
 
@@ -16,13 +16,13 @@ const ImagesCard = ({ image, currentUser, getUser }) => {
         })
         .catch(error => {
           console.error('Error deleting image:', error);
-        });
+        })
     }
   };
 
   return (
     <div className="card">
-      <img src={imageUrl} alt={name} className="card-img-top" />
+      <img src={editedImageUrl ?? imageUrl } alt={name} className="card-img-top" />
       <div className="card-body">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">

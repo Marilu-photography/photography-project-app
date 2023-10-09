@@ -13,9 +13,9 @@ import { Position } from "@cloudinary/url-gen/qualifiers/position";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { getImage } from "../../services/ImagesServices";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { text } from "@cloudinary/url-gen/qualifiers/source";
-//import { editImage } from "../../services/ImagesServices";
+import { editImage } from "../../services/ImagesServices";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -30,21 +30,18 @@ const EditorTool = () => {
   const [textFont, setTextFont] = useState("arial");
   const [textSize, setTextSize] = useState(100);
   const [textColor, setTextColor] = useState("#000000");
-  //const [newImageFile, setNewImageFile] = useState(null);
-
-  /*const handleNewImageChange = (e) => {
-    setNewImageFile(e.target.files[0]);
-  };*/
+  const [author, setAuthor] = useState(null); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     getImage(id)
       .then((res) => {
-        console.log(res);
         const imageUrlData = res.imageUrl.split("/");
         const fileName = imageUrlData[imageUrlData.length - 1];
         const imageName = fileName.split(".")[0];
-        console.log(imageName);
-        setImage(`/marilu-photography/${imageName}`);
+        setImage(`marilu-photography/${imageName}`);
+        setAuthor(res.author);
+        console.log("entra aqui", res);
         setLoading(false);
       })
       .catch((error) => {
@@ -140,17 +137,19 @@ const EditorTool = () => {
     return result;
   }, [actions, imageToRender]);
 
-  /*const handleSave = () => {
-    if (newImageFile) {
-      editImage(id, newImageFile)
-        .then((res) => {
-          console.log(res.data);
-          Navigate(`/profile/${author.id}`);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }*/
+  const handleSave = () => {
+    const editedImageUrl = renderImage().toURL();
+      editImage(id, {editedImageUrl})
+      .then((res) => {
+          console.log(res)
+          navigate(`/profile/${author}`)
+          
+      })
+      .catch((error) => {
+          console.error(error)
+      })
+
+    }
 
     return (
       <div className="container">
@@ -293,18 +292,12 @@ const EditorTool = () => {
           <div className="col-md-4">
             <div className="editor-output">
               <AdvancedImage cldImg={renderImage()} />
-              {/* <input
-                type="file"
-                accept="image/*"
-                onChange={handleNewImageChange}
-              />
-              <button onClick={handleSave}>Guardar</button> */}
+              <button onClick={handleSave} to={`/profile/${id}`}>Guardar</button>
             </div>
           </div>
         </div>
       </div>
     );
   };
-//};
 
 export default EditorTool;
