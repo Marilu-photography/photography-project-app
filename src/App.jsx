@@ -18,6 +18,7 @@ import CameraList from "./views/Camera/Camera";
 import LensList from './views/Lens/Lens';
 import AccessoriesList from "./views/Accessories/Accessories";
 import Nav from "./components/Nav/Nav";
+import Footer from "./components/Footer/Footer";
 
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
 
           </Routes>
         </CartProvider>
+        
       )}
+      <Footer />
     </>
   );
 }
