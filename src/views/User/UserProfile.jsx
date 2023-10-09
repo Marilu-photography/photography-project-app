@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserProfilePage from "../../components/UserProfile/UserProfile";
 import { getUserProfile } from "../../services/UserServices";
@@ -9,17 +9,17 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getUser = () => {
+  const getUser = useCallback(() => {
     getUserProfile(id)
-    .then((user) => {
-        setUser(user);
-        setIsLoading(false);
-    })
-    .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
-    });
-  }
+      .then((user) => {
+          setUser(user);
+          setIsLoading(false);
+      })
+      .catch((error) => {
+          console.error(error);
+          setIsLoading(false);
+      });
+  }, [getUserProfile])
 
     useEffect(() => {
       getUser()

@@ -1,5 +1,5 @@
 .card {
-    margin: 0 auto;
+    margin: 10px !important;
     width: 300px;
     height: 254px;
     padding: 0.8em;
@@ -11,13 +11,13 @@
   
    
   .card-img {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     height: 100%; /* Ajusta la altura según sea necesario o elimina si prefieres una altura automática */
     width: 100%;
     padding: 1em;
-    border-radius: 0.5rem;
+    /*border-radius: 0.5rem;
     transition: 0.3s ease;
-    z-index: 1;
+    z-index: 1;*/
   }
   
    
@@ -117,3 +117,105 @@
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
    }
+
+   .product img {
+    filter: grayscale(40%);
+    transition: all 0.3s
+}
+
+.product-overlay {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem 0;
+    opacity: 0;
+    transition: all 0.3s
+}
+
+.product-overlay ul li {
+    transition: all 0.3s
+}
+
+.product-overlay ul li:first-of-type {
+    transform: translateX(-10px);
+    opacity: 0
+}
+
+.product-overlay ul li:last-of-type {
+    transform: translateX(10px);
+    opacity: 0
+}
+
+.product:hover img {
+    opacity: 0.3
+}
+
+.product:hover .product-overlay {
+    opacity: 1
+}
+
+.product:hover .product-overlay li {
+    opacity: 1;
+    transform: none
+}
+
+.product .badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1
+}
+
+.product-view {
+    min-height: 20rem
+}
+
+.badge {
+  display: inline-block;
+  padding: .35em .65em;
+  font-size: .8em;
+  font-weight: 400;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0
+}
+
+.badge:empty {
+  display: none
+}
+
+.btn .badge {
+  position: relative;
+  top: -1px
+}
+
+
+.list-inline {
+  padding-left: 0;
+  list-style: none
+}
+
+.list-inline-item {
+  display: inline-block
+}
+
+.list-inline-item:not(:last-child) {
+  margin-right: .5rem
+}
+
+.reset-anchor {
+  color: black !important;
+  transition: all 0.3s;
+  text-decoration: none !important;
+}
+
+.reset-anchor:hover,.reset-anchor:focus {
+  text-decoration: none
+}

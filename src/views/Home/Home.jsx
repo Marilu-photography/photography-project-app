@@ -1,7 +1,8 @@
 
+import ImagesList from "../Images/ImagesList";
 import ImageSliderComponent from "../../components/Slider/Slider";
 import ProductsList from '../Products/ProductsList';
-import ImagesList from './../Images/ImagesList';
+import Categories from "../../components/Categories/Categories";
 
 
 const Message = ({ message }) => (
@@ -14,8 +15,9 @@ const Home = () => {
   return (
     <div className="Home">
      <ImageSliderComponent/>
+     <Categories/>
      <ProductsList />
-     <ImagesList />
+     <ImagesList/>
     
 
         

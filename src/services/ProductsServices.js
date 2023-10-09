@@ -12,3 +12,5 @@ export const buyProduct = (product) => http.post('/products/checkout', product);
 export const editProduct = (id, product) => http.patch(`/products/${id}`, product);
 
 export const deleteProduct = (id) => http.delete(`/products/${id}`);
+
+export const doComment = (id, comment) => http.post(`/products/${id}/comment`, comment);
