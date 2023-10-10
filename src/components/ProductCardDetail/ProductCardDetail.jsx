@@ -1,7 +1,7 @@
 import "./ProductCardDetail.css";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import {
   createComment,
@@ -10,6 +10,7 @@ import {
 } from "../../services/CommentsServices";
 
 import { FaStar } from "react-icons/fa";
+import { getCurrentUser } from "../../services/UserServices";
 
 const ProductCardDetail = ({ product }) => {
   const {
@@ -25,7 +26,7 @@ const ProductCardDetail = ({ product }) => {
     model,
   } = product;
 
-  const { user } = useAuthContext();
+  const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [show, setShow] = useState(false);
   const { user: currentUser } = useAuthContext();
@@ -34,6 +35,22 @@ const ProductCardDetail = ({ product }) => {
     message: "",
     score: 0,
   });
+
+  // const getUser = useCallback(() => {
+  //   getCurrentUser()
+  //     .then((user) => {
+  //         setUser(user);
+          
+  //     })
+  //     .catch((error) => {
+  //         console.error(error);
+         
+  //     });
+  // }, [getCurrentUser])
+
+  //   useEffect(() => {
+  //     getUser()
+  //   }, [getUser]);
 
   useEffect(() => {
     if (user && user.isAdmin !== undefined) {
@@ -44,7 +61,7 @@ const ProductCardDetail = ({ product }) => {
   useEffect(() => {
     listComments(product._id)
       .then((comments) => {
-        setComments(comments.data);
+        setComments(comments);
       })
       .catch((error) => {
         console.error("Error listing comments:", error);
@@ -288,11 +305,11 @@ const ProductCardDetail = ({ product }) => {
     {comments && comments.map((comment) => (
     <div key={comment._id} className="comment">
         <img
-          src={comment.user.image} 
-          alt={comment.user.username} 
+          src={comment.user ? comment.user.image : ''} 
+          alt={comment.user ? comment.user.username : ''}
         />
-        <p>{comment.user.username}</p>
-        <p>{comment.message}</p>
+         <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
+    <p>{comment.message}</p>
         <div className="rating">
           {Array.from({ length: comment.score }, (_, index) => (
             <FaStar key={index} className="star active" />
