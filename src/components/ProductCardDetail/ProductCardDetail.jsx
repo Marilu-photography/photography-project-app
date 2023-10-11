@@ -1,9 +1,12 @@
 import "./ProductCardDetail.css";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
-import { deleteProduct } from "../../services/ProductsServices";
+import { deleteProduct, doComment } from "../../services/ProductsServices";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import CommentsForm from "../Comments/CommentsForm";
+import CommentList from "../Comments/CommentsList";
+
 
 const ProductCardDetail = ({ product }) => {
   const { user } = useAuthContext();
@@ -12,8 +15,30 @@ const ProductCardDetail = ({ product }) => {
 
   const [show, setShow] = useState(false);
 
-  const handleButtonClick = () => {
+  const [showComments, setShowComments] = useState(false);
+
+  const { user: currentUser } = useAuthContext();
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    doComment(product._id, comments, currentUser.token)
+      .then((comments) => {
+        setComments(comments);
+      })
+      .catch((error) => {
+        console.error(error);
+      }
+      );
+  }, [product._id]);
+
+
+  const handleButtonDescriptionClick = () => {
     setShow(!show);
+  };
+
+  const handleButtonCommentsClick = () => {
+    setShowComments(!showComments);
   };
 
   useEffect(() => {
@@ -55,8 +80,8 @@ const ProductCardDetail = ({ product }) => {
   } = product;
 
   return (
-    <>
-      <div className="container ProductCardDetail">
+    <div className="container d-flex flex-column ">
+      <div className=" ProductCardDetail">
         <div className="row mb-3">
           <div className="col-lg-6">
             <div className="img-product">
@@ -124,7 +149,7 @@ const ProductCardDetail = ({ product }) => {
                 )}
               </ul>
 
-              {category !== "Camera" && category !== "Lens"? (
+              {category !== "Camera" && category !== "Lens" ? (
                 <>
                   <ul>
                     <li className="d-inline-block li-detail px-3 py-2 mb-1">
@@ -168,17 +193,22 @@ const ProductCardDetail = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="container btn-detail">
-          <button className="btnDetails show-on-click" tabIndex={0} onClick={handleButtonClick}>
+      <div className="d-flex flex-row">
+        <div className=" btn-detail">
+          <button className="btnDetails show-on-click" tabIndex={0} onClick={handleButtonDescriptionClick}>
             Description
           </button>
           <div className={`hidden-div ${show ? 'show' : ''}`}>
-          <p className="">{description}</p>
+            <p>{description}</p>
           </div>
         </div>
       </div>
-    </>
+      <div>
+        <h5>Reviews</h5>
+        <CommentList comments={comments}  />
+        <CommentsForm product={product} currentUser={currentUser} />
+      </div>
+    </div>
   );
 };
 export default ProductCardDetail;

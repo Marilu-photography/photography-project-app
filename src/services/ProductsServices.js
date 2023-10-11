@@ -13,4 +13,6 @@ export const editProduct = (id, product) => http.patch(`/products/${id}`, produc
 
 export const deleteProduct = (id) => http.delete(`/products/${id}`);
 
-export const doComment = (id, comment) => http.post(`/products/${id}/comment`, comment);
+export const getComments = (id) => http.get(`/products/${id}/comments`);
+
+export const doComment = (id, comment) => http.post(`/products/${id}/comments`, comment);
