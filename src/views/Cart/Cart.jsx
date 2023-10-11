@@ -14,8 +14,6 @@ function Cart() {
     cartTotal,
   } = useCart();
   const [message, setMessage] = useState("");
-  const { clearCartMetadata } = useCart();
-  const navigate = useNavigate();
   const { emptyCart } = useCart();
   
   

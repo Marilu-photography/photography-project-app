@@ -9,6 +9,7 @@ import {
   listComments,
   deleteComment,
 } from "../../services/CommentsServices";
+import { list } from "postcss";
 
 
 
@@ -76,8 +77,15 @@ const ProductCardDetail = ({ product }) => {
     if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
       createComment(product._id, newComment)
         .then((comment) => {
-          setComments([...comments, comment]);
           setNewComment({ message: "", score: 0 });
+          listComments(product._id)
+            .then((comments) => {
+              setComments(comments);
+            })
+            .catch((error) => {
+              console.error("Error listing comments:", error);
+            });
+          
         })
         .catch((error) => {
           console.error("Error creating comment:", error);
@@ -287,7 +295,7 @@ const ProductCardDetail = ({ product }) => {
               <p>{comment.score}</p>
               <p>{comment.date}</p>
               <p>{comment.message}</p>
-              {currentUser && currentUser._id === comment.user._id && (
+              {currentUser && currentUser.id === comment.user.id && (
                 <button onClick={() => handleCommentDelete(comment.id)}>
                   Delete
                 </button>
