@@ -1,51 +1,78 @@
 import "./ProductCardDetail.css";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
-import { deleteProduct, doComment } from "../../services/ProductsServices";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
-import CommentsForm from "../Comments/CommentsForm";
-import CommentList from "../Comments/CommentsList";
+import {
+  createComment,
+  listComments,
+  deleteComment,
+} from "../../services/CommentsServices";
 
+import { FaStar } from "react-icons/fa";
+import { getCurrentUser } from "../../services/UserServices";
 
 const ProductCardDetail = ({ product }) => {
-  const { user } = useAuthContext();
+  const {
+    name,
+    description,
+    price,
+    image,
+    category,
+    condition,
+    cameraType,
+    lensType,
+    accessoryType,
+    model,
+  } = product;
 
+  const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-
   const [show, setShow] = useState(false);
-
-  const [showComments, setShowComments] = useState(false);
-
   const { user: currentUser } = useAuthContext();
-
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState({
+    message: "",
+    score: 0,
+  });
 
-  useEffect(() => {
-    doComment(product._id, comments, currentUser.token)
-      .then((comments) => {
-        setComments(comments);
-      })
-      .catch((error) => {
-        console.error(error);
-      }
-      );
-  }, [product._id]);
+  // const getUser = useCallback(() => {
+  //   getCurrentUser()
+  //     .then((user) => {
+  //         setUser(user);
+          
+  //     })
+  //     .catch((error) => {
+  //         console.error(error);
+         
+  //     });
+  // }, [getCurrentUser])
 
-
-  const handleButtonDescriptionClick = () => {
-    setShow(!show);
-  };
-
-  const handleButtonCommentsClick = () => {
-    setShowComments(!showComments);
-  };
+  //   useEffect(() => {
+  //     getUser()
+  //   }, [getUser]);
 
   useEffect(() => {
     if (user && user.isAdmin !== undefined) {
       setIsAdmin(user.isAdmin);
     }
   }, [user]);
+
+  useEffect(() => {
+    listComments(product._id)
+      .then((comments) => {
+        setComments(comments);
+      })
+      .catch((error) => {
+        console.error("Error listing comments:", error);
+      });
+  }, [product._id]);
+
+  
+
+  const handleButtonDescriptionClick = () => {
+    setShow(!show);
+  };
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -59,6 +86,42 @@ const ProductCardDetail = ({ product }) => {
     }
   };
 
+  const handleCommentSubmit = () => {
+    if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
+      createComment(product._id, newComment)
+        .then((comment) => {
+          setComments([...comments, comment.data]);
+          setNewComment({ message: "", score: 0 });
+        })
+        .catch((error) => {
+          console.error("Error creating comment:", error);
+        });
+    } else {
+      console.error("Invalid comment.");
+    }
+  };
+
+  const handleCommentChange = (event) => {
+    const { name, value } = event.target;
+    setNewComment({
+      ...newComment,
+      [name]: value,
+    });
+  };
+
+  const handleCommentDelete = (commentId) => {
+    deleteComment(commentId)
+      .then(() => {
+        const updateComments = comments.filter((comment) => {
+          comment._id !== commentId;
+        });
+        setComments(updateComments);
+      })
+      .catch((error) => {
+        console.error("Error deleting comment:", error);
+      });
+  };
+
   const { addItem } = useCart();
 
   if (!product) {
@@ -66,18 +129,19 @@ const ProductCardDetail = ({ product }) => {
     return null;
   }
 
-  const {
-    name,
-    description,
-    price,
-    image,
-    category,
-    condition,
-    cameraType,
-    lensType,
-    accessoryType,
-    model,
-  } = product;
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FaStar
+        key={i}
+        className={i <= newComment.score ? "star active" : "star"}
+        onClick={() => setNewComment({ ...newComment, score: i })}
+      />
+      );
+    }
+    return stars;
+  };
 
   return (
     <div className="container d-flex flex-column ">
@@ -195,20 +259,72 @@ const ProductCardDetail = ({ product }) => {
       </div>
       <div className="d-flex flex-row">
         <div className=" btn-detail">
-          <button className="btnDetails show-on-click" tabIndex={0} onClick={handleButtonDescriptionClick}>
+          <button
+            className="btnDetails show-on-click"
+            tabIndex={0}
+            onClick={handleButtonDescriptionClick}
+          >
             Description
           </button>
-          <div className={`hidden-div ${show ? 'show' : ''}`}>
+          <div className={`hidden-div ${show ? "show" : ""}`}>
             <p>{description}</p>
           </div>
         </div>
       </div>
       <div>
         <h5>Reviews</h5>
-        <CommentList comments={comments}  />
-        <CommentsForm product={product} currentUser={currentUser} />
+        <form>
+      <div className="form-group">
+        <label htmlFor="message">Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          value={newComment.message}
+          onChange={handleCommentChange}
+          required
+        ></textarea>
       </div>
+      <div className="form-group">
+    <label htmlFor="score">Score:</label>
+    <input
+      type="number"
+      id="score"
+      name="score"
+      value={newComment.score}
+      onChange={handleCommentChange}
+      min="1"
+      max="5"
+      required
+    />
+  </div>
+      <button type="button" onClick={handleCommentSubmit}>
+        Submit Comment
+      </button>
+      </form>
+  <div className="comments-list">
+    {comments && comments.map((comment) => (
+    <div key={comment._id} className="comment">
+        <img
+          src={comment.user ? comment.user.image : ''} 
+          alt={comment.user ? comment.user.username : ''}
+        />
+         <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
+    <p>{comment.message}</p>
+        <div className="rating">
+          {Array.from({ length: comment.score }, (_, index) => (
+            <FaStar key={index} className="star active" />
+          ))}
+        </div>
+        {currentUser && currentUser._id === comment.user._id && (
+          <button onClick={() => handleCommentDelete(comment._id)}>
+            Delete
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
     </div>
   );
-};
+}
 export default ProductCardDetail;
