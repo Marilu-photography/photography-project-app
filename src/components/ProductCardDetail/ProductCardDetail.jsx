@@ -1,16 +1,17 @@
 import "./ProductCardDetail.css";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { deleteProduct } from "../../services/ProductsServices";
 import {
   createComment,
   listComments,
   deleteComment,
 } from "../../services/CommentsServices";
 
-import { FaStar } from "react-icons/fa";
-import { getCurrentUser } from "../../services/UserServices";
+
+
 
 const ProductCardDetail = ({ product }) => {
   const {
@@ -26,7 +27,7 @@ const ProductCardDetail = ({ product }) => {
     model,
   } = product;
 
-  const [user, setUser] = useState(null);
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [show, setShow] = useState(false);
   const { user: currentUser } = useAuthContext();
@@ -36,27 +37,12 @@ const ProductCardDetail = ({ product }) => {
     score: 0,
   });
 
-  // const getUser = useCallback(() => {
-  //   getCurrentUser()
-  //     .then((user) => {
-  //         setUser(user);
-          
-  //     })
-  //     .catch((error) => {
-  //         console.error(error);
-         
-  //     });
-  // }, [getCurrentUser])
-
-  //   useEffect(() => {
-  //     getUser()
-  //   }, [getUser]);
 
   useEffect(() => {
-    if (user && user.isAdmin !== undefined) {
-      setIsAdmin(user.isAdmin);
+    if (currentUser && currentUser.isAdmin !== undefined) {
+      setIsAdmin(currentUser.isAdmin);
     }
-  }, [user]);
+  }, [currentUser]);
 
   useEffect(() => {
     listComments(product._id)
@@ -68,7 +54,7 @@ const ProductCardDetail = ({ product }) => {
       });
   }, [product._id]);
 
-  
+
 
   const handleButtonDescriptionClick = () => {
     setShow(!show);
@@ -90,7 +76,7 @@ const ProductCardDetail = ({ product }) => {
     if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
       createComment(product._id, newComment)
         .then((comment) => {
-          setComments([...comments, comment.data]);
+          setComments([...comments, comment]);
           setNewComment({ message: "", score: 0 });
         })
         .catch((error) => {
@@ -113,7 +99,7 @@ const ProductCardDetail = ({ product }) => {
     deleteComment(commentId)
       .then(() => {
         const updateComments = comments.filter((comment) => {
-          comment._id !== commentId;
+          return comment.id !== commentId;
         });
         setComments(updateComments);
       })
@@ -129,19 +115,6 @@ const ProductCardDetail = ({ product }) => {
     return null;
   }
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <FaStar
-        key={i}
-        className={i <= newComment.score ? "star active" : "star"}
-        onClick={() => setNewComment({ ...newComment, score: i })}
-      />
-      );
-    }
-    return stars;
-  };
 
   return (
     <div className="container d-flex flex-column ">
@@ -274,56 +247,55 @@ const ProductCardDetail = ({ product }) => {
       <div>
         <h5>Reviews</h5>
         <form>
-      <div className="form-group">
-        <label htmlFor="message">Message:</label>
-        <textarea
-          id="message"
-          name="message"
-          value={newComment.message}
-          onChange={handleCommentChange}
-          required
-        ></textarea>
-      </div>
-      <div className="form-group">
-    <label htmlFor="score">Score:</label>
-    <input
-      type="number"
-      id="score"
-      name="score"
-      value={newComment.score}
-      onChange={handleCommentChange}
-      min="1"
-      max="5"
-      required
-    />
-  </div>
-      <button type="button" onClick={handleCommentSubmit}>
-        Submit Comment
-      </button>
-      </form>
-  <div className="comments-list">
-    {comments && comments.map((comment) => (
-    <div key={comment._id} className="comment">
-        <img
-          src={comment.user ? comment.user.image : ''} 
-          alt={comment.user ? comment.user.username : ''}
-        />
-         <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
-    <p>{comment.message}</p>
-        <div className="rating">
-          {Array.from({ length: comment.score }, (_, index) => (
-            <FaStar key={index} className="star active" />
+          <div className="form-group">
+            <label htmlFor="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              value={newComment.message}
+              onChange={handleCommentChange}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="score">Score:</label>
+            <input
+              type="number"
+              id="score"
+              name="score"
+              value={newComment.score}
+              onChange={handleCommentChange}
+              min="1"
+              max="5"
+              required
+            />
+          </div>
+          <button type="button" onClick={handleCommentSubmit}>
+            Submit Comment
+          </button>
+        </form>
+        <div className="comments-list">
+          {comments && comments
+          .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
+          .map((comment) => (
+            <div key={comment.id} className="comment">
+              <img
+                src={comment.user ? comment.user.avatar : ''}
+                alt={comment.user ? comment.user.username : ''}
+              />
+              <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
+              <p>{comment.score}</p>
+              <p>{comment.date}</p>
+              <p>{comment.message}</p>
+              {currentUser && currentUser._id === comment.user._id && (
+                <button onClick={() => handleCommentDelete(comment.id)}>
+                  Delete
+                </button>
+              )}
+            </div>
           ))}
         </div>
-        {currentUser && currentUser._id === comment.user._id && (
-          <button onClick={() => handleCommentDelete(comment._id)}>
-            Delete
-          </button>
-        )}
       </div>
-    ))}
-  </div>
-</div>
     </div>
   );
 }
