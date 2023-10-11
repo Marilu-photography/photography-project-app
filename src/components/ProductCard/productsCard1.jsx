@@ -36,10 +36,7 @@ const ProductsCard = ({ product }) => {
 
 export default ProductsCard;
 
-{
-  
- 
-}
+
 
 {/* <>
       <div className="product text-center mb-5">
