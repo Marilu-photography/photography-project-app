@@ -1,7 +1,7 @@
 import InputGroup from "../../components/InputGroup/InputGroup";
 import { useFormik } from "formik";
 import { registerSchema } from '../../utils/yup.schemas';
-import { register } from '../../services/AuthServices';
+import { register, sendActivationEmail } from '../../services/AuthServices';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 
@@ -56,6 +56,7 @@ const Register = () => {
 
       register(formData)
         .then(() => {
+          sendActivationEmail(formData);
           navigate("/login");
         })
         .catch((err) => {
