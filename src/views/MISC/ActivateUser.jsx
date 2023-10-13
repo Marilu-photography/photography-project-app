@@ -1,19 +1,17 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { activateUser } from "../../services/AuthServices";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const ActivateUser = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [activationMessage, setActivationMessage] = useState(null);
 
   useEffect(() => {
     activateUser(id)
-      .then((response) => {
-        setActivationMessage(response.data.message);
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000); // Redirige al usuario después de 2 segundos
+      .then(() => {
+        console.log(user)
+        
+ 
       })
       .catch((err) => {
         console.log(err);
@@ -21,13 +19,7 @@ const ActivateUser = () => {
   }, [id, navigate]);
 
   return (
-    <div>
-      {activationMessage ? (
-        <p>{activationMessage}</p>
-      ) : (
-        <p>Activating user...</p>
-      )}
-    </div>
+   <Navigate to="/login" />
   );
 };
 
