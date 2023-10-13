@@ -5,5 +5,4 @@ export const register = (user) => http.post('/register', user);
 
 export const login = (user) => http.post('/login', user);
 
-export const sendActivationEmail = (user) => http.post('/send-activation-email', user);
-
+export const activateUser = (id) => http.post(`/activate/${id}`);

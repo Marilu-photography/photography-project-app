@@ -20,6 +20,7 @@ import AccessoriesList from "./views/Accessories/Accessories";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import EditProfile from "./views/EditProfile/EditProfile";
+import ActivateUser from "./views/MISC/ActivateUser";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/activate/:id" element={<ActivateUser />} />
             <Route path="/cameras" element={<CameraList />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/lens" element={<LensList />} />
