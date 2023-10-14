@@ -22,6 +22,7 @@ import Footer from "./components/Footer/Footer";
 import EditProfile from "./views/EditProfile/EditProfile";
 
 
+
 function App() {
   const { isAuthenticationFetched } = useAuthContext();
 
