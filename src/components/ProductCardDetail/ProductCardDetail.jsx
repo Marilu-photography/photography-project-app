@@ -10,8 +10,6 @@ import {
   deleteComment,
 } from "../../services/CommentsServices";
 
-import { list } from "postcss";
-
 
 
 const ProductCardDetail = ({ product }) => {

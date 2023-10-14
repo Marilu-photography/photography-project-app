@@ -14,3 +14,5 @@ export const editProduct = (id, product) => http.patch(`/products/${id}`, produc
 export const deleteProduct = (id) => http.delete(`/products/${id}`);
 
 export const getSearch = (query) => http.get(`/search?query=${query}`);
+
+export const success = (orderId) => http.get(`/products/checkout/success/${orderId}`);

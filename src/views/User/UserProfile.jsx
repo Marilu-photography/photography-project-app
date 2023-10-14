@@ -4,7 +4,6 @@ import UserProfilePage from "../../components/UserProfile/UserProfile";
 import { getUserProfile } from "../../services/UserServices";
 
 const UserProfile = () => {
-
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +18,7 @@ const UserProfile = () => {
           console.error(error);
           setIsLoading(false);
       });
-  }, [getUserProfile])
+  }, [getUserProfile, id])
 
     useEffect(() => {
       getUser()

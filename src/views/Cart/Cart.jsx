@@ -1,8 +1,11 @@
 import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import {buyProduct} from '../../services/ProductsServices';
 import { useEffect, useState } from "react";
+import { success } from "../../services/ProductsServices";
+import { useAuthContext } from "../../contexts/AuthContext";
+
 
 function Cart() {
   const {
@@ -15,17 +18,22 @@ function Cart() {
   } = useCart();
   const [message, setMessage] = useState("");
   const { emptyCart } = useCart();
-  
+  const [orderPaid, setOrderPaid] = useState(null);
+  const { user: currentUser } = useAuthContext();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search)  
+  const successParam = params.get("success");
+  const orderId = params.get("orderId");
   
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const successParam = searchParams.get("success");
-
-    if (successParam === "true") {
+    if (successParam === "true" && orderId) {
+      setOrderPaid(orderId);
+      setMessage("Order placed! You will receive an email confirmation.");
+      success(orderId);
       emptyCart();
- 
     }
-  }, []);
+  }, [successParam, orderId]);
 
     const handleCheckout = async () => {
       buyProduct(items)
