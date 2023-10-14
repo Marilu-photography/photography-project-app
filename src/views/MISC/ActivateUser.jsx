@@ -10,8 +10,7 @@ const ActivateUser = () => {
     activateUser(id)
       .then(() => {
         console.log(user)
-        
- 
+
       })
       .catch((err) => {
         console.log(err);

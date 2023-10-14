@@ -9,7 +9,6 @@ import { useAuthContext } from "./contexts/AuthContext";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import { CartProvider } from "react-use-cart";
 import CreateProducts from "./views/CreateProducts/CreateProducts";
 import ImagesList from "./views/Images/ImagesList";
 import UserProfile from "./views/User/UserProfile";
@@ -33,7 +32,6 @@ function App() {
       {!isAuthenticationFetched ? (
         <p>Loading...</p>
       ) : (
-        <CartProvider>
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -57,10 +55,10 @@ function App() {
             </Route>
 
           </Routes>
-        </CartProvider>
         
       )}
       <Footer />
+
     </>
   );
 }

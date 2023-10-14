@@ -11,10 +11,12 @@ import './assets/scss/styles.scss';
 
 // Import all of Bootstrap's JS
 import 'bootstrap/dist/js/bootstrap.bundle';
+import { CartProvider } from 'react-use-cart';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
+  <CartProvider>
   <AuthContextProvider>
   <BrowserRouter>
   
@@ -22,5 +24,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   
   </BrowserRouter>
   </AuthContextProvider>
+  </CartProvider>
   </>
 )

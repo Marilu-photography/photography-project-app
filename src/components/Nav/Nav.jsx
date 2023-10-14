@@ -4,13 +4,13 @@ import "./Nav.css";
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from "react";
 import { logout } from '../../stores/AccessTokenStore';
-import { useCart } from 'react-use-cart';
+import { useCart } from "react-use-cart";
+
 
 const Nav = ( product ) => {
   const { user, isLoading } = useAuthContext();
   const [userState, setUserState] = useState(null);
-  const { totalItems } = useCart();
-  console.log(totalItems)
+  const { totalItems, emptyCart } = useCart();
 
   useEffect(() => {
     if (!isLoading) {
@@ -21,6 +21,7 @@ const Nav = ( product ) => {
   const isAdmin = userState?.isAdmin || false;
 
   const handleLogout = () => {
+    emptyCart();
     logout();
   };
 
