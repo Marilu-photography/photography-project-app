@@ -19,21 +19,22 @@ import { CartProvider } from 'react-use-cart';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
 
-  <CartProvider>
+    <CartProvider>
 
-   <AppProvider>
+      <AppProvider>
 
-  <AuthContextProvider>
-  <BrowserRouter>
-  
-    <App />
-  
-  </BrowserRouter>
-  </AuthContextProvider>
+        <AuthContextProvider>
+          <BrowserRouter>
 
-  </CartProvider>
+            <App />
 
-  </AppProvider>
+          </BrowserRouter>
+        </AuthContextProvider>
+
+
+
+      </AppProvider>
+    </CartProvider>
 
   </>
 )

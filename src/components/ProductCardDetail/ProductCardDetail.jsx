@@ -10,8 +10,6 @@ import {
   deleteComment,
 } from "../../services/CommentsServices";
 
-import { deleteProduct } from "../../services/ProductsServices";
-
 import { list } from "postcss";
 
 

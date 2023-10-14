@@ -6,9 +6,6 @@ import { useEffect, useState } from "react";
 import { logout } from '../../stores/AccessTokenStore';
 import { useCart } from "react-use-cart";
 
-
-import { logout } from "../../stores/AccessTokenStore";
-import { useCart } from "react-use-cart";
 import { getSearch } from "../../services/ProductsServices";
 import { useAppContext } from "../../contexts/AppContext";
 
