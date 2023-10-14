@@ -3,12 +3,17 @@ import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { deleteProduct } from "../../services/ProductsServices";
 import {
   createComment,
   listComments,
   deleteComment,
 } from "../../services/CommentsServices";
+
 import { deleteProduct } from "../../services/ProductsServices";
+
+import { list } from "postcss";
+
 
 
 const ProductCardDetail = ({ product }) => {
@@ -73,8 +78,15 @@ const ProductCardDetail = ({ product }) => {
     if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
       createComment(product._id, newComment)
         .then((comment) => {
-          setComments([comment, ...comments]);
+
           setNewComment({ message: "", score: 0 });
+          listComments(product._id)
+            .then((comments) => {
+              setComments(comments);
+            })
+            .catch((error) => {
+              console.error("Error listing comments:", error);
+            });
           
         })
         .catch((error) => {
@@ -274,17 +286,18 @@ const ProductCardDetail = ({ product }) => {
           </button>
         </form>
         <div className="comments-list">
-          {comments.length > 0 && comments
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+          {comments && comments
+          .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
           .map((comment) => (
             <div key={comment.id} className="comment">
               <img
-                src={comment.user ? comment.user?.avatar : ''}
-                alt={comment.user ? comment.user?.username : ''}
+                src={comment.user ? comment.user.avatar : ''}
+                alt={comment.user ? comment.user.username : ''}
               />
-              <p>{comment.user ? comment.user?.username : 'Unknown User'}</p>
+              <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
               <p>{comment.score}</p>
-              <p>{comment.createdAt}</p>
+              <p>{comment.date}</p>
               <p>{comment.message}</p>
               {currentUser && currentUser.id === comment.user.id && (
                 <button onClick={() => handleCommentDelete(comment.id)}>

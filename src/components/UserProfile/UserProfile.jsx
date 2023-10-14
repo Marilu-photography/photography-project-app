@@ -3,6 +3,7 @@ import ImagesCard from "../ImagesCard/ImagesCard";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Button } from "react-bootstrap";
 import UploadModal from "../UploadModal/UploadModal";
+import { Link } from "react-router-dom";
 
 const UserProfilePage = ({ user, getUser }) => {
   const { username, name, surname, avatar, images } = user;
@@ -13,8 +14,6 @@ const UserProfilePage = ({ user, getUser }) => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
-
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -36,39 +35,39 @@ const UserProfilePage = ({ user, getUser }) => {
                   src={avatar}
                   alt={username}
                   className="img-thumbnail mt-5 mb-2"
-                  style={{ width: "200px", height: "200px", zIndex: 1, objectFit: "cover" }}
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    zIndex: 1,
+                    objectFit: "cover",
+                  }}
                 />
                 {currentUser && currentUser.id === user.id && (
                   <div className="flex-row">
-                   
-                    <button
-                    type="button"
-                    className="btn btn-outline-dark mb-3"
-                    data-mdb-ripple-color="dark"
-                    style={{ width: "150px", zIndex: 1 }}
-                  >
-                    Edit profile
-                  </button>
-                
-                    
-                   
-                      <Button
-                        variant="outline-dark"
-                        className="mb-3"
-                        style={{ width: "150px", zIndex: 1 }}
-                        onClick={() => setShowModal(true)}
-                      >
-                        Upload Image
-                      </Button>
+                    <Link
+                      to={`/profile/${user.id}/edit`}
+                      className="btn btn-outline-dark mb-3"
+                      data-mdb-ripple-color="dark"
+                      style={{ width: "150px", zIndex: 1 }}
+                    >
+                      Edit profile
+                    </Link>
 
-                      <UploadModal
-                        show={showModal}
-                        onHide={() => setShowModal(false)}
-                        getUser={getUser}
-                      />
-                    
+                    <Button
+                      variant="outline-dark"
+                      className="mb-3"
+                      style={{ width: "150px", zIndex: 1 }}
+                      onClick={() => setShowModal(true)}
+                    >
+                      Upload Image
+                    </Button>
+
+                    <UploadModal
+                      show={showModal}
+                      onHide={() => setShowModal(false)}
+                      getUser={getUser}
+                    />
                   </div>
-
                 )}
               </div>
               <div className="ms-1" style={{ marginTop: "120px" }}>
@@ -103,7 +102,11 @@ const UserProfilePage = ({ user, getUser }) => {
                 {images && images.length > 0 ? (
                   images.map((image) => (
                     <div key={image._id} className="col">
-                      <ImagesCard image={image} currentUser={currentUser} getUser={getUser}/>
+                      <ImagesCard
+                        image={image}
+                        currentUser={currentUser}
+                        getUser={getUser}
+                      />
                     </div>
                   ))
                 ) : (

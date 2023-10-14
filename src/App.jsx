@@ -19,6 +19,7 @@ import LensList from './views/Lens/Lens';
 import AccessoriesList from "./views/Accessories/Accessories";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
+import EditProfile from "./views/EditProfile/EditProfile";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/images" element={<ImagesList />} />
             <Route path="/profile/:id" element={<UserProfile />} />
+            <Route path="/profile/:userId/edit" element={<EditProfile />} />
             <Route path="/" element={<ProtectedRoute />}>
               <Route path="/editor/:id" element={<Editor />} />
               <Route path="/create" element={<CreateProducts />} />

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductCardDetail from '../../components/ProductCardDetail/ProductCardDetail';
 
-const Message = ({ message }) => (
+const message = ({ message }) => (
     <section>
       <p>{message}</p>
     </section>

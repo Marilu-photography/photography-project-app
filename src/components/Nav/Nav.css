@@ -28,3 +28,19 @@
   a.nav-link {
     color: rgb(251,173,25)!important;
   }
+
+  .cart-nav-btn {
+    background-color: rgb(227, 227, 227) !important;
+    width: 3.5rem;
+    height: 2.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1.3rem;
+  }
+
+  .cart-nav-btn:hover {
+    background-color: rgb(251,173,25) !important;
+  }

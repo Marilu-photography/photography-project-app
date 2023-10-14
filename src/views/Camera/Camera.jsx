@@ -41,7 +41,7 @@ const CameraList = () => {
     
             <div className="row display-flex">
                 {products.map((product) => (
-                    <div key={product._id} className="col-12 col-md-6 col-lg-4">
+                    <div key={product._id} className="col-12 col-md-6 col-lg-4 mb-4">
                         <ProductsCard product={product}/>
                     </div>
                 ))}

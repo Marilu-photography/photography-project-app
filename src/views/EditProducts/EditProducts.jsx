@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { productSchema } from "../../utils/product.schema";
 import { editProduct, getProductDetails } from "../../services/ProductsServices";
