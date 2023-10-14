@@ -6,6 +6,8 @@ import App from './App.jsx'
 import { AuthContextProvider } from './contexts/AuthContext';
 import './index.css'
 
+import { AppProvider } from './contexts/AppContext.jsx';
+
 // Import our custom CSS
 import './assets/scss/styles.scss';
 
@@ -16,7 +18,11 @@ import { CartProvider } from 'react-use-cart';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
+
   <CartProvider>
+
+   <AppProvider>
+
   <AuthContextProvider>
   <BrowserRouter>
   
@@ -24,6 +30,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   
   </BrowserRouter>
   </AuthContextProvider>
+
   </CartProvider>
+
+  </AppProvider>
+
   </>
 )

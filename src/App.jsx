@@ -22,6 +22,7 @@ import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
 
 
+
 function App() {
   const { isAuthenticationFetched } = useAuthContext();
 

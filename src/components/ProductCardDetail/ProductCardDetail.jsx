@@ -9,8 +9,10 @@ import {
   listComments,
   deleteComment,
 } from "../../services/CommentsServices";
-import { list } from "postcss";
 
+import { deleteProduct } from "../../services/ProductsServices";
+
+import { list } from "postcss";
 
 
 
@@ -27,7 +29,6 @@ const ProductCardDetail = ({ product }) => {
     accessoryType,
     model,
   } = product;
-
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [show, setShow] = useState(false);
@@ -77,6 +78,7 @@ const ProductCardDetail = ({ product }) => {
     if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
       createComment(product._id, newComment)
         .then((comment) => {
+
           setNewComment({ message: "", score: 0 });
           listComments(product._id)
             .then((comments) => {
@@ -122,6 +124,7 @@ const ProductCardDetail = ({ product }) => {
     console.error("Warning: 'product' prop is missing in ProductCard!");
     return null;
   }
+
 
 
   return (
@@ -283,6 +286,7 @@ const ProductCardDetail = ({ product }) => {
           </button>
         </form>
         <div className="comments-list">
+
           {comments && comments
           .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
           .map((comment) => (
