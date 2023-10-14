@@ -2,16 +2,25 @@ import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
+
+import { logout } from '../../stores/AccessTokenStore';
+import { useCart } from "react-use-cart";
+
+
 import { logout } from "../../stores/AccessTokenStore";
 import { useCart } from "react-use-cart";
 import { getSearch } from "../../services/ProductsServices";
 import { useAppContext } from "../../contexts/AppContext";
 
+
 const Nav = (product) => {
   const { user, isLoading } = useAuthContext();
   const [userState, setUserState] = useState(null);
-  const { totalItems } = useCart();
-  console.log(totalItems);
+
+  const { totalItems, emptyCart } = useCart();
+
+
+
   const [searchQuery, setSearchQuery] = useState("");
   const { setGlobalSearchResults } = useAppContext();
  const [searchResults, setSearchResults] = useState([]);
@@ -36,6 +45,7 @@ const Nav = (product) => {
 };
 
 
+
   useEffect(() => {
     if (!isLoading) {
       setUserState(user);
@@ -45,6 +55,7 @@ const Nav = (product) => {
   const isAdmin = userState?.isAdmin || false;
 
   const handleLogout = () => {
+    emptyCart();
     logout();
   };
 

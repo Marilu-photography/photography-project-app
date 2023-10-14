@@ -1,9 +1,10 @@
 import InputGroup from '../../components/InputGroup/InputGroup';
 import { useFormik } from 'formik';
 import { loginSchema } from '../../utils/yup.schemas';
-import { login as loginRequest } from '../../services/AuthServices';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { activateUser, login as loginRequest } from '../../services/AuthServices';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { useEffect, useState } from 'react';
 
 const initialValues = {
   email: "",
@@ -11,8 +12,11 @@ const initialValues = {
 };
 
 const Login = () => {
+  const location = useLocation();
+  const activateUserId = new URLSearchParams(location.search).get('activate');
   const { login, user } = useAuthContext();
   const navigate = useNavigate();
+  const { newUser, setNewUser } = useState(null);
 
   const {
     values,
@@ -43,6 +47,20 @@ const Login = () => {
         });
     },
   });
+
+   useEffect(() => {
+    if(activateUserId) {
+      activateUser(activateUserId)
+       .then(() => {
+         console.log(activateUserId)
+
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+    }
+     
+   }, [activateUserId]);
 
   return user ? (
     <Navigate to="/" />
