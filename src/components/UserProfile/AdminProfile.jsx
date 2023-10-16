@@ -18,9 +18,12 @@ const AdminProfile = ({ user, products }) => {
         return <p>Loading...</p>;
     }
 
-    const handleTabChange = (tabId) => {
+    const handleTabClick = (tabId) => {
         setActiveTab(tabId);
     }
+
+    const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
+
 
     return (
         <div>
@@ -104,12 +107,25 @@ const AdminProfile = ({ user, products }) => {
                             </ul>
                             <div className="tab-content mb-5" id="myTabContent">
                                 <div className={`tab-pane fade ${activeTab === "productsList" ? "active show" : ""}`} id="productsList" role="tabpanel" aria-labelledby="productsList-tab">
-                                    {products.map((product) => (
-                                        <div key={product._id} className="product-item" >
-                                            <img src={product.image} alt={product.name} style={{ width: '100px'}} />
-                                            <p>{product.name}</p>
-                                            <p>{product.price}</p>
-                                            <div className="flex-row">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                    
+                                    {sortedProducts.map((product) => (
+                                        <tr key={product._id} className="product-item" >
+                                            <td>
+                                            <img src={product.image} alt={product.name} style={{ width: '50px'}} />
+                                            </td>
+                                            <td>{product.name}</td>
+                                            <td>{product.price}</td>
+                                            <td className="flex-row">
                                                 <Link
                                                     to={`/editProduct/${product.id}`}
                                                     className="btn btn-outline-dark mb-3"
@@ -124,10 +140,12 @@ const AdminProfile = ({ user, products }) => {
                                                 >
                                                     Delete
                                                 </button>
-                                            </div>
+                                            </td>
 
-                                        </div>)
+                                        </tr>)
                                     )}
+                                    </tbody>
+                                    </table>
 
                                 </div>
 
