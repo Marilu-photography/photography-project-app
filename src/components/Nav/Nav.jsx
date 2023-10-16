@@ -30,13 +30,11 @@ const Nav = (product) => {
     getSearch(searchQuery)
       .then((response) => {
         console.log("Resultados de búsqueda:", response);
-        // Actualiza el contexto con los resultados antes de realizar operaciones dependientes de searchResults
         setGlobalSearchResults(response);
         setSearchResults(response);
       })
       .catch((error) => {
         console.error("Error al realizar la búsqueda:", error);
-        // Maneja el error según tus necesidades
       });
   }
 };
@@ -180,20 +178,18 @@ const Nav = (product) => {
             onSubmit={(e) => {
               e.preventDefault();
               handleSearch(e);
-              // Realizar la búsqueda con el valor de searchQuery
               getSearch(searchQuery)
                 .then((response) => {
                   console.log("Resultados de búsqueda:", response);
-                  // Haz algo con los resultados, por ejemplo, actualiza el estado con los resultados
+
                   setSearchResults(response);
                 })
                 .catch((error) => {
                   console.error("Error al realizar la búsqueda:", error);
-                  // Maneja el error según tus necesidades
                 });
             }}
           >
-            {/* Input de búsqueda */}
+            
             <input
               className="form-control me-2"
               type="search"
@@ -203,7 +199,7 @@ const Nav = (product) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            {/* Botón de búsqueda */}
+            
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>
