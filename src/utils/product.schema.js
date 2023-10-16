@@ -13,8 +13,9 @@ export const productSchema = Yup.object({
     category: Yup
     .string('Enter category err')
     .required('Required'),
-    image: Yup
-    .string('Enter image err')
+    images: Yup.array()
+    .of(Yup.mixed().required('Please upload an image'))
+    .max(5, 'You can upload a maximum of 5 images')
     .required('Required'),
     
     

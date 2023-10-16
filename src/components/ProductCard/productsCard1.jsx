@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
 
 const ProductsCard = ({ product }) => {
-  const { _id, name, category, description, price, image } = product;
+  const { _id, name, category, description, price, images } = product;
 
   const { addItem } = useCart();
 
@@ -11,7 +11,7 @@ const ProductsCard = ({ product }) => {
     <>
 <div className="card" style={{ width: '400px', height: '100%'}}>
   <div className="card-img">
-  <img src={image} style={{width : '100%' , height : '100%', objectFit: 'contain' }} alt={product.name} />
+  <img src={images[0]} style={{width : '100%' , height : '100%', objectFit: 'contain' }} alt={product.name} />
   </div>
   <div className="card-info">
     <p className="text-title text-truncate">{name} </p>

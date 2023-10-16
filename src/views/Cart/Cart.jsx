@@ -80,7 +80,7 @@ function Cart() {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>
-                    <img src={item.image} width="50px" alt={item.name} />
+                    <img src={item.images[0]} width="50px" alt={item.name} />
                   </td>
                   <td>{item.price} €</td>
                   <td>

@@ -67,14 +67,14 @@
     transition: opacity 0.15s linear
 }
 
-.product-item {
+.product-item, .order-item {
     border-bottom: 1px solid #dee2e6;
     align-items: center;
 }
 
 .action-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center !important;
     margin-top: 15px;
 }
