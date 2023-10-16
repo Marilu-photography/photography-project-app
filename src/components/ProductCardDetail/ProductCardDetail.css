@@ -115,3 +115,24 @@
     opacity: 1;
     height: auto;
   }
+
+  /* css para los comentarios */
+
+  .avatar-comment {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline;
+  }
+
+  .user-comment-name {
+    font-weight: bold;
+    font-size: 20px;
+    display: inline;
+  }
+
+  .user-comment-date {
+    font-size: 15px;
+    display: inline;
+  }

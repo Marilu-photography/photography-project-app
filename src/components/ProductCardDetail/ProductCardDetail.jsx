@@ -287,14 +287,17 @@ const ProductCardDetail = ({ product }) => {
           .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
           .map((comment) => (
             <div key={comment.id} className="comment">
-              <img
+            <div className="d-flex flex-row">
+              <img className="avatar-comment"
                 src={comment.user ? comment.user.avatar : ''}
                 alt={comment.user ? comment.user.username : ''}
               />
-              <p>{comment.user ? comment.user.username : 'Unknown User'}</p>
-              <p>{comment.score}</p>
-              <p>{comment.date}</p>
-              <p>{comment.message}</p>
+              </div>
+              <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
+              <p className="date-comment">{comment.date}</p>
+              <p className="score-comment">{comment.score}</p>
+              
+              <p className="message-comment">{comment.message}</p>
               {currentUser && currentUser.id === comment.user.id && (
                 <button onClick={() => handleCommentDelete(comment.id)}>
                   Delete
