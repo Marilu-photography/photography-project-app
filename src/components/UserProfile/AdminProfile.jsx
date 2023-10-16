@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import './AdminProfile.css'
+import { PencilSquare } from "react-bootstrap-icons";
+import { Trash3 } from "react-bootstrap-icons";
+import { deleteProduct } from "../../services/ProductsServices";
 
-const AdminProfile = ({ user, products }) => {
+
+const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
     const { username, name, surname, avatar, images } = user;
     const [isLoading, setIsLoading] = useState(true);
     const { user: currentUser } = useAuthContext();
     const [activeTab, setActiveTab] = useState("productsList");
+    const [productsList, setProductsList] = useState([]);
 
 
     useEffect(() => {
@@ -21,6 +26,18 @@ const AdminProfile = ({ user, products }) => {
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
     }
+
+    const handleDelete = (product) => {
+        deleteProduct(product._id)
+            .then(() => {
+                setProducts((prevProducts) => prevProducts.filter((p) => p._id !== product._id));
+            })
+            .catch((error) => {
+                console.error("Error deleting product:", error);
+            });
+
+    };
+
 
     const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -107,44 +124,95 @@ const AdminProfile = ({ user, products }) => {
                             </ul>
                             <div className="tab-content mb-5" id="myTabContent">
                                 <div className={`tab-pane fade ${activeTab === "productsList" ? "active show" : ""}`} id="productsList" role="tabpanel" aria-labelledby="productsList-tab">
-                                    <table>
-                                        <thead>
+                                    <table className="mt-3 " style={{ width: '100%' }}>
+                                        <thead className="products-list-head">
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Name</th>
+                                                <th>Category</th>
                                                 <th>Price</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    
-                                    {sortedProducts.map((product) => (
-                                        <tr key={product._id} className="product-item" >
-                                            <td>
-                                            <img src={product.image} alt={product.name} style={{ width: '50px'}} />
-                                            </td>
-                                            <td>{product.name}</td>
-                                            <td>{product.price}</td>
-                                            <td className="flex-row">
-                                                <Link
-                                                    to={`/editProduct/${product.id}`}
-                                                    className="btn btn-outline-dark mb-3"
-                                                    data-mdb-ripple-color="dark"
-                                                >
-                                                    Edit
-                                                </Link>
-                                                <button
-                                                    className="btn btn-danger mb-3"
-                                                    data-mdb-ripple-color="dark"
-                                                    onClick={() => handleDeleteProduct(product.id)}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
 
-                                        </tr>)
-                                    )}
-                                    </tbody>
+                                            {sortedProducts.map((product) => (
+                                                <tr key={product._id} className="product-item" >
+                                                    <td>
+                                                        <img src={product.image} alt={product.name} style={{ width: '50px' }} />
+                                                    </td>
+                                                    <td>{product.name}</td>
+                                                    <td>{product.category}</td>
+                                                    <td>{product.price}</td>
+                                                    <td className="action-row">
+                                                        <Link
+                                                            to={`/edit-product/${product._id}`}
+                                                            className=" mb-3"
+                                                            data-mdb-ripple-color="dark"
+                                                        >
+                                                            <PencilSquare style={{ color: 'green' }} />
+
+                                                        </Link>
+                                                        <button
+                                                            className="delete-btn mb-3"
+                                                            data-mdb-ripple-color="dark"
+                                                            onClick={() => handleDelete(product)}
+                                                        >
+                                                            <Trash3 style={{ color: 'red' }} />
+                                                        </button>
+                                                    </td>
+
+                                                </tr>)
+                                            )}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                            <div className="tab-content mb-5" id="myTabOrdersContent">
+                                <div className={`tab-pane fade ${activeTab === "orders" ? "active show" : ""}`} id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                                    <table className="mt-3 " style={{ width: '100%' }}>
+                                        <thead className="orders-list-head">
+                                            <tr>
+                                                <th>Nº</th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {sortedProducts.map((product) => (
+                                                <tr key={product._id} className="product-item" >
+                                                    <td>
+                                                        <img src={product.image} alt={product.name} style={{ width: '50px' }} />
+                                                    </td>
+                                                    <td>{product.name}</td>
+                                                    <td>{product.category}</td>
+                                                    <td>{product.price}</td>
+                                                    <td className="action-row">
+                                                        <Link
+                                                            to={`/edit-product/${product._id}`}
+                                                            className=" mb-3"
+                                                            data-mdb-ripple-color="dark"
+                                                        >
+                                                            <PencilSquare style={{ color: 'green' }} />
+
+                                                        </Link>
+                                                        <button
+                                                            className="delete-btn mb-3"
+                                                            data-mdb-ripple-color="dark"
+                                                            onClick={() => handleDelete(product)}
+                                                        >
+                                                            <Trash3 style={{ color: 'red' }} />
+                                                        </button>
+                                                    </td>
+
+                                                </tr>)
+                                            )}
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -158,4 +226,4 @@ const AdminProfile = ({ user, products }) => {
     );
 };
 
-            export default AdminProfile;
+export default AdminProfile;

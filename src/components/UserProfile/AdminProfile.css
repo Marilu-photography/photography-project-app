@@ -66,3 +66,30 @@
 .fade {
     transition: opacity 0.15s linear
 }
+
+.product-item {
+    border-bottom: 1px solid #dee2e6;
+    align-items: center;
+}
+
+.action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+    margin-top: 15px;
+}
+
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+.products-list-head, .orders-list-head {
+    border-bottom: 1px solid #dee2e6 !important;
+    height: 50px;
+}

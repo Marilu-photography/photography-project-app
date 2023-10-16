@@ -6,6 +6,7 @@ import { editProduct, getProductDetails } from "../../services/ProductsServices"
 import InputGroup from "../../components/InputGroup/InputGroup";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const categories = ["Camera", "Lens", "Accessory"];
 
 const EditProduct = () => {
@@ -15,7 +16,7 @@ const EditProduct = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleNavigation = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const {

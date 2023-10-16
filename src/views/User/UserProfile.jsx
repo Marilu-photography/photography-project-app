@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserProfile } from "../../services/UserServices";
 import { getProductList } from "../../services/ProductsServices";
+import { listOrders } from "../../services/OrdersServices";
 import UserProfilePage from "../../components/UserProfile/UserProfile";
 import AdminProfile from "../../components/UserProfile/AdminProfile";
 
@@ -11,6 +12,7 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   const getUser = useCallback(() => {
     getUserProfile(id)
@@ -40,6 +42,18 @@ const UserProfile = () => {
       });
   }, []);
 
+  useEffect(() => {
+    listOrders()
+      .then((orders) => {
+        setOrders(orders);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  }, []);
+
   if (!user) {
     return <p>User not found 🥺</p>;
   }
@@ -52,7 +66,7 @@ const UserProfile = () => {
         </div>
       ) : 
       
-      <AdminProfile user={user} products={products} />}</>
+      <AdminProfile user={user} products={products} setProducts={setProducts} orders={orders} setOrders={setOrders}/>}</>
 
   );
 };
