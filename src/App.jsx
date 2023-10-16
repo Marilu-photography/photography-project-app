@@ -20,6 +20,7 @@ import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
+import Result from "./views/Result/Result";
 
 
 
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/activate/:id" element={<ActivateUser />} />
+            <Route path="/results/:searchQuery" element={<Result />} />
             <Route path="/cameras" element={<CameraList />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/lens" element={<LensList />} />

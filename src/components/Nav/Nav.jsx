@@ -1,14 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Nav.css";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 
-import { logout } from '../../stores/AccessTokenStore';
+import { logout } from "../../stores/AccessTokenStore";
 import { useCart } from "react-use-cart";
 
 import { getSearch } from "../../services/ProductsServices";
 import { useAppContext } from "../../contexts/AppContext";
-
 
 const Nav = (product) => {
   const { user, isLoading } = useAuthContext();
@@ -16,30 +15,28 @@ const Nav = (product) => {
 
   const { totalItems, emptyCart } = useCart();
 
-
-
   const [searchQuery, setSearchQuery] = useState("");
   const { setGlobalSearchResults } = useAppContext();
- const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
 
+  const handleSearch = (e) => {
+    e.preventDefault();
 
- const handleSearch = (e) => {
-  e.preventDefault();
+    if (searchQuery.trim() !== "") {
+      getSearch(searchQuery)
+        .then((response) => {
+          console.log("Resultados de búsqueda:", response);
+          setGlobalSearchResults(response);
+          setSearchResults(response);
 
-  if (searchQuery.trim() !== "") {
-    getSearch(searchQuery)
-      .then((response) => {
-        console.log("Resultados de búsqueda:", response);
-        setGlobalSearchResults(response);
-        setSearchResults(response);
-      })
-      .catch((error) => {
-        console.error("Error al realizar la búsqueda:", error);
-      });
-  }
-};
-
-
+          navigate(`/results/${searchQuery}`);
+        })
+        .catch((error) => {
+          console.error("Error al realizar la búsqueda:", error);
+        });
+    }
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -189,7 +186,6 @@ const Nav = (product) => {
                 });
             }}
           >
-            
             <input
               className="form-control me-2"
               type="search"
@@ -199,16 +195,18 @@ const Nav = (product) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            
-            <button className="btn btn-outline-success" type="submit">
+            <Link
+              to={`/results/${searchQuery}`}
+              className="btn btn-outline-success"
+              type="submit"
+            >
               Search
-            </button>
+            </Link>
           </form>
         </div>
       </div>
     </nav>
   );
 };
-
 
 export default Nav;

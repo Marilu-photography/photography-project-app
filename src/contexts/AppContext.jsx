@@ -15,8 +15,12 @@ export const AppProvider = ({ children }) => {
     setSearchResults(results);
   };
 
+  const clearSearchResults = () => {
+    setSearchResults([]);
+  };
+
   return (
-    <AppContext.Provider value={{ searchResults, setGlobalSearchResults }}>
+    <AppContext.Provider value={{ searchResults, setGlobalSearchResults, clearSearchResults }}>
       {children}
     </AppContext.Provider>
   );
