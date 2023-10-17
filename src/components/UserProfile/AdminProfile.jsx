@@ -5,14 +5,20 @@ import './AdminProfile.css'
 import { PencilSquare } from "react-bootstrap-icons";
 import { Trash3 } from "react-bootstrap-icons";
 import { deleteProduct } from "../../services/ProductsServices";
+import { updateOrderStatus } from "../../services/OrdersServices";
 
-const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
+const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOrder }) => {
     const { username, name, surname, avatar, images } = user;
     const [isLoading, setIsLoading] = useState(true);
     const { user: currentUser } = useAuthContext();
     const [activeTab, setActiveTab] = useState("productsList");
     const [expandedOrderId, setExpandedOrderId] = useState(null);
-    const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
+    // const [preparedButtonDisabled, setPreparedButtonDisabled] = useState(false);
+    // const [sentButtonDisabled, setSentButtonDisabled] = useState(true);
+    // const [deliveredButtonDisabled, setDeliveredButtonDisabled] = useState(true);
+    // const [orderStatuses, setOrderStatuses] = useState({});
+
+
 
 
     useEffect(() => {
@@ -46,8 +52,19 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
     };
 
     const handleUpdateStatus = (orderId, status) => {
-        
-    }
+        const requestBody = {
+            status: status,
+        };
+
+        updateOrderStatus(orderId, status)
+            .then((response) => {
+                console.log('Solicitud exitosa');
+                updateOrder();
+            })
+            .catch((error) => {
+                console.error('Error en la solicitud:', error);
+            });
+    };
 
     return (
         <div>
@@ -131,7 +148,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
                             </ul>
                             <div className="tab-content mb-5" id="myTabContent">
                                 <div className={`tab-pane fade ${activeTab === "productsList" ? "active show" : ""}`} id="productsList" role="tabpanel" aria-labelledby="productsList-tab">
-                                    <table className="mt-3 " style={{ width: '100%' }}>
+                                    <table className="mt-3 text-center " style={{ width: '100%' }}>
                                         <thead className="products-list-head">
                                             <tr>
                                                 <th>Image</th>
@@ -187,24 +204,23 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
                                         </thead>
                                         <tbody>
                                             {orders.map((order) => (
-                                                 <Fragment key={order._id}>
+                                                <Fragment key={order._id}>
                                                     <tr className="order-item" >
                                                         <td>{order.orderNumber}</td>
-                                                       
                                                         <td>
-                                                            <button className="order-name-btn" onClick={() => handleOrderClick(order._id)}>
+                                                            <button className="order-name-btn" onClick={() => handleOrderClick(order._id)} >
                                                                 {order.orderName}
                                                             </button>
                                                         </td>
                                                         <td className="text-center">{order.status}</td>
                                                         <td className="action-row">
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Prepared")}>
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Prepared")}disabled={order.status !== "Paid"}>
                                                                 Prepared
                                                             </button>
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Sent")}>
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Sent")} disabled={order.status !== "Prepared"}>
                                                                 Sent
                                                             </button>
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Delivered")}>
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Delivered")} disabled={order.status !== "Sent"}>
                                                                 Delivered
                                                             </button>
                                                         </td>
@@ -216,31 +232,39 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
                                                                     <h3>Order Details</h3>
                                                                     <p>User Name: {order.user.username}</p>
                                                                     <h4>Products:</h4>
-                                                                    <ul>
-                                                                        {order.products.map((product) => (
-                                                                            <li key={product.product._id}>
-                                                                                Product Name: {product.product.name} <br />
-                                                                                Product Price: {product.product.price} <br />
-                                                                                Product Quantity: {product.quantity} <br /> {/* Corrected 'products.quantity' to 'product.quantity' */}
+                                                                    <ul >
+                                                                        {order.items.map((item) => (
+                                                                           
+                                                                            
+                                                                            <li key={ item.product ? item.product._id : item.image._id}>
+                                                                                Name: { item.product ? item.product.name : item.image.name}<br />
+                                                                                Price: { item.product ? item.product.price : item.image.price}<br />
+                                                                                Quantity: {item.quantity}<br />
+                                                                                
+                                                                                
                                                                             </li>
-                                                                        ))}
-                                                                    </ul>
+                                                                            
+                                                                        )
+                                                                        )}
+                                                                        </ul>
+                                                                   
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     )}
                                                 </Fragment>
-                                            ))}
+                                            ))
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div >
+            </div >
+        </div >
     );
-};
+}
 
 export default AdminProfile;
