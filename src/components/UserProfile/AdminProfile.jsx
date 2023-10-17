@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import './AdminProfile.css'
@@ -6,13 +6,13 @@ import { PencilSquare } from "react-bootstrap-icons";
 import { Trash3 } from "react-bootstrap-icons";
 import { deleteProduct } from "../../services/ProductsServices";
 
-
 const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
     const { username, name, surname, avatar, images } = user;
     const [isLoading, setIsLoading] = useState(true);
     const { user: currentUser } = useAuthContext();
     const [activeTab, setActiveTab] = useState("productsList");
-    const [productsList, setProductsList] = useState([]);
+    const [expandedOrderId, setExpandedOrderId] = useState(null);
+    const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 
 
     useEffect(() => {
@@ -35,12 +35,19 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
             .catch((error) => {
                 console.error("Error deleting product:", error);
             });
-
     };
-
 
     const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
 
+    const handleOrderClick = (orderId) => {
+        setExpandedOrderId((prevExpandedOrderId) =>
+            prevExpandedOrderId === orderId ? null : orderId
+        );
+    };
+
+    const handleUpdateStatus = (orderId, status) => {
+        
+    }
 
     return (
         <div>
@@ -139,7 +146,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
                                             {sortedProducts.map((product) => (
                                                 <tr key={product._id} className="product-item" >
                                                     <td>
-                                                        <img src={product.image} alt={product.name} style={{ width: '50px' }} />
+                                                        <img src={product.images[0]} alt={product.name} style={{ width: '50px' }} />
                                                     </td>
                                                     <td>{product.name}</td>
                                                     <td>{product.category}</td>
@@ -166,57 +173,67 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders }) => {
                                             )}
                                         </tbody>
                                     </table>
-
                                 </div>
 
-                            </div>
-                            <div className="tab-content mb-5" id="myTabOrdersContent">
                                 <div className={`tab-pane fade ${activeTab === "orders" ? "active show" : ""}`} id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                                    <table className="mt-3 " style={{ width: '100%' }}>
+                                    <table className="mt-3" style={{ width: '100%' }}>
                                         <thead className="orders-list-head">
-                                            <tr>
+                                            <tr className="text-center">
                                                 <th>Nº</th>
-                                                <th>Name</th>
-                                                <th>Category</th>
-                                                <th>Price</th>
-                                                <th>Actions</th>
+                                                <th>Order Name</th>
+                                                <th>Order Status</th>
+                                                <th>Status Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            {sortedProducts.map((product) => (
-                                                <tr key={product._id} className="product-item" >
-                                                    <td>
-                                                        <img src={product.image} alt={product.name} style={{ width: '50px' }} />
-                                                    </td>
-                                                    <td>{product.name}</td>
-                                                    <td>{product.category}</td>
-                                                    <td>{product.price}</td>
-                                                    <td className="action-row">
-                                                        <Link
-                                                            to={`/edit-product/${product._id}`}
-                                                            className=" mb-3"
-                                                            data-mdb-ripple-color="dark"
-                                                        >
-                                                            <PencilSquare style={{ color: 'green' }} />
-
-                                                        </Link>
-                                                        <button
-                                                            className="delete-btn mb-3"
-                                                            data-mdb-ripple-color="dark"
-                                                            onClick={() => handleDelete(product)}
-                                                        >
-                                                            <Trash3 style={{ color: 'red' }} />
-                                                        </button>
-                                                    </td>
-
-                                                </tr>)
-                                            )}
+                                            {orders.map((order) => (
+                                                 <Fragment key={order._id}>
+                                                    <tr className="order-item" >
+                                                        <td>{order.orderNumber}</td>
+                                                       
+                                                        <td>
+                                                            <button className="order-name-btn" onClick={() => handleOrderClick(order._id)}>
+                                                                {order.orderName}
+                                                            </button>
+                                                        </td>
+                                                        <td className="text-center">{order.status}</td>
+                                                        <td className="action-row">
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Prepared")}>
+                                                                Prepared
+                                                            </button>
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Sent")}>
+                                                                Sent
+                                                            </button>
+                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Delivered")}>
+                                                                Delivered
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    {expandedOrderId === order._id && (
+                                                        <tr>
+                                                            <td colSpan="3">
+                                                                <div className="expanded-order-details">
+                                                                    <h3>Order Details</h3>
+                                                                    <p>User Name: {order.user.username}</p>
+                                                                    <h4>Products:</h4>
+                                                                    <ul>
+                                                                        {order.products.map((product) => (
+                                                                            <li key={product.product._id}>
+                                                                                Product Name: {product.product.name} <br />
+                                                                                Product Price: {product.product.price} <br />
+                                                                                Product Quantity: {product.quantity} <br /> {/* Corrected 'products.quantity' to 'product.quantity' */}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </Fragment>
+                                            ))}
                                         </tbody>
                                     </table>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>

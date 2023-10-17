@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "react-use-cart";
-import {buyProduct} from '../../services/ProductsServices';
+import { buyProduct } from '../../services/ProductsServices';
 import { useEffect, useState } from "react";
 import { success } from "../../services/ProductsServices";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -22,10 +22,10 @@ function Cart() {
   const { user: currentUser } = useAuthContext();
 
   const location = useLocation();
-  const params = new URLSearchParams(location.search)  
+  const params = new URLSearchParams(location.search)
   const successParam = params.get("success");
   const orderId = params.get("orderId");
-  
+
   useEffect(() => {
     if (successParam === "true" && orderId) {
       setOrderPaid(orderId);
@@ -35,16 +35,16 @@ function Cart() {
     }
   }, [successParam, orderId]);
 
-    const handleCheckout = async () => {
-      buyProduct(items)
-        .then((session) => {
-          window.location.href = session.url;
-        })
-        .catch((error) => {
-          console.error(error);
-          setMessage("Something went wrong 😭");
-        });
-    
+  const handleCheckout = async () => {
+    buyProduct(items)
+      .then((session) => {
+        window.location.href = session.url;
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage("Something went wrong 😭");
+      });
+
   };
 
   if (isEmpty) return <p>Your cart is empty</p>;
@@ -52,12 +52,12 @@ function Cart() {
   return (
     <div className="container flex flex-column">
       <div className="row">
-      <div className="Banner">
-      <Link to="/editor"> 
-      <img src='/public/img/muestra.png' alt="muestro" className="muestra" /> 
-      </Link>
+        <div className="Banner">
+          <Link to="/editor">
+            <img src='/public/img/muestra.png' alt="muestro" className="muestra" />
+          </Link>
 
-      </div>
+        </div>
 
         <div className="col-md-12">
           <h1 className="my-4">Cart ({totalUniqueItems})</h1>
@@ -80,7 +80,11 @@ function Cart() {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>
-                    <img src={item.image} width="50px" alt={item.name} />
+                    <img
+                      src={item.images ? item.images[0] : (item.imageUrl ? item.imageUrl : '')}
+                      width="50px"
+                      alt={item.name}
+                    />
                   </td>
                   <td>{item.price} €</td>
                   <td>

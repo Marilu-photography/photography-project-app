@@ -17,7 +17,7 @@ const ProductCardDetail = ({ product }) => {
     name,
     description,
     price,
-    image,
+    images,
     category,
     condition,
     cameraType,
@@ -129,7 +129,7 @@ const ProductCardDetail = ({ product }) => {
         <div className="row mb-3">
           <div className="col-lg-6">
             <div className="img-product">
-              <img src={image} className="card-img-top" alt={name} />
+              <img src={images[0]} className="card-img-top" alt={name} />
             </div>
           </div>
           <div className="col-lg-6">
