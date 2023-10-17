@@ -13,12 +13,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
     const { user: currentUser } = useAuthContext();
     const [activeTab, setActiveTab] = useState("productsList");
     const [expandedOrderId, setExpandedOrderId] = useState(null);
-    // const [preparedButtonDisabled, setPreparedButtonDisabled] = useState(false);
-    // const [sentButtonDisabled, setSentButtonDisabled] = useState(true);
-    // const [deliveredButtonDisabled, setDeliveredButtonDisabled] = useState(true);
-    // const [orderStatuses, setOrderStatuses] = useState({});
-
-
+ 
 
 
     useEffect(() => {
