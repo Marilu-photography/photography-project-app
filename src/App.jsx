@@ -21,6 +21,7 @@ import LensList from './views/Lens/Lens';
 import AccessoriesList from "./views/Accessories/Accessories";
 import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
+import Result from "./views/Result/Result";
 
 
 
@@ -35,25 +36,25 @@ function App() {
         <p>Loading...</p>
       ) : (
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/activate/:id" element={<ActivateUser />} />
-          <Route path="/cameras" element={<CameraList />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/lens" element={<LensList />} />
-          <Route path="/accessories" element={<AccessoriesList />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/images" element={<ImagesList />} />
-          <Route path="/profile/:id" element={<UserProfile />} />
-          <Route path="/profile/:userId/edit" element={<EditProfile />} />
-          <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/editor/:id" element={<Editor />} />
-            <Route path="/create" element={<CreateProducts />} />
-            <Route path="/edit-product/:productId" element={<EditProduct />} />
 
-
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/activate/:id" element={<ActivateUser />} />
+            <Route path="/results/:searchQuery" element={<Result />} />
+            <Route path="/cameras" element={<CameraList />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/lens" element={<LensList />} />
+            <Route path="/accessories" element={<AccessoriesList />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/images" element={<ImagesList />} />
+            <Route path="/profile/:id" element={<UserProfile />} />
+            <Route path="/profile/:userId/edit" element={<EditProfile />} />
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path="/editor/:id" element={<Editor />} />
+              <Route path="/create" element={<CreateProducts />} />
+              <Route path="/edit-product/:productId" element={<EditProduct />} />
           </Route>
 
         </Routes>

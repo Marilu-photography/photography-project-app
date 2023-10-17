@@ -7,7 +7,7 @@ const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { searchResults, setGlobalSearchResults } = useAppContext();
+  const { searchResults } = useAppContext();
   
   useEffect(() => {
     getProductList()
