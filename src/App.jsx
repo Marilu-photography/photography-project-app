@@ -1,14 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 //import Navbar from "./components/Navbar/Navbar";
+import { useAuthContext } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Nav from "./components/Nav/Nav";
+import Footer from "./components/Footer/Footer";
+
 import Home from "./views/Home/Home";
 import Cart from "./views/Cart/Cart";
 import Editor from "./views/Editor/Editor";
 import ProductDetails from "./views/ProductDetails/ProductDetails";
-import { useAuthContext } from "./contexts/AuthContext";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import CreateProducts from "./views/CreateProducts/CreateProducts";
 import ImagesList from "./views/Images/ImagesList";
 import UserProfile from "./views/User/UserProfile";
@@ -16,8 +19,6 @@ import EditProduct from "./views/EditProducts/EditProducts";
 import CameraList from "./views/Camera/Camera";
 import LensList from './views/Lens/Lens';
 import AccessoriesList from "./views/Accessories/Accessories";
-import Nav from "./components/Nav/Nav";
-import Footer from "./components/Footer/Footer";
 import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
 import Result from "./views/Result/Result";
@@ -34,6 +35,7 @@ function App() {
       {!isAuthenticationFetched ? (
         <p>Loading...</p>
       ) : (
+
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -53,12 +55,10 @@ function App() {
               <Route path="/editor/:id" element={<Editor />} />
               <Route path="/create" element={<CreateProducts />} />
               <Route path="/edit-product/:productId" element={<EditProduct />} />
+          </Route>
 
+        </Routes>
 
-            </Route>
-
-          </Routes>
-        
       )}
       <Footer />
 

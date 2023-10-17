@@ -9,7 +9,7 @@ const categories = ['Camera', 'Lens', 'Accessory'];
 const initialValues = {
   name: "",
   price: "",
-  image: '',
+  images: [],
   description: "",
   category: "",
 };
@@ -40,14 +40,16 @@ const CreateProducts = () => {
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('price', values.price);
-      formData.append('image', values.image);
+
+      for (let i = 0; i < values.images.length; i++) {
+        formData.append(`images`, values.images[i]);
+      }
       formData.append('description', values.description);
       formData.append('category', values.category);
 
       createProduct(formData)
         .then(response => {
           if (response) {
-            console.log(response.data);
             handleNavigation();
           } else {
             console.error("Response or response.data is undefined");
@@ -62,78 +64,80 @@ const CreateProducts = () => {
     },
   });
 
-    return ( 
-        <>
-        <h1>Create Products</h1>
-        <div className="create-Product">
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <InputGroup
-                    label="Name"
-                    name="name"
-                    type="text"
-                    placeholder="Enter name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.name && errors.name}
-                />
-                <InputGroup
-                    label="Price"
-                    name="price"
-                    type="number"
-                    placeholder="Enter price"
-                    value={values.price}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.price && errors.price}
-                />
-                <InputGroup
-                    label="Image"
-                    id="image"
-                    name="image"
-                    type="file"
-                    placeholder="Enter image"
-                    onChange={(e) => {
-                        setFieldValue('image', e.target.files[0]);
-                    }}
-                    onBlur={handleBlur}
-                    error={touched.image && errors.image}
-                />
-                <InputGroup
-                    label="Description"
-                    name="description"
-                    type="text"
-                    placeholder="Enter description"
-                    value={values.description}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.description && errors.description}
-                />
-                 <label htmlFor="category">Category</label>
-            <select
-              id="category"
-              name="category"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.category}
-            >
-              <option value="" label="Select a category" />
-              {categories.map((category) => (
-                <option key={category} value={category} label={category} />
-              ))}
-            </select>
-            {touched.category && errors.category && (
-              <div style={{ color: 'red' }}>{errors.category}</div>
-            )}
-            <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`} disabled={isSubmitting}>
-                {isSubmitting ? "Submitting..." : "Create Product"}
-            </button>
+  return (
+    <>
+      <h1>Create Products</h1>
+      <div className="create-Product">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <InputGroup
+            label="Name"
+            name="name"
+            type="text"
+            placeholder="Enter name"
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.name && errors.name}
+          />
+          <InputGroup
+            label="Price"
+            name="price"
+            type="number"
+            placeholder="Enter price"
+            value={values.price}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.price && errors.price}
+          />
+          <input
+           label="Images"
+           name="images"
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => {
+              const selectedFiles = Array.from(e.target.files);
+              setFieldValue("images", values.images.concat(selectedFiles));
 
-            </form>
+              console.log(selectedFiles);
 
-        </div>
-        </>
-    )
+            }}
+          />
+          <InputGroup
+            label="Description"
+            name="description"
+            type="text"
+            placeholder="Enter description"
+            value={values.description}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.description && errors.description}
+          />
+          <label htmlFor="category">Category</label>
+          <select
+            id="category"
+            name="category"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.category}
+          >
+            <option value="" label="Select a category" />
+            {categories.map((category) => (
+              <option key={category} value={category} label={category} />
+            ))}
+          </select>
+          {touched.category && errors.category && (
+            <div style={{ color: 'red' }}>{errors.category}</div>
+          )}
+          <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`} disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Create Product"}
+          </button>
+
+        </form>
+
+      </div>
+    </>
+  )
 }
 
 export default CreateProducts;
