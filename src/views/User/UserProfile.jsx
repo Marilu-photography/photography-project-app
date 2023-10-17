@@ -18,6 +18,7 @@ const UserProfile = () => {
     getUserProfile(id)
       .then((user) => {
         setUser(user);
+        console.log(user.id)
         setIsLoading(false);
       })
       .catch((error) => {
@@ -54,6 +55,18 @@ const UserProfile = () => {
       });
   }, []);
 
+  const handleOrderList = () => {
+    listOrders()
+      .then((orders) => {
+        setOrders(orders);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  }
+
   if (!user) {
     return <p>User not found 🥺</p>;
   }
@@ -66,7 +79,7 @@ const UserProfile = () => {
         </div>
       ) : 
       
-      <AdminProfile user={user} products={products} setProducts={setProducts} orders={orders} setOrders={setOrders}/>}</>
+      <AdminProfile user={user} products={products} setProducts={setProducts} orders={orders} setOrders={setOrders} updateOrder={handleOrderList}/>}</>
 
   );
 };
