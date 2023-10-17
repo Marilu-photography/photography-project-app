@@ -8,6 +8,8 @@ import { useCart } from "react-use-cart";
 
 import { getSearch } from "../../services/ProductsServices";
 import { useAppContext } from "../../contexts/AppContext";
+import ModalR from "../Modal/ModalR";
+import ModalMessage from "../Modal/ModalMessage";
 
 const Nav = (product) => {
   const { user, isLoading } = useAuthContext();
@@ -19,6 +21,16 @@ const Nav = (product) => {
   const { setGlobalSearchResults } = useAppContext();
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+
+  //modales 
+  const [showModalR, setShowModalR] = useState(false);
+  const [showModalMessage, setShowModalMessage] = useState(false);
+
+    // Función para cerrar ModalR y mostrar ModalMessage
+    const handleCloseModalR = () => {
+      setShowModalR(false);
+      setShowModalMessage(true);
+    };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -156,6 +168,12 @@ const Nav = (product) => {
               </li>
             ) : (
               <>
+              <li>
+        <ModalR show={showModalR} onHide={handleCloseModalR} />
+      </li>
+      {showModalMessage && (
+        <ModalMessage show={showModalMessage} onHide={() => setShowModalMessage(false)} />
+      )}
                 <li className="nav-item">
                   <NavLink to="/register" className="nav-link">
                     Register
@@ -205,6 +223,7 @@ const Nav = (product) => {
           </form>
         </div>
       </div>
+      {showModalMessage && <ModalMessage show={showModalMessage} onHide={() => setShowModalMessage(false)} />}
     </nav>
   );
 };

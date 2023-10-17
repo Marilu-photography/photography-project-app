@@ -2,8 +2,10 @@ import InputGroup from "../../components/InputGroup/InputGroup";
 import { useFormik } from "formik";
 import { registerSchema } from '../../utils/yup.schemas';
 import { register } from '../../services/AuthServices';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+// import ModalMessage from "../../components/Modal/ModalMessage";
+// import { useState } from "react";
 
 const initialValues = {
   name: "",
@@ -14,9 +16,20 @@ const initialValues = {
   confirmPassword: "",
 };
 
-const Register = () => {
+const Register = ( { onCloseModalR  }) => {
   const { user } = useAuthContext();
-  const navigate = useNavigate();
+  const [showHelloWorldModal, setShowHelloWorldModal] = useState(false);
+  //const navigate = useNavigate();
+  //const [modalShowMessage, setModalShowMessage] = useState(false);
+  //const [loading, setLoading] = useState(false);
+
+
+  
+  // const handleModalMessageClose = () => {
+  //   //setModalShowMessage(false);
+  //   onShowModalMessage();
+  // };
+
 
   const {
     values,
@@ -56,7 +69,11 @@ const Register = () => {
 
       register(formData)
         .then(() => {
-          navigate("/login");
+          
+          onCloseModalR(); 
+          
+          
+          
         })
         .catch((err) => {
           console.log(err);
@@ -72,7 +89,6 @@ const Register = () => {
     <Navigate to="/" />
   ) : (
     <div className="Register">
-      <h1>Register</h1>
 
       <form onSubmit={handleSubmit}>
         <InputGroup
@@ -149,6 +165,7 @@ const Register = () => {
           {isSubmitting ? "Submitting..." : "Register"}
         </button>
       </form>
+      {/* <ModalMessage show={modalShowMessage} onHide={handleModalMessageClose} /> */}
     </div>
   );
 }
