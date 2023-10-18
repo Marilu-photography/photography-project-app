@@ -32,7 +32,8 @@ const ProductsList = () => {
   
 
   const displayProducts = searchResults && searchResults.length > 0
-  ? searchResults : products;
+    ? searchResults
+    : products.slice(0, 6);
 
   return (
     <div className="container Store d-flex align-items-center flex-column">

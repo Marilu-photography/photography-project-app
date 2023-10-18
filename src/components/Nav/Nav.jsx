@@ -97,6 +97,40 @@ const Nav = (product) => {
                 Accessories
               </NavLink>
             </li>
+            <form
+            className="d-flex"
+            role="search"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch(e);
+              getSearch(searchQuery)
+                .then((response) => {
+                  console.log("Resultados de búsqueda:", response);
+
+                  setSearchResults(response);
+                })
+                .catch((error) => {
+                  console.error("Error al realizar la búsqueda:", error);
+                });
+            }}
+          >
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+
+            <Link
+              to={`/results/${searchQuery}`}
+              className="btn btn-outline-success"
+              type="submit"
+            >
+              Search
+            </Link>
+          </form>
             <li className="nav-item">
               <NavLink to="/images" className="nav-link text-warning">
                 Image Gallery
@@ -169,15 +203,13 @@ const Nav = (product) => {
             ) : (
               <>
               <li>
-        <ModalR show={showModalR} onHide={handleCloseModalR} />
+        
       </li>
       {showModalMessage && (
         <ModalMessage show={showModalMessage} onHide={() => setShowModalMessage(false)} />
       )}
                 <li className="nav-item">
-                  <NavLink to="/register" className="nav-link">
-                    Register
-                  </NavLink>
+                  <ModalR  show={showModalR} onHide={handleCloseModalR} />
                 </li>
                 <li className="nav-item">
                   <NavLink to="/login" className="nav-link">
@@ -187,40 +219,7 @@ const Nav = (product) => {
               </>
             )}
           </ul>
-          <form
-            className="d-flex"
-            role="search"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSearch(e);
-              getSearch(searchQuery)
-                .then((response) => {
-                  console.log("Resultados de búsqueda:", response);
-
-                  setSearchResults(response);
-                })
-                .catch((error) => {
-                  console.error("Error al realizar la búsqueda:", error);
-                });
-            }}
-          >
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-
-            <Link
-              to={`/results/${searchQuery}`}
-              className="btn btn-outline-success"
-              type="submit"
-            >
-              Search
-            </Link>
-          </form>
+          
         </div>
       </div>
       {showModalMessage && <ModalMessage show={showModalMessage} onHide={() => setShowModalMessage(false)} />}

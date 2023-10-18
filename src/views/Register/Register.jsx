@@ -2,8 +2,9 @@ import InputGroup from "../../components/InputGroup/InputGroup";
 import { useFormik } from "formik";
 import { registerSchema } from '../../utils/yup.schemas';
 import { register } from '../../services/AuthServices';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+import './Register.css'
 
 // import ModalMessage from "../../components/Modal/ModalMessage";
 // import { useState } from "react";
@@ -162,9 +163,10 @@ const Register = ( { onCloseModalR  }) => {
           placeholder="Upload your profile picture"
         />
 
-        <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`}>
+        <button type="submit" className={`btnDetails btn-${isSubmitting ? 'btn-submitting' : 'btnDetails'}`}>
           {isSubmitting ? "Submitting..." : "Register"}
         </button>
+        <p>Already have an account? <Link to="/login" onClick={onCloseModalR}>Log in here</Link></p>
       </form>
       {/* <ModalMessage show={modalShowMessage} onHide={handleModalMessageClose} /> */}
     </div>
@@ -172,3 +174,6 @@ const Register = ( { onCloseModalR  }) => {
 }
 
 export default Register;
+
+
+

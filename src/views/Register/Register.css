@@ -1,0 +1,31 @@
+.btnDetails {
+    width: 6.5em;
+    height: 2.3em;
+    margin: 0.5em;
+    background: black;
+    text-align: center;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-decoration: none;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .btn-submitting{
+     background: #FBAD19;
+   }
+
+
+   @media only screen and (max-width: 600px) {
+    .btnDetails {
+        width: 100% !important; 
+        margin: 0 !important;
+      }
+   }
+  

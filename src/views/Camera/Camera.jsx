@@ -3,6 +3,7 @@ import { getProductList } from "../../services/ProductsServices";
 import ProductsCard from "../../components/ProductCard/productsCard1";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext";
+import "./Camera.css";
 
 const CameraList = () => {
     const [products, setProducts] = useState([]);
@@ -43,15 +44,18 @@ const CameraList = () => {
             <img src="/public/img/muestra.png" alt="muestra" className="muestra" />
           </Link>
         </div>
-            <h1>Cameras</h1>
+        <div className="container contenedor display-block">
+            <h1 className="h1-cameras"> Cameras</h1>
+            <hr className="hr-cameras"/>
     
             <div className="row display-flex">
                 {displayProducts.map((product) => (
-                    <div key={product._id} className="col-12 col-md-6 col-lg-4 mb-4">
+                    <div key={product._id} className="col-12 col-md-4 col-lg-4 mb-4">
                         <ProductsCard product={product}/>
                     </div>
                 ))}
             </div>
+        </div>    
         </div>
     );
 }

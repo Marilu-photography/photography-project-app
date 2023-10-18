@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Register from '../../views/Register/Register';
+import { Link } from 'react-router-dom';
+import './ModalR.css';
+
 
 
 const ModalR = () => {
@@ -16,9 +19,9 @@ const ModalR = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Link className='nav-link' variant="primary" onClick={handleShow}>
         Register
-      </Button>
+      </Link>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
