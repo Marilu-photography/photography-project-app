@@ -2,7 +2,7 @@ import './ToolLanding.css'
 
 const ToolLanding = () => {
     return (
-        <div className="App">
+        <div className="PhotoIA">
           <header>
             <img src="tu_imagen_de_cabecera.jpg" alt="Cabecera" />
             <h1>Discover Our Image Editing Tool</h1>

@@ -29,7 +29,7 @@ const ImagesList = () => {
   }
 
 return (
-  <div className="container">
+  <div className="container ImageList">
   <div className="row">
     <h1>Image Gallery</h1>
 

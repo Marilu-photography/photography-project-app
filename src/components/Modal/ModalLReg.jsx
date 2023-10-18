@@ -7,7 +7,7 @@ import ModalR from './ModalR';
 
 
 
-const ModalL = (props) => {
+const ModalLReg = (props) => {
     const [show, setShow] = useState(false);
     const [showR, setShowR] = useState(false);
 
@@ -18,17 +18,15 @@ const ModalL = (props) => {
 
     return (
         <>
+        <div onClick={handleShow}>
+            </div>
 
-            <Link className='nav-link' onClick={handleShow}>
-                Login
-            </Link>
-
-            <Modal {...props} show={show} onHide={handleClose}>
+            <Modal {...props} show={props.show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Login Here</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> <Login /> 
-                <p>Dont't you have an account yet? <button>Register here</button></p> 
+                <p>Don't you have an account yet? <button>Register here</button></p> 
                 </Modal.Body> 
             </Modal>
         </>
@@ -36,4 +34,4 @@ const ModalL = (props) => {
 };
 
 
-export default ModalL; 
+export default ModalLReg; 

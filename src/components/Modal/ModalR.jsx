@@ -1,18 +1,17 @@
 import { useState } from 'react';
-//import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Register from '../../views/Register/Register';
 import { Link } from 'react-router-dom';
 import './ModalR.css';
 import ModalMessage from './ModalMessage';
-import ModalL from './ModalL';
+import ModalLReg from './ModalLReg';
 
 
 
-const ModalR = () => {
+const ModalR = (props) => {
   const [show, setShow] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const [showL, setShowL] = useState(false);
+  const [showLR, setShowLR] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,7 +22,7 @@ const ModalR = () => {
   }
 
   const handleLogInLink = () => {
-    setShowL(true);
+    setShowLR(true);
     setShow(false);
   }
 
@@ -33,16 +32,16 @@ const ModalR = () => {
         Register
       </Link>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal {...props} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Register Here</Modal.Title>
         </Modal.Header>
         <Modal.Body> <Register onCloseModalR={closeModalR}  /> 
-        <p>Already have an account? <button onClick={handleLogInLink}>Log in here</button></p>
+        <p>Already have an account? <button onClick={handleLogInLink}>Login here</button></p>
          </Modal.Body>
       </Modal>
       <ModalMessage show={showMessage} />
-      <ModalL show={showL} />
+      <ModalLReg show={showLR} />
     </>
   );
 };
