@@ -15,7 +15,6 @@ export const productSchema = Yup.object({
     .required('Required'),
     images: Yup.array()
     .of(Yup.mixed().required('Please upload an image'))
-    .max(5, 'You can upload a maximum of 5 images')
     .required('Required'),
     
     

@@ -1,0 +1,115 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff !important;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+/* Estilos de la cabecera */
+header {
+  background-color: #3498db;
+  color: #fff;
+  padding: 100px 0;
+}
+
+header img {
+  max-width: 100%;
+}
+
+header h1 {
+  font-size: 36px;
+  margin: 20px 0;
+}
+
+header p {
+  font-size: 18px;
+}
+
+header button {
+  background-color: #f39c12;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+/* Estilos de la sección de beneficios */
+.benefits {
+  background-color: #fff;
+  padding: 50px 0;
+}
+
+.benefit {
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  margin: 0 2%;
+}
+
+.benefit img {
+  max-width: 100px;
+  margin-bottom: 20px;
+}
+
+/* Estilos de la sección "Cómo funciona" */
+.how-it-works {
+  background-color: #3498db;
+  color: #fff;
+  padding: 50px 0;
+}
+
+.how-it-works-step {
+  width: 23%;
+  display: inline-block;
+  text-align: center;
+  margin: 0 2%;
+}
+
+.how-it-works-step img {
+  max-width: 100px;
+  margin: 20px 0;
+}
+
+.how-it-works-details {
+  background-color: #fff;
+  padding: 50px 0;
+}
+
+.how-it-works-details-text {
+  width: 45%;
+  display: inline-block;
+  text-align: left;
+  padding: 0 2%;
+}
+
+/* Estilos de la sección de motivación */
+.motivation {
+  background-color: #f39c12;
+  color: #fff;
+  padding: 100px 0;
+}
+
+.motivation h2 {
+  font-size: 36px;
+  margin: 20px 0;
+}
+
+.motivation p {
+  font-size: 18px;
+}
+
+.motivation button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 20px 0;
+  cursor: pointer;
+}

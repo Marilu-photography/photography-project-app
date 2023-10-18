@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { deleteProduct } from "../../services/ProductsServices";
 import {
-  createComment,
   listComments,
   deleteComment,
 } from "../../services/CommentsServices";
+import { buttonBaseClasses } from "@mui/material";
+import ModalReview from "../Modal/ModalReview";
 
 
 
@@ -29,13 +30,13 @@ const ProductCardDetail = ({ product }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { user: currentUser } = useAuthContext();
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState({
-    message: "",
-    score: 0,
-  });
+  // const [newComment, setNewComment] = useState({
+  //   message: "",
+  //   score: 0,
+  // });
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [activeTab, setActiveTab] = useState("description");
   const handleThumbnailClick = (index) => {
     setCurrentImageIndex(index);
   };
@@ -56,14 +57,11 @@ const ProductCardDetail = ({ product }) => {
       });
   }, [product._id]);
 
-
-  const [activeTab, setActiveTab] = useState("description");
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
- 
+
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -77,37 +75,7 @@ const ProductCardDetail = ({ product }) => {
     }
   };
 
-  const handleCommentSubmit = () => {
-    if (newComment.message.trim() !== "" && newComment.score >= 1 && newComment.score <= 5) {
-      createComment(product._id, newComment)
-        .then((comment) => {
-
-          setNewComment({ message: "", score: 0 });
-          listComments(product._id)
-            .then((comments) => {
-              setComments(comments);
-            })
-            .catch((error) => {
-              console.error("Error listing comments:", error);
-            });
-
-        })
-        .catch((error) => {
-          console.error("Error creating comment:", error);
-        });
-    } else {
-      console.error("Invalid comment.");
-    }
-  };
-
-  const handleCommentChange = (event) => {
-    const { name, value } = event.target;
-    setNewComment({
-      ...newComment,
-      [name]: value,
-    });
-  };
-
+  
   const handleCommentDelete = (commentId) => {
     deleteComment(commentId)
       .then(() => {
@@ -128,13 +96,22 @@ const ProductCardDetail = ({ product }) => {
     return null;
   }
 
-
+const handleUpdateComments = () => {
+  listComments(product._id)
+  .then((comments) => {
+    setComments(comments);
+  })
+  .catch((error) => {
+    console.error("Error listing comments:", error);
+  });
+}
 
   return (
+    <>
     <div className="container d-flex flex-column ">
       <div className=" ProductCardDetail">
         <div className="row mb-3">
-          <div className="col-lg-6 d-flex align-items-center flex-column">
+          <div className="col-lg-6 d-flex align-items-center flex-column img-product-container">
             <div className="img-product">
               <img src={images[currentImageIndex]} className="card-img-top" alt={name} />
             </div>
@@ -186,14 +163,7 @@ const ProductCardDetail = ({ product }) => {
                   <strong>Condition: </strong>
                   <span>{condition}</span>
                 </li>
-                {model !== null ? (
-                  <li className="li-detail px-3 py-2 mb-1">
-                    <strong>Model: </strong>
-                    <span>{model}</span>
-                  </li>
-                ) : (
-                  ""
-                )}
+
                 {cameraType !== null ? (
                   <li className="li-detail px-3 py-2 mb-1">
                     <strong>Camera type: </strong>
@@ -210,21 +180,25 @@ const ProductCardDetail = ({ product }) => {
                 ) : (
                   ""
                 )}
-              </ul>
-
-              {category !== "Camera" && category !== "Lens" ? (
-                <>
-                  <ul>
+                {model !== null ? (
+                  <li className="li-detail px-3 py-2 mb-1">
+                    <strong>Model: </strong>
+                    <span>{model}</span>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {category !== "Camera" && category !== "Lens" ? (
+                  <>
                     <li className="d-inline-block li-detail px-3 py-2 mb-1">
                       <strong>Accessory type: </strong>
                       <span>{accessoryType}</span>
                     </li>
-                  </ul>
-                </>
-              ) : (
-                ""
-              )}
-
+                  </>
+                ) : (
+                  ""
+                )}
+              </ul>
               {isAdmin && (
                 <>
                   <div className="d-flex justify-content-center">
@@ -248,127 +222,90 @@ const ProductCardDetail = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className="my-5 d-flex flex-row">
-        <div className="btn-detail">
-          <ul className="nav nav-tabs border-0" id="myTab">
-            <li className=" nav-item">
-              <button
-                className={`nav-link text-uppercase ${
-                  activeTab === "description" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("description")}
-              >
-                <strong>Descripción</strong>
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link text-uppercase ${
-                  activeTab === "reviews" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("reviews")}
-              >
-                <strong>Reviews</strong>
-              </button>
-            </li>
-          </ul>
-
-          <div className="tab-content">
-            <div
-              className={`tab-pane fade show ${
-                activeTab === "description" ? "active" : ""
-              }`}
-              id="description"
-            >
-              <p className="p-style">{description}</p>
-            </div>
-            <div
-              className={`tab-pane fade ${
-                activeTab === "reviews" ? "show active" : ""
-              }`}
-              id="reviews"
-            >
-              <p>Reviews</p>
-              <div className="comments-list">
-
-          {comments && comments
-          .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
-          .map((comment) => (
-            <div key={comment.id} className="comment">
-            <div className="d-flex flex-row">
-              <img className="avatar-comment"
-                src={comment.user ? comment.user.avatar : ''}
-                alt={comment.user ? comment.user.username : ''}
-              />
-              </div>
-              <div className="d-flex flex-column">
-              <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
-              <p className="date-comment">{comment.date}</p>
-              <p className="score-comment">Score: {comment.score}</p>
-              
-              <p className="message-comment">{comment.message}</p>
-              {currentUser && currentUser.id === comment.user.id && (
-                <button onClick={() => handleCommentDelete(comment.id)}>
-                  Delete
-                </button>
-              )}
-              </div>
-              
-            </div>
-          ))}
-        </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-
-        
-          {/* <button
-            className="btnDetails show-on-click"
-            tabIndex={0}
-            onClick={handleButtonDescriptionClick}
-          >
-            Description
-          </button>
-          <div className={`hidden-div ${show ? "show" : ""}`}>
-            <p>{description}</p>
-          </div> */}
-        
-      
-      <div>
-        <h5>Reviews</h5>
-        <form>
-          <div className="form-group">
-            <label htmlFor="message">Message:</label>
-            <textarea
-              id="message"
-              name="message"
-              value={newComment.message}
-              onChange={handleCommentChange}
-              required
-            ></textarea>
-          </div>
-          <div className="form-group">
-            <label htmlFor="score">Score:</label>
-            <input
-              type="number"
-              id="score"
-              name="score"
-              value={newComment.score}
-              onChange={handleCommentChange}
-              min="1"
-              max="5"
-              required
-            />
-          </div>
-          <button type="button" onClick={handleCommentSubmit}>
-            Submit Comment
-          </button>
-        </form>
-      </div>
+     
     </div>
+     <div className="my-5 d-flex reviews-area ">
+      <div className="container flex-column ">
+     <div className="btn-detail">
+       <ul className="nav nav-tabs border-0" role="tablist" id="myTab">
+         <li className=" nav-item nav-btns ">
+           <button
+             className={`nav-link text-uppercase ${activeTab === "description" ? "active" : ""
+               }`}
+             onClick={() => handleTabClick("description")}
+           >
+             <strong>Descripción</strong>
+           </button>
+         </li>
+         <li className="nav-item nav-btns">
+           <button
+             className={`nav-link text-uppercase ${activeTab === "reviews" ? "active" : ""
+               }`}
+             onClick={() => handleTabClick("reviews")}
+           >
+             <strong>Reviews</strong>
+           </button>
+         </li>
+       </ul>
+
+       <div className="tab-content">
+         <div
+           className={`tab-pane fade show p-style ${activeTab === "description" ? "active" : ""
+             }`}
+           id="description"
+         > <h5>{name}</h5>
+           <p>{description}</p>
+         </div>
+         <div
+           className={`tab-pane fade p-style ${activeTab === "reviews" ? "show active" : ""
+             }`}
+           id="reviews"
+         >
+           <p>Reviews</p>
+           <div className="comments-list p.">
+
+             {comments && comments
+               .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
+               .map((comment) => (
+                 <div key={comment.id} className="comment">
+                   <div className="d-flex flex-row">
+                     <img className="avatar-comment"
+                       src={comment.user ? comment.user.avatar : ''}
+                       alt={comment.user ? comment.user.username : ''}
+                     />
+                   </div>
+                   <div className="d-flex flex-column">
+                     <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
+                     <p className="date-comment">{comment.date}</p>
+                     <p className="score-comment">Score: {comment.score}</p>
+
+                     <p className="message-comment">{comment.message}</p>
+                     {currentUser && currentUser.id === comment.user.id && (
+                       <button onClick={() => handleCommentDelete(comment.id)}>
+                         Delete
+                       </button>
+                     )}
+                   </div>
+
+                 </div>
+               ))}
+           </div>
+         </div>
+       </div>
+     </div>
+     {currentUser && currentUser.id ? (
+        <ModalReview product={product} handleUpdateComments={handleUpdateComments}/>
+     
+   ) : (
+     ""
+   )}
+   </div>
+   </div>
+   
+   </>
   );
 }
 
 export default ProductCardDetail;
+
+

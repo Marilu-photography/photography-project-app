@@ -22,6 +22,7 @@ import AccessoriesList from "./views/Accessories/Accessories";
 import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
 import Result from "./views/Result/Result";
+import ToolLanding from "./views/Tool-Landing/ToolLanding";
 
 
 
@@ -51,6 +52,7 @@ function App() {
             <Route path="/images" element={<ImagesList />} />
             <Route path="/profile/:id" element={<UserProfile />} />
             <Route path="/profile/:userId/edit" element={<EditProfile />} />
+            <Route path="/tool-landing" element={<ToolLanding />} />
             <Route path="/" element={<ProtectedRoute />}>
               <Route path="/editor/:id" element={<Editor />} />
               <Route path="/create" element={<CreateProducts />} />

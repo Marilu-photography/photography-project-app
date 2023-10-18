@@ -103,8 +103,8 @@ const Nav = (product) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/editor" className="nav-link text-warning">
-                Edit Photos
+              <NavLink to="/tool-landing" className="nav-link text-warning">
+                PhotoIA
               </NavLink>
             </li>
             <li className="nav-item">

@@ -4,6 +4,7 @@
     color: #343a40;
     transition: all 0.3s;
     text-align: center;
+
 }
 
 .category-item img {
@@ -38,4 +39,9 @@
 
     border-right: none !important;
 
+}
+
+.img-container-category {
+    background-color: white;
+    height: 100%;
 }

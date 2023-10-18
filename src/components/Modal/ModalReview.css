@@ -1,0 +1,21 @@
+.post-btn {
+    background-color: #000000 !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease-in-out !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    width: 10rem;
+    &:hover {
+        background-color: rgb(251, 173, 25) !important;
+        color: #000000 !important;
+        border: none !important;
+        font-size: 1rem !important;
+
+    }
+}

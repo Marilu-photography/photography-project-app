@@ -35,10 +35,10 @@ const EditProduct = () => {
   }
     , []);
 
-  const handleDelete = (image) => {
-    const filteredImages = images.filter((img) => img !== image);
-    setImages(filteredImages);
-  }
+    const handleDelete = (image) => {
+      const filteredImages = images.filter((img) => img !== image);
+      setImages(filteredImages);
+    }
 
   const {
     values,
@@ -146,7 +146,6 @@ const EditProduct = () => {
             onChange={(e) => {
               const selectedFiles = Array.from(e.target.files);
               setFieldValue("images", values.images.concat(selectedFiles));
-              // setFieldValue("images", [...values.images, ...selectedFiles]);
 
 
             }}
