@@ -166,7 +166,6 @@ const Register = ( { onCloseModalR  }) => {
         <button type="submit" className={`btnDetails btn-${isSubmitting ? 'btn-submitting' : 'btnDetails'}`}>
           {isSubmitting ? "Submitting..." : "Register"}
         </button>
-        <p>Already have an account? <Link to="/login" onClick={onCloseModalR}>Log in here</Link></p>
       </form>
       {/* <ModalMessage show={modalShowMessage} onHide={handleModalMessageClose} /> */}
     </div>

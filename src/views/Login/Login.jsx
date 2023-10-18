@@ -2,7 +2,7 @@ import InputGroup from '../../components/InputGroup/InputGroup';
 import { useFormik } from 'formik';
 import { loginSchema } from '../../utils/yup.schemas';
 import { activateUser, login as loginRequest } from '../../services/AuthServices';
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +36,7 @@ const Login = () => {
     onSubmit: (values) => {
       loginRequest(values)
         .then((res) => {
+  
           login(res.accessToken, () => navigate('/'));
         })
         .catch((err) => {
@@ -93,6 +94,7 @@ const Login = () => {
         <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`}>
           {isSubmitting ? "Submitting..." : "Login"}
         </button>
+        <p>Don't have an account? <Link to="/Register">Register here</Link></p>
       </form>
     </div>
   );

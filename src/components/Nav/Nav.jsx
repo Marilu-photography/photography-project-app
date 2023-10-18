@@ -10,6 +10,7 @@ import { getSearch } from "../../services/ProductsServices";
 import { useAppContext } from "../../contexts/AppContext";
 import ModalR from "../Modal/ModalR";
 import ModalMessage from "../Modal/ModalMessage";
+import ModalL from "../Modal/ModalL";
 
 const Nav = (product) => {
   const { user, isLoading } = useAuthContext();
@@ -24,13 +25,18 @@ const Nav = (product) => {
 
   //modales 
   const [showModalR, setShowModalR] = useState(false);
+  const [showModalL, setShowModalL] = useState(false);
   const [showModalMessage, setShowModalMessage] = useState(false);
 
     // Función para cerrar ModalR y mostrar ModalMessage
-    const handleCloseModalR = () => {
-      setShowModalR(false);
-      setShowModalMessage(true);
-    };
+    // const handleCloseModalR = () => {
+    //   setShowModalR(false);
+    //   setShowModalMessage(true);
+    // };
+
+    // const handleShowModalL = () => {
+    //   setShowModalL(true);
+    // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -209,12 +215,10 @@ const Nav = (product) => {
         <ModalMessage show={showModalMessage} onHide={() => setShowModalMessage(false)} />
       )}
                 <li className="nav-item">
-                  <ModalR  show={showModalR} onHide={handleCloseModalR} />
+                  <ModalR  show={showModalR}  />
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/login" className="nav-link">
-                    Iniciar sesión
-                  </NavLink>
+                  <ModalL show={showModalL}  />
                 </li>
               </>
             )}
