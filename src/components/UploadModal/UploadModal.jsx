@@ -6,7 +6,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 function UploadModal({ show, onHide, getUser }) {
   const [formData, setFormData] = useState({
-    imageUrl: null,
+    images: [],
     name: '',
     price: '',
   });
@@ -24,13 +24,14 @@ function UploadModal({ show, onHide, getUser }) {
     const imageFile = event.target.files[0];
     setFormData({
       ...formData,
-      imageUrl: imageFile,
+      images: [...formData.images, imageFile],
     }); console.log(formData);
   };
 
   const handleSubmit = () => {
     const formDataToSend = new FormData();
-    formDataToSend.append('imageUrl', formData.imageUrl);
+
+    formDataToSend.append('images', formData.images[0]);
     formDataToSend.append('name', formData.name);
     formDataToSend.append('price', formData.price);
     formDataToSend.append('author', currentUser.id);
@@ -60,8 +61,9 @@ function UploadModal({ show, onHide, getUser }) {
             <Form.Label>Image</Form.Label>
             <Form.Control
               type="file"
-              name="imageUrl"
+              name="images"
               onChange={handleImageUpload}
+
             />
           </Form.Group>
           <Form.Group>

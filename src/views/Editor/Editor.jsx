@@ -36,7 +36,7 @@ const EditorTool = () => {
   useEffect(() => {
     getImage(id)
       .then((res) => {
-        const imageUrlData = res.imageUrl.split("/");
+        const imageUrlData = res.images[0].split("/");
         const fileName = imageUrlData[imageUrlData.length - 1];
         const imageName = fileName.split(".")[0];
         setImage(`marilu-photography/${imageName}`);

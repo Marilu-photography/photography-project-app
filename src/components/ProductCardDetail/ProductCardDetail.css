@@ -136,3 +136,21 @@
     font-size: 15px;
     display: inline;
   }
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 2px;
+    
+  }
+  
+  .thumbnail img {
+    padding: 10px;
+  }
+
+  .thumbnail.active {
+    border: 2px solid rgb(251,173,25);
+  }

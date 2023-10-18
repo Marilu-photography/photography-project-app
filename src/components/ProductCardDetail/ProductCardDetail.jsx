@@ -35,6 +35,11 @@ const ProductCardDetail = ({ product }) => {
     score: 0,
   });
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index);
+  };
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin !== undefined) {
@@ -83,7 +88,7 @@ const ProductCardDetail = ({ product }) => {
             .catch((error) => {
               console.error("Error listing comments:", error);
             });
-          
+
         })
         .catch((error) => {
           console.error("Error creating comment:", error);
@@ -127,9 +132,21 @@ const ProductCardDetail = ({ product }) => {
     <div className="container d-flex flex-column ">
       <div className=" ProductCardDetail">
         <div className="row mb-3">
-          <div className="col-lg-6">
+          <div className="col-lg-6 d-flex align-items-center flex-column">
             <div className="img-product">
-              <img src={images[0]} className="card-img-top" alt={name} />
+              <img src={images[currentImageIndex]} className="card-img-top" alt={name} />
+            </div>
+            <div className="thumbnails">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={name}
+                  className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+                  onClick={() => handleThumbnailClick(index)}
+                />
+              ))}
+
             </div>
           </div>
           <div className="col-lg-6">
@@ -228,78 +245,81 @@ const ProductCardDetail = ({ product }) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="d-flex flex-row">
-        <div className=" btn-detail">
-          <button
-            className="btnDetails show-on-click"
-            tabIndex={0}
-            onClick={handleButtonDescriptionClick}
-          >
-            Description
-          </button>
-          <div className={`hidden-div ${show ? "show" : ""}`}>
-            <p>{description}</p>
+
+
+        <div className="d-flex flex-row">
+          <div className=" btn-detail">
+            <button
+              className="btnDetails show-on-click"
+              tabIndex={0}
+              onClick={handleButtonDescriptionClick}
+            >
+              Description
+            </button>
+            <div className={`hidden-div ${show ? "show" : ""}`}>
+              <p>{description}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <h5>Reviews</h5>
-        <form>
-          <div className="form-group">
-            <label htmlFor="message">Message:</label>
-            <textarea
-              id="message"
-              name="message"
-              value={newComment.message}
-              onChange={handleCommentChange}
-              required
-            ></textarea>
-          </div>
-          <div className="form-group">
-            <label htmlFor="score">Score:</label>
-            <input
-              type="number"
-              id="score"
-              name="score"
-              value={newComment.score}
-              onChange={handleCommentChange}
-              min="1"
-              max="5"
-              required
-            />
-          </div>
-          <button type="button" onClick={handleCommentSubmit}>
-            Submit Comment
-          </button>
-        </form>
-        <div className="comments-list">
-
-          {comments && comments
-          .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
-          .map((comment) => (
-            <div key={comment.id} className="comment">
-            <div className="d-flex flex-row">
-              <img className="avatar-comment"
-                src={comment.user ? comment.user.avatar : ''}
-                alt={comment.user ? comment.user.username : ''}
-              />
-              </div>
-              <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
-              <p className="date-comment">{comment.date}</p>
-              <p className="score-comment">{comment.score}</p>
-              
-              <p className="message-comment">{comment.message}</p>
-              {currentUser && currentUser.id === comment.user.id && (
-                <button onClick={() => handleCommentDelete(comment.id)}>
-                  Delete
-                </button>
-              )}
+        <div>
+          <h5>Reviews</h5>
+          <form>
+            <div className="form-group">
+              <label htmlFor="message">Message:</label>
+              <textarea
+                id="message"
+                name="message"
+                value={newComment.message}
+                onChange={handleCommentChange}
+                required
+              ></textarea>
             </div>
-          ))}
+            <div className="form-group">
+              <label htmlFor="score">Score:</label>
+              <input
+                type="number"
+                id="score"
+                name="score"
+                value={newComment.score}
+                onChange={handleCommentChange}
+                min="1"
+                max="5"
+                required
+              />
+            </div>
+            <button type="button" onClick={handleCommentSubmit}>
+              Submit Comment
+            </button>
+          </form>
+          <div className="comments-list">
+
+            {comments && comments
+              .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
+              .map((comment) => (
+                <div key={comment.id} className="comment">
+                  <div className="d-flex flex-row">
+                    <img className="avatar-comment"
+                      src={comment.user ? comment.user.avatar : ''}
+                      alt={comment.user ? comment.user.username : ''}
+                    />
+                  </div>
+                  <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
+                  <p className="date-comment">{comment.date}</p>
+                  <p className="score-comment">{comment.score}</p>
+
+                  <p className="message-comment">{comment.message}</p>
+                  {currentUser && currentUser.id === comment.user.id && (
+                    <button onClick={() => handleCommentDelete(comment.id)}>
+                      Delete
+                    </button>
+                  )}
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 export default ProductCardDetail;
