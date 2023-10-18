@@ -27,7 +27,6 @@ const ProductCardDetail = ({ product }) => {
   } = product;
 
   const [isAdmin, setIsAdmin] = useState(false);
-  const [show, setShow] = useState(false);
   const { user: currentUser } = useAuthContext();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
@@ -58,10 +57,13 @@ const ProductCardDetail = ({ product }) => {
   }, [product._id]);
 
 
+  const [activeTab, setActiveTab] = useState("description");
 
-  const handleButtonDescriptionClick = () => {
-    setShow(!show);
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
+
+ 
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -245,78 +247,125 @@ const ProductCardDetail = ({ product }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="my-5 d-flex flex-row">
+        <div className="btn-detail">
+          <ul className="nav nav-tabs border-0" id="myTab">
+            <li className=" nav-item">
+              <button
+                className={`nav-link text-uppercase ${
+                  activeTab === "description" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("description")}
+              >
+                <strong>Descripción</strong>
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link text-uppercase ${
+                  activeTab === "reviews" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("reviews")}
+              >
+                <strong>Reviews</strong>
+              </button>
+            </li>
+          </ul>
 
-
-        <div className="d-flex flex-row">
-          <div className=" btn-detail">
-            <button
-              className="btnDetails show-on-click"
-              tabIndex={0}
-              onClick={handleButtonDescriptionClick}
+          <div className="tab-content">
+            <div
+              className={`tab-pane fade show ${
+                activeTab === "description" ? "active" : ""
+              }`}
+              id="description"
             >
-              Description
-            </button>
-            <div className={`hidden-div ${show ? "show" : ""}`}>
-              <p>{description}</p>
+              <p className="p-style">{description}</p>
             </div>
-          </div>
-        </div>
-        <div>
-          <h5>Reviews</h5>
-          <form>
-            <div className="form-group">
-              <label htmlFor="message">Message:</label>
-              <textarea
-                id="message"
-                name="message"
-                value={newComment.message}
-                onChange={handleCommentChange}
-                required
-              ></textarea>
-            </div>
-            <div className="form-group">
-              <label htmlFor="score">Score:</label>
-              <input
-                type="number"
-                id="score"
-                name="score"
-                value={newComment.score}
-                onChange={handleCommentChange}
-                min="1"
-                max="5"
-                required
+            <div
+              className={`tab-pane fade ${
+                activeTab === "reviews" ? "show active" : ""
+              }`}
+              id="reviews"
+            >
+              <p>Reviews</p>
+              <div className="comments-list">
+
+          {comments && comments
+          .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
+          .map((comment) => (
+            <div key={comment.id} className="comment">
+            <div className="d-flex flex-row">
+              <img className="avatar-comment"
+                src={comment.user ? comment.user.avatar : ''}
+                alt={comment.user ? comment.user.username : ''}
               />
+              </div>
+              <div className="d-flex flex-column">
+              <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
+              <p className="date-comment">{comment.date}</p>
+              <p className="score-comment">Score: {comment.score}</p>
+              
+              <p className="message-comment">{comment.message}</p>
+              {currentUser && currentUser.id === comment.user.id && (
+                <button onClick={() => handleCommentDelete(comment.id)}>
+                  Delete
+                </button>
+              )}
+              </div>
+              
             </div>
-            <button type="button" onClick={handleCommentSubmit}>
-              Submit Comment
-            </button>
-          </form>
-          <div className="comments-list">
-
-            {comments && comments
-              .sort((a, b) => { return new Date(b.date) - new Date(a.date); })
-              .map((comment) => (
-                <div key={comment.id} className="comment">
-                  <div className="d-flex flex-row">
-                    <img className="avatar-comment"
-                      src={comment.user ? comment.user.avatar : ''}
-                      alt={comment.user ? comment.user.username : ''}
-                    />
-                  </div>
-                  <h6 className="user-comment-name">{comment.user ? comment.user.username : 'Unknown User'}</h6>
-                  <p className="date-comment">{comment.date}</p>
-                  <p className="score-comment">{comment.score}</p>
-
-                  <p className="message-comment">{comment.message}</p>
-                  {currentUser && currentUser.id === comment.user.id && (
-                    <button onClick={() => handleCommentDelete(comment.id)}>
-                      Delete
-                    </button>
-                  )}
-                </div>
-              ))}
+          ))}
+        </div>
+            </div>
           </div>
         </div>
+      </div>
+      
+
+        
+          {/* <button
+            className="btnDetails show-on-click"
+            tabIndex={0}
+            onClick={handleButtonDescriptionClick}
+          >
+            Description
+          </button>
+          <div className={`hidden-div ${show ? "show" : ""}`}>
+            <p>{description}</p>
+          </div> */}
+        
+      
+      <div>
+        <h5>Reviews</h5>
+        <form>
+          <div className="form-group">
+            <label htmlFor="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              value={newComment.message}
+              onChange={handleCommentChange}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="score">Score:</label>
+            <input
+              type="number"
+              id="score"
+              name="score"
+              value={newComment.score}
+              onChange={handleCommentChange}
+              min="1"
+              max="5"
+              required
+            />
+          </div>
+          <button type="button" onClick={handleCommentSubmit}>
+            Submit Comment
+          </button>
+        </form>
       </div>
     </div>
   );

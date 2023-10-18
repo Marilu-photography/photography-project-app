@@ -24,7 +24,7 @@
 .CartBtn {
     width: 140px;
     height: 40px;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     border: none;
     background-color: rgb(251,173,25);
     display: flex;
@@ -137,6 +137,7 @@
     display: inline;
   }
 
+
   .thumbnail {
     width: 80px;
     height: 80px;
@@ -154,3 +155,21 @@
   .thumbnail.active {
     border: 2px solid rgb(251,173,25);
   }
+
+  
+  .nav-tabs .nav-link {
+    background: white;
+    color: #000 !important;
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem
+}
+
+.p-style{
+  margin: 20px 0px 15px 0;
+}
+
+.comment{ 
+  display: flex;
+  align-items: flex-start;
+}
+
