@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import ImagesCard from "../ImagesCard/ImagesCard";
+import ImagesCard from "../ImagesCard/imagesCard";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Button } from "react-bootstrap";
 import UploadModal from "../UploadModal/UploadModal";
