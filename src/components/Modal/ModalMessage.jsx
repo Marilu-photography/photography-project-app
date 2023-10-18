@@ -8,6 +8,7 @@ const ModalMessage = (props) => {
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
+        show={props.show}
         centered
       >
         <Modal.Header closeButton>

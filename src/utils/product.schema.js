@@ -17,5 +17,8 @@ export const productSchema = Yup.object({
     .of(Yup.mixed().required('Please upload an image'))
     .required('Required'),
     
+    imagesFiles: Yup.array()
+    .of(Yup.mixed().required('Please upload an image')),
+    
     
 })

@@ -35,10 +35,7 @@ const EditProduct = () => {
   }
     , []);
 
-    const handleDelete = (image) => {
-      const filteredImages = images.filter((img) => img !== image);
-      setImages(filteredImages);
-    }
+    
 
   const {
     values,
@@ -55,6 +52,7 @@ const EditProduct = () => {
       name: "",
       price: "",
       images: [],
+      imagesFiles: [],
       description: "",
       category: "",
     },
@@ -65,9 +63,10 @@ const EditProduct = () => {
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('price', values.price);
+      formData.append('images', values.images);
 
-      for (let i = 0; i < values.images.length; i++) {
-        formData.append(`images`, values.images[i]);
+      for (let i = 0; i < values.imagesFiles.length; i++) {
+        formData.append(`imagesFiles`, values.imagesFiles[i]);
       }
       formData.append('description', values.description);
       formData.append('category', values.category);
@@ -90,6 +89,11 @@ const EditProduct = () => {
     },
   });
 
+  const handleDelete = (image) => {
+    const filteredImages = values.images.filter((img) => img !== image);
+    setFieldValue('images', filteredImages);
+  }
+
   useEffect(() => {
     if (productId) {
       setIsEditing(true);
@@ -111,6 +115,8 @@ const EditProduct = () => {
         });
     }
   }, [productId, setFieldValue, setIsEditing]);
+
+  console.log(values.images)
 
   return (
     <>
@@ -139,19 +145,19 @@ const EditProduct = () => {
           />
           <input
             label="Images"
-            name="images"
+            name="imagesFiles"
             type="file"
             multiple
             accept="image/*"
             onChange={(e) => {
               const selectedFiles = Array.from(e.target.files);
-              setFieldValue("images", values.images.concat(selectedFiles));
+              setFieldValue("imagesFiles", selectedFiles);
 
 
             }}
           />
           <div>
-            {product && images.map((image, index) => (
+            {product && values.images.map((image, index) => (
               <div key={index}>
               <img src={image} alt={image.name} style={{ width: "100px" }} />
                 <button
