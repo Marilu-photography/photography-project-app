@@ -34,6 +34,11 @@ const ProductCardDetail = ({ product }) => {
     score: 0,
   });
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index);
+  };
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin !== undefined) {
@@ -85,7 +90,7 @@ const ProductCardDetail = ({ product }) => {
             .catch((error) => {
               console.error("Error listing comments:", error);
             });
-          
+
         })
         .catch((error) => {
           console.error("Error creating comment:", error);
@@ -129,9 +134,21 @@ const ProductCardDetail = ({ product }) => {
     <div className="container d-flex flex-column ">
       <div className=" ProductCardDetail">
         <div className="row mb-3">
-          <div className="col-lg-6">
+          <div className="col-lg-6 d-flex align-items-center flex-column">
             <div className="img-product">
-              <img src={images[0]} className="card-img-top" alt={name} />
+              <img src={images[currentImageIndex]} className="card-img-top" alt={name} />
+            </div>
+            <div className="thumbnails">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={name}
+                  className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+                  onClick={() => handleThumbnailClick(index)}
+                />
+              ))}
+
             </div>
           </div>
           <div className="col-lg-6">
@@ -349,9 +366,9 @@ const ProductCardDetail = ({ product }) => {
             Submit Comment
           </button>
         </form>
-        
       </div>
     </div>
   );
 }
+
 export default ProductCardDetail;

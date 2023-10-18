@@ -3,7 +3,7 @@ import { useCart } from "react-use-cart";
 import { deleteImage } from "../../services/ImagesServices";
 
 const ImagesCard = ({ image, currentUser, getUser }) => {
-  const { _id, name, price, imageUrl, author, editedImageUrl } = image;
+  const { _id, name, price, images, author, editedImageUrl } = image;
 
   const { addItem } = useCart();
 
@@ -22,13 +22,9 @@ const ImagesCard = ({ image, currentUser, getUser }) => {
 
   return (
     <div className="card">
-      <img src={editedImageUrl ?? imageUrl } alt={name} className="card-img-top" />
+      <img src={images[0]} alt={name} className="card-img-top" />
       <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        <p className="card-text">
-          Author: <Link to={`/profile/${author.id}`}>{author.username}</Link>
-        </p>
-        <p className="card-text">Price: {price} €</p>
+
         {currentUser && currentUser.id === author.id ? (
           <>
             <Link to={`/editor/${_id}`} className="btn btn-primary">
@@ -38,6 +34,12 @@ const ImagesCard = ({ image, currentUser, getUser }) => {
           </>
         ) : (
           <>
+
+            <h5 className="card-title">{name}</h5>
+            <p className="card-text">
+              Author: <Link to={`/profile/${author.id}`}>{author.username}</Link>
+            </p>
+            <p className="card-text">Price: {price} €</p>
             <button className="btn btn-success">View</button>
             <button
               className="card-button"
