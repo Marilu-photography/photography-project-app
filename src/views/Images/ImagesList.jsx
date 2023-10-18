@@ -29,7 +29,8 @@ const ImagesList = () => {
   }
 
 return (
-  <div>
+  <div className="container">
+  <div className="row">
     <h1>Image Gallery</h1>
 
     <div className="row">
@@ -38,6 +39,7 @@ return (
           <ImagesCard image={image} />
           </div>
       ))}
+    </div>
     </div>
   </div>
 );

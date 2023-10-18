@@ -1,9 +1,24 @@
 
-.Camera {
+/* .Camera {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     height: 100%;
     
+} */
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.hr-cameras {
+    width: 100%;
+    height: 1px;
+    background-color:black;
+    margin: 0;
 }
