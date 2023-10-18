@@ -4,6 +4,7 @@ import { registerSchema } from '../../utils/yup.schemas';
 import { register } from '../../services/AuthServices';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+
 // import ModalMessage from "../../components/Modal/ModalMessage";
 // import { useState } from "react";
 
@@ -18,7 +19,7 @@ const initialValues = {
 
 const Register = ( { onCloseModalR  }) => {
   const { user } = useAuthContext();
-  const [showHelloWorldModal, setShowHelloWorldModal] = useState(false);
+  // const [showHelloWorldModal, setShowHelloWorldModal] = useState(false);
   //const navigate = useNavigate();
   //const [modalShowMessage, setModalShowMessage] = useState(false);
   //const [loading, setLoading] = useState(false);
