@@ -1,0 +1,21 @@
+
+/* Ajusta el tamaño del carrusel */
+#carouselExampleIndicators {
+    max-width: 100%; /* Cambia este valor según tus necesidades */
+    margin: auto;
+    max-height: 200px;  /* Centra el carrusel en la página */
+  }
+  
+  .carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 402px;
+}
+
+
+  .carousel-inner img {
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+  }

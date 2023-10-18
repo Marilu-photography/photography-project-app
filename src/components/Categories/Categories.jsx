@@ -4,9 +4,9 @@ import "./Categories.css";
 const Categories = () => {
   return (
     <div className="container pt-5 d-flex flex-column">
-      <div className="text-center">
+      {/* <div className="text-center">
         <h2 className="text-uppercase mb-4">Our categories</h2>
-      </div>
+      </div> */}
       <div className="d-flex flex-md-row flex-column">
         <div className="col-md-4 category-item">
           <Link  to='/cameras'>
