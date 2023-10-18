@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getImagesList } from "../../services/ImagesServices";
 import './ImagesList.css';
-import ImagesCard from "../../components/ImagesCard/ImagesCard";
+import ImagesCard from "../../components/ImagesCard/imagesCard";
 
 const ImagesList = () => {
   const [images, setImagesData] = useState([]);
