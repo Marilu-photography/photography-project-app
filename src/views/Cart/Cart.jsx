@@ -54,7 +54,7 @@ function Cart() {
       <div className="row">
         <div className="Banner">
           <Link to="/editor">
-            <img src='/public/img/muestra.png' alt="muestro" className="muestra" />
+            <img src='/img/muestra.png' alt="muestro" className="muestra" />
           </Link>
 
         </div>

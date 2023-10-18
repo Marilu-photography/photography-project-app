@@ -38,7 +38,7 @@ const AccessoriesList = () => {
         <div className='Lens Camera'>
             <div className="Banner">
                 <Link to="/editor">
-                    <img src="/public/img/muestra.png" alt="muestra" className="muestra"/>
+                    <img src="/img/muestra.png" alt="muestra" className="muestra"/>
                 </Link>
             </div>
             <h1>Accessories</h1>

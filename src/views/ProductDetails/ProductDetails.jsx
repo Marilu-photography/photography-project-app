@@ -67,7 +67,7 @@ const message = ({ message }) => (
       <div className="row ProductDetails">
         <div className="Banner">
           <Link to="/editor">
-            <img src="/public/img/muestra.png" alt="muestra" className="muestra" />
+            <img src="/img/muestra.png" alt="muestra" className="muestra" />
           </Link>
         </div>
         <div>
