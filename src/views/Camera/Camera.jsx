@@ -234,7 +234,7 @@ const CameraList = () => {
                     checked={filters.priceRange.includes(range)}
                     onChange={() => handlePriceRangeFilter(range)}
                   />
-                  {range}
+                  {range} €
                 </label>
               ))}
               <hr className="hr-cameras mb-2" />
