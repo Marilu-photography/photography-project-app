@@ -194,20 +194,20 @@ const CameraList = () => {
 
 
   return (
-    <div className="Camera">
+    <div className="Camera mb-5">
       <div className="Banner">
         <Link to="/editor">
           <img src="/img/muestra.png" alt="muestra" className="muestra" />
         </Link>
       </div>
       <div className="container contenedor display-block product-container">
-        <div className="d-flex flex-row">
-          <div className="filters-container">
+        <div className="d-flex flex-row align-items-start">
+          <div className="filters-container ">
             <h3>Filters</h3>
             <div className="d-flex flex-column">
               <h4>Brand:</h4>
               {brandOptions.map((brand) => (
-                <label key={brand}>
+                <label className="checkbox-label" key={brand}>
                   <input
                     type="checkbox"
                     value={brand}
@@ -217,11 +217,12 @@ const CameraList = () => {
                   {brand}
                 </label>
               ))}
+               <hr className="hr-cameras mb-2"/>
             </div>
             <div className="d-flex flex-column">
               <h4>Price Range:</h4>
               {priceRangeOptions.map((range) => (
-                <label key={range}>
+                <label className="checkbox-label" key={range}>
                   <input
                     type="checkbox"
                     value={range}
@@ -231,11 +232,12 @@ const CameraList = () => {
                   {range}
                 </label>
               ))}
+              <hr className="hr-cameras mb-2"/>
             </div>
             <div className="d-flex flex-column">
               <h4>Condition:</h4>
               {conditionOptions.map((condition) => (
-                <label key={condition}>
+                <label className="checkbox-label" key={condition}>
                   <input
                     type="checkbox"
                     value={condition}
@@ -245,11 +247,12 @@ const CameraList = () => {
                   {condition}
                 </label>
               ))}
+              <hr className="hr-cameras mb-2"/>
             </div>
             <div className="d-flex flex-column">
               <h4>Camera Type:</h4>
               {cameraTypeOptions.map((cameraType) => (
-                <label key={cameraType}>
+                <label className="checkbox-label" key={cameraType}>
                   <input
                     type="checkbox"
                     value={cameraType}
@@ -259,12 +262,14 @@ const CameraList = () => {
                   {cameraType}
                 </label>
               ))}
+              <hr className="hr-cameras mb-2"/>
             </div>
-            <button onClick={handleApplyFilters}>Apply Filters</button>
-            <button onClick={handleClearFilters}>Clear Filters</button>
+            <button className="m-1 btn-filter" onClick={handleApplyFilters}>Apply Filters</button>
+            <button className="m-1 btn-filter" onClick={handleClearFilters}>Clear Filters</button>
           </div>
           <div className="row display-flex camera-product-container">
           <h1 className="h1-cameras"> Cameras</h1>
+          <hr className="hr-cameras"/>
             {displayProducts.length === 0 ? (
               <p>No Results Found</p>
             ) : (
