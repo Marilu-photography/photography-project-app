@@ -37,7 +37,7 @@ const ModalR = (props) => {
           <Modal.Title>Register Here</Modal.Title>
         </Modal.Header>
         <Modal.Body> <Register onCloseModalR={closeModalR}  /> 
-        <p>Already have an account? <button onClick={handleLogInLink}>Login here</button></p>
+        <p>Already have an account? <button className='btn-modal-link' onClick={handleLogInLink}>Login here</button></p>
          </Modal.Body>
       </Modal>
       <ModalMessage show={showMessage} />

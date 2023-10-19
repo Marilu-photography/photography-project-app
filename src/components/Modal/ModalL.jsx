@@ -28,7 +28,7 @@ const ModalL = (props) => {
                     <Modal.Title>Login Here</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> <Login /> 
-                <p>Dont't you have an account yet? <button>Register here</button></p> 
+                <p>Dont't you have an account yet? <button className='btn-modal-link'>Register here</button></p> 
                 </Modal.Body> 
             </Modal>
         </>

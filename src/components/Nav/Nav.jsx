@@ -89,7 +89,7 @@ const Nav = (product) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink to="/cameras" className="nav-link " aria-current="page">
+              <NavLink to="/cameras" className="nav-link text-warning" aria-current="page">
                 Cameras
               </NavLink>
             </li>

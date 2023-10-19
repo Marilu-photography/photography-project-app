@@ -38,7 +38,6 @@ padding: 10px;
 
 .camera-product-container {
     width: 1300px;
-
     margin: 0 auto; 
     box-sizing: border-box;
   }
@@ -63,11 +62,75 @@ padding: 10px;
     background-color: black;
     color: white;
     padding: 5px;
- 
     font-size: 15px;
   } 
   .btn-filter:hover {
     background-color: rgb(251,173,25);
     color: black;
   }
+
+  .filter-list-container {
+    flex-direction: row;
+  }
+
+
+  @media screen and (max-width: 768px) {
+
+    body {
+      font-size: 16px; 
+    }
+
+    
+
+    .filter-list-container {
+      flex-direction: column;
+      
+      width: 90vw;
+    }
   
+    .filters-container {
+      position:initial;
+      width: 100%;
+      margin: 0 auto;
+      align-items: center !important;
+      display: none !important;
+      
+    }
+hr {
+  width: 100% !important;
+  align-items: center !important;
+}
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 10px 0px!important;
+    }
+
+    .camera-product-container {
+      width: 100%;
+      margin: 0 auto; 
+      box-sizing: border-box;
+      justify-content: center;
+      align-items: center !important;
+      
+    }
+
+    .camera-cards-container {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .camera-cards-container .card {
+    width: 80vw!important;
+    margin: 0px !important;
+   }
+   
+   .btn-filter {
+    width: 40%;
+   }
+
+
+}

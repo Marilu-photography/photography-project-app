@@ -17,6 +17,9 @@ const CameraList = () => {
   });
 
   const [filterApplied, setFilterApplied] = useState(false);
+  const [filtersCollapsed, setFiltersCollapsed] = useState(true);
+
+  
 
   useEffect(() => {
     getProductList()
@@ -35,15 +38,15 @@ const CameraList = () => {
 
   const applyFilters = (filters) => {
     const { brands, priceRange, condition, cameraType } = filters;
-  
+
     let filteredProducts = [...products];
-  
+
     if (brands.length > 0) {
-          filteredProducts = filteredProducts.filter((product) =>
+      filteredProducts = filteredProducts.filter((product) =>
         brands.some((brand) => product.name.includes(brand))
       );
     }
-  
+
     if (priceRange.length > 0) {
       filteredProducts = filteredProducts.filter((product) => {
         const price = product.price;
@@ -53,19 +56,19 @@ const CameraList = () => {
         });
       });
     }
-  
+
     if (condition.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
         condition.includes(product.condition)
       );
     }
-  
+
     if (cameraType.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
         cameraType.includes(product.cameraType)
       );
     }
-  
+
     setProducts(filteredProducts);
     setFilterApplied(true);
   };
@@ -96,12 +99,11 @@ const CameraList = () => {
   };
 
   const handleBrandFilter = (brand) => {
-    // Actualiza el estado de los filtros para las marcas
     setFilters({
       ...filters,
       brands: filters.brands.includes(brand)
-        ? filters.brands.filter((item) => item !== brand) // Desmarca la marca
-        : [...filters.brands, brand], // Marca la marca
+        ? filters.brands.filter((item) => item !== brand) 
+        : [...filters.brands, brand],
     });
   };
   const handlePriceRangeFilter = (range) => {
@@ -119,7 +121,7 @@ const CameraList = () => {
       }
     });
   };
-  
+
   const handleConditionFilter = (condition) => {
     setFilters((prevFilters) => {
       if (prevFilters.condition.includes(condition)) {
@@ -135,7 +137,7 @@ const CameraList = () => {
       }
     });
   };
-  
+
   const handleCameraTypeFilter = (cameraType) => {
     setFilters((prevFilters) => {
       if (prevFilters.cameraType.includes(cameraType)) {
@@ -192,6 +194,9 @@ const CameraList = () => {
   const displayProducts =
     searchResults && searchResults.length > 0 ? searchResults : products;
 
+    const toggleFilters = () => {
+      setFiltersCollapsed(!filtersCollapsed);
+    };
 
   return (
     <div className="Camera mb-5">
@@ -200,8 +205,8 @@ const CameraList = () => {
           <img src="/img/muestra.png" alt="muestra" className="muestra" />
         </Link>
       </div>
-      <div className="container contenedor display-block product-container">
-        <div className="d-flex flex-row align-items-start">
+      <div className="container contenedor product-container">
+        <div className="d-flex align-items-start filter-list-container">
           <div className="filters-container ">
             <h3>Filters</h3>
             <div className="d-flex flex-column">
@@ -217,7 +222,7 @@ const CameraList = () => {
                   {brand}
                 </label>
               ))}
-               <hr className="hr-cameras mb-2"/>
+              <hr className="hr-cameras mb-2" />
             </div>
             <div className="d-flex flex-column">
               <h4>Price Range:</h4>
@@ -232,7 +237,7 @@ const CameraList = () => {
                   {range}
                 </label>
               ))}
-              <hr className="hr-cameras mb-2"/>
+              <hr className="hr-cameras mb-2" />
             </div>
             <div className="d-flex flex-column">
               <h4>Condition:</h4>
@@ -247,7 +252,7 @@ const CameraList = () => {
                   {condition}
                 </label>
               ))}
-              <hr className="hr-cameras mb-2"/>
+              <hr className="hr-cameras mb-2" />
             </div>
             <div className="d-flex flex-column">
               <h4>Camera Type:</h4>
@@ -262,22 +267,30 @@ const CameraList = () => {
                   {cameraType}
                 </label>
               ))}
-              <hr className="hr-cameras mb-2"/>
+              <hr className="hr-cameras mb-2" />
             </div>
             <button className="m-1 btn-filter" onClick={handleApplyFilters}>Apply Filters</button>
             <button className="m-1 btn-filter" onClick={handleClearFilters}>Clear Filters</button>
           </div>
-          <div className="row display-flex camera-product-container">
-          <h1 className="h1-cameras"> Cameras</h1>
-          <hr className="hr-cameras"/>
+          <div className="row d-flex camera-product-container">
+            <div>
+              <h1 className="h1-cameras"> Cameras</h1>
+              <hr className="hr-cameras" />
+
+            </div>
+
             {displayProducts.length === 0 ? (
               <p>No Results Found</p>
             ) : (
-              displayProducts.map((product) => (
-                <div key={product._id} className="col-12 col-md-4 col-lg-4 mb-4">
-                  <ProductsCard product={product} />
-                </div>
-              ))
+              <div className="row camera-cards-container">
+                {displayProducts.map((product) => (
+                  <div key={product._id} className="col-12 col-md-4 col-lg-4 mb-4">
+                    <ProductsCard product={product} />
+                  </div>
+                ))}
+
+              </div>
+
             )}
           </div>
         </div>
