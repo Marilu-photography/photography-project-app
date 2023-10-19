@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getImagesList } from "../../services/ImagesServices";
 import './ImagesList.css';
 import ImagesCard from "../../components/ImagesCard/imagesCard";
+
 
 const ImagesList = () => {
   const [images, setImagesData] = useState([]);
@@ -29,19 +30,20 @@ const ImagesList = () => {
   }
 
 return (
-  <div className="container ImageList">
-  <div className="row">
-    <h1>Image Gallery</h1>
 
-    <div className="row">
+  <div className="container">
+  <div className="row contendor-gallery">
+    <h1 className="h1-Gallery">Image Gallery</h1>
+
+   
       {images.map((image) => (
-          <div key={image._id} className="col-lg-4 col-md-6 mb-4" >
+          <div key={image._id} className="col-12 col-lg-4 col-md-6 mb-4" >
           <ImagesCard image={image} />
           </div>
       ))}
     </div>
     </div>
-  </div>
+  
 );
 };
 export default ImagesList;

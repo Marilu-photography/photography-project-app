@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import { deleteImage } from "../../services/ImagesServices";
-import './imagesCard.css';
+import "./imagesCard.css";
+import { PencilSquare, Trash3, Cart3, ArrowsFullscreen } from "react-bootstrap-icons";
+import { Button } from "react-bootstrap";
+import { useState } from "react";
+import ModalG from "../Modal/ModalG.jsx";
+
 
 const ImagesCard = ({ image, currentUser, getUser }) => {
   const { _id, name, price, images, author, editedImageUrl } = image;
@@ -9,82 +14,105 @@ const ImagesCard = ({ image, currentUser, getUser }) => {
   const { addItem } = useCart();
 
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this image?')) {
+    if (window.confirm("Are you sure you want to delete this image?")) {
       deleteImage(image._id)
         .then(() => {
           getUser();
-          console.log('Image deleted');
+          console.log("Image deleted");
         })
-        .catch(error => {
-          console.error('Error deleting image:', error);
-        })
+        .catch((error) => {
+          console.error("Error deleting image:", error);
+        });
     }
   };
 
   return (
-    <>
+     <>
+     
     <div className="card-photos">
-          <div className="card-photo">
-          <img src={images[0]} alt={name} className="card-img-top" />
-           </div>
-          <ul className="social-media-photo">
-          <li><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" className="icon">
-          <path d="M962.267429 233.179429q-38.253714 56.027429-92.598857 95.451429 0.585143 7.972571 0.585143 23.990857 0 74.313143-21.723429 148.260571t-65.974857 141.970286-105.398857 120.32-147.456 83.456-184.539429 31.158857q-154.843429 0-283.428571-82.870857 19.968 2.267429 44.544 2.267429 128.585143 0 229.156571-78.848-59.977143-1.170286-107.446857-36.864t-65.170286-91.136q18.870857 2.852571 34.889143 2.852571 24.576 0 48.566857-6.290286-64-13.165714-105.984-63.707429t-41.984-117.394286l0-2.267429q38.838857 21.723429 83.456 23.405714-37.741714-25.161143-59.977143-65.682286t-22.308571-87.990857q0-50.322286 25.161143-93.110857 69.12 85.138286 168.301714 136.265143t212.260571 56.832q-4.534857-21.723429-4.534857-42.276571 0-76.580571 53.979429-130.56t130.56-53.979429q80.018286 0 134.875429 58.294857 62.317714-11.995429 117.174857-44.544-21.138286 65.682286-81.115429 101.741714 53.174857-5.705143 106.276571-28.598857z"></path>
-        </svg></li>
-        <li><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" className="icon">
-        <path d="M123.52064 667.99143l344.526782 229.708899 0-205.136409-190.802457-127.396658zM88.051421 585.717469l110.283674-73.717469-110.283674-73.717469 0 147.434938zM556.025711 897.627196l344.526782-229.708899-153.724325-102.824168-190.802457 127.396658 0 205.136409zM512 615.994287l155.406371-103.994287-155.406371-103.994287-155.406371 103.994287zM277.171833 458.832738l190.802457-127.396658 0-205.136409-344.526782 229.708899zM825.664905 512l110.283674 73.717469 0-147.434938zM746.828167 458.832738l153.724325-102.824168-344.526782-229.708899 0 205.136409zM1023.926868 356.00857l0 311.98286q0 23.402371-19.453221 36.566205l-467.901157 311.98286q-11.993715 7.459506-24.57249 7.459506t-24.57249-7.459506l-467.901157-311.98286q-19.453221-13.163834-19.453221-36.566205l0-311.98286q0-23.402371 19.453221-36.566205l467.901157-311.98286q11.993715-7.459506 24.57249-7.459506t24.57249 7.459506l467.901157 311.98286q19.453221 13.163834 19.453221 36.566205z"></path>
-      </svg></li>
-      <li><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" className="icon">
-      <path d="M950.930286 512q0 143.433143-83.748571 257.974857t-216.283429 158.573714q-15.433143 2.852571-22.601143-4.022857t-7.168-17.115429l0-120.539429q0-55.442286-29.696-81.115429 32.548571-3.437714 58.587429-10.313143t53.686857-22.308571 46.299429-38.034286 30.281143-59.977143 11.702857-86.016q0-69.12-45.129143-117.686857 21.138286-52.004571-4.534857-116.589714-16.018286-5.12-46.299429 6.290286t-52.589714 25.161143l-21.723429 13.677714q-53.174857-14.848-109.714286-14.848t-109.714286 14.848q-9.142857-6.290286-24.283429-15.433143t-47.689143-22.016-49.152-7.68q-25.161143 64.585143-4.022857 116.589714-45.129143 48.566857-45.129143 117.686857 0 48.566857 11.702857 85.723429t29.988571 59.977143 46.006857 38.253714 53.686857 22.308571 58.587429 10.313143q-22.820571 20.553143-28.013714 58.88-11.995429 5.705143-25.746286 8.557714t-32.548571 2.852571-37.449143-12.288-31.744-35.693714q-10.825143-18.285714-27.721143-29.696t-28.306286-13.677714l-11.410286-1.682286q-11.995429 0-16.603429 2.56t-2.852571 6.582857 5.12 7.972571 7.460571 6.875429l4.022857 2.852571q12.580571 5.705143 24.868571 21.723429t17.993143 29.110857l5.705143 13.165714q7.460571 21.723429 25.161143 35.108571t38.253714 17.115429 39.716571 4.022857 31.744-1.974857l13.165714-2.267429q0 21.723429 0.292571 50.834286t0.292571 30.866286q0 10.313143-7.460571 17.115429t-22.820571 4.022857q-132.534857-44.032-216.283429-158.573714t-83.748571-257.974857q0-119.442286 58.88-220.306286t159.744-159.744 220.306286-58.88 220.306286 58.88 159.744 159.744 58.88 220.306286z"></path>
-    </svg></li>
-  </ul>
-  <div className="card-info-photo">
-    <p className="title-photo">Name</p>
-    <p className="subtitle-photo">Web Dev</p>
-  </div>
-</div>
-</>
+      <div className="card-photo">
+        <img src={images[0]} alt={name} className="card-img-top" />
+      </div>
+      <ul className="social-media-photo">        
+      <li>
+          <button
+            className="card-button-img"
+            onClick={() => addItem({ ...image, id: image._id })}
+          >
+            <Cart3 className="icon svg-icon" />
+          </button>
+        </li>
+        {currentUser && currentUser.id === author.id ? (
+          <>
+            <li>
+              <button className="card-button-img">
+                <Link to={`/editor/${_id}`}>
+                  <PencilSquare className="icon svg-icon" />
+                </Link>
+              </button>
+            </li>
+            <li>
+              <button className="card-button-img">
+                <Link onClick={handleDelete} to={`/profile/${author.id}`}>
+                  <Trash3 className="icon svg-icon" />
+                </Link>
+              </button>
+            </li>
+          </>
+        ) : (
+          <li>
+          <ModalG image={image}  />
+          </li>
+        )}
+      </ul>
+      <div className="card-info-photo">
+        <p className="title-photo">{name}</p>
+        <div className="info">
+          <p className="subtitle-photo">
+            Author: <strong><Link to={`/profile/${author.id}`}>{author.username}</Link></strong>
+          </p>
+          <p className="subtitle-photo"> Price: {price} €</p>
+        </div>
+      </div>
+    </div>
     
-  );
+  </>
+);
 };
 
 export default ImagesCard;
 
+{/* // <div className="card">
+//   <img src={images[0]} alt={name} className="card-img-top" />
+//   <div className="card-body">
 
+//     {currentUser && currentUser.id === author.id ? (
+//       <>
+//         <Link to={`/editor/${_id}`} className="btn btn-primary">
+//           Edit
+//         </Link>
+//         <Link className="btnDetails" onClick={handleDelete} to={`/profile/${author.id}`}> Delete </Link>
+//       </>
+//     ) : (
+//       <>
 
-
-
-// <div className="card">
-    //   <img src={images[0]} alt={name} className="card-img-top" />
-    //   <div className="card-body">
-
-    //     {currentUser && currentUser.id === author.id ? (
-    //       <>
-    //         <Link to={`/editor/${_id}`} className="btn btn-primary">
-    //           Edit
-    //         </Link>
-    //         <Link className="btnDetails" onClick={handleDelete} to={`/profile/${author.id}`}> Delete </Link>
-    //       </>
-    //     ) : (
-    //       <>
-
-    //         <h5 className="card-title">{name}</h5>
-    //         <p className="card-text">
-    //           Author: <Link to={`/profile/${author.id}`}>{author.username}</Link>
-    //         </p>
-    //         <p className="card-text">Price: {price} €</p>
-    //         <button className="btn btn-success">View</button>
-    //         <button
-    //           className="card-button"
-    //           onClick={() => addItem({ ...image, id: image._id })}
-    //         >
-    //           <svg className="svg-icon" viewBox="0 0 20 20">
-    //             <path d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z"></path>
-    //             <path d="M8.251,12.386c-1.023,0-1.856,0.834-1.856,1.856s0.833,1.853,1.856,1.853c1.021,0,1.853-0.83,1.853-1.853S9.273,12.386,8.251,12.386z M8.251,15.116c-0.484,0-0.877-0.393-0.877-0.874c0-0.484,0.394-0.878,0.877-0.878c0.482,0,0.875,0.394,0.875,0.878C9.126,14.724,8.733,15.116,8.251,15.116z"></path>
-    //             <path d="M13.972,12.386c-1.022,0-1.855,0.834-1.855,1.856s0.833,1.853,1.855,1.853s1.854-0.83,1.854-1.853S14.994,12.386,13.972,12.386z M13.972,15.116c-0.484,0-0.878-0.393-0.878-0.874c0-0.484,0.394-0.878,0.878-0.878c0.482,0,0.875,0.394,0.875,0.878C14.847,14.724,14.454,15.116,13.972,15.116z"></path>
-    //           </svg>
-    //         </button>
-    //       </>
-    //     )}
-    //   </div>
-    // </div>
+//         <h5 className="card-title">{name}</h5>
+//         <p className="card-text">
+//           Author: <Link to={`/profile/${author.id}`}>{author.username}</Link>
+//         </p>
+//         <p className="card-text">Price: {price} €</p>
+//         <button className="btn btn-success">View</button>
+//         <button
+//           className="card-button"
+//           onClick={() => addItem({ ...image, id: image._id })}
+//         >
+//           <svg className="svg-icon" viewBox="0 0 20 20">
+//             <path d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z"></path>
+//             <path d="M8.251,12.386c-1.023,0-1.856,0.834-1.856,1.856s0.833,1.853,1.856,1.853c1.021,0,1.853-0.83,1.853-1.853S9.273,12.386,8.251,12.386z M8.251,15.116c-0.484,0-0.877-0.393-0.877-0.874c0-0.484,0.394-0.878,0.877-0.878c0.482,0,0.875,0.394,0.875,0.878C9.126,14.724,8.733,15.116,8.251,15.116z"></path>
+//             <path d="M13.972,12.386c-1.022,0-1.855,0.834-1.855,1.856s0.833,1.853,1.855,1.853s1.854-0.83,1.854-1.853S14.994,12.386,13.972,12.386z M13.972,15.116c-0.484,0-0.878-0.393-0.878-0.874c0-0.484,0.394-0.878,0.878-0.878c0.482,0,0.875,0.394,0.875,0.878C14.847,14.724,14.454,15.116,13.972,15.116z"></path>
+//           </svg>
+//         </button>
+//       </>
+//     )}
+//   </div>
+// </div> */}
