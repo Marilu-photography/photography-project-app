@@ -1,0 +1,16 @@
+
+.modal-message-button {
+    border: none !important;
+    background-color: black !important ;
+    color: rgb(251,173,25)!important;
+    font-weight: bolder !important;
+    border-radius: 1% !important;
+}
+
+.modal-message-button:hover {
+    border: none    !important;
+    background-color: rgb(251,173,25) !important ;
+    color: black!important;
+    font-weight: bolder !important;
+    border-radius: 1% !important;
+}
