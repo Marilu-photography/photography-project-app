@@ -1,0 +1,19 @@
+
+@media only screen and (max-width: 600px) {
+
+    .contendor-gallery{
+        width: 90% !important;
+    }
+
+    .card-photos{
+        width: 120% !important;
+      
+    }
+
+    .h1-Gallery{
+        font-size: 1.5em !important;
+        text-align: center !important;
+        margin-top: 17px!important;
+    }
+    
+}
