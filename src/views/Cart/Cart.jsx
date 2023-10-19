@@ -5,6 +5,7 @@ import { buyProduct } from '../../services/ProductsServices';
 import { useEffect, useState } from "react";
 import { success } from "../../services/ProductsServices";
 import { useAuthContext } from "../../contexts/AuthContext";
+import "./Cart.css";
 
 
 function Cart() {
@@ -50,7 +51,7 @@ function Cart() {
   if (isEmpty) return <p>Your cart is empty</p>;
 
   return (
-    <div className="container flex flex-column">
+    <div className="container flex flex-column cart-container">
       <div className="row">
         <div className="Banner">
           <Link to="/editor">

@@ -3,6 +3,7 @@ import { getProductList } from '../../services/ProductsServices';
 import ProductsCard from '../../components/ProductCard/productsCard1';
 import { Link } from 'react-router-dom';
 import { useAppContext } from "../../contexts/AppContext";
+import './Lens.css';
 
 const LensList = () => { 
     
@@ -39,7 +40,7 @@ const LensList = () => {
       ? searchResults : products;
 
     return (
-        <div className='Lens Camera'>  
+        <div className='LensList'>  
         <div className="Banner">
           <Link to="/editor">
             <img src="/img/muestra.png" alt="muestra" className="muestra" />

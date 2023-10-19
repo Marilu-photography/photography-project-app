@@ -1,0 +1,25 @@
+.btn-post {
+    width: 10rem;
+    height: 2.3em;
+    margin: 0.5em;
+    background: black;
+    text-align: center;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: center;
+    z-index: 1;
+    overflow: hidden;
+    text-decoration: none;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .btn-post:hover {
+    
+    background: #FBAD19;
+    
+    color: black;
+    
+   }

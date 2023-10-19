@@ -91,10 +91,9 @@ const Login = () => {
           placeholder="Enter your password"
         />
 
-        <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`}>
+        <button type="submit" className={`btnDetails btn-${isSubmitting ? 'secondary' : 'primary'}`}>
           {isSubmitting ? "Submitting..." : "Login"}
         </button>
-        <p>Don't have an account? <Link to="/Register">Register here</Link></p>
       </form>
     </div>
   );

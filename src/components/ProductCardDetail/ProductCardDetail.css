@@ -1,5 +1,6 @@
 .container{
     border: none !important;
+    
 }
 
 .row {
@@ -130,12 +131,21 @@
 
   /* css para los comentarios */
 
+  .comment {
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin: 10px;
+  }
+
   .avatar-comment {
-    width: 90px;
-    height: 90px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 10px;
     display: inline;
+  }
+
+  .avatar-comment img {
+    object-fit: cover;
   }
 
   .user-comment-name {
@@ -198,4 +208,12 @@
 .text-area-form-control {
   width: 100% !important;
   height: 100px;
+}
+
+.btn-delete-post {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
 }

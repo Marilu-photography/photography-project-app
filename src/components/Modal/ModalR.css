@@ -6,3 +6,10 @@ a.nav-link {
 .nav-link.active {
     color: white !important;
   }
+
+  .btn-modal-link {
+    border: none;
+    background-color: white !important;
+    color: black;
+    font-weight: bolder;
+  }

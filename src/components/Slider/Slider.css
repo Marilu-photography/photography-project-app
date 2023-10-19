@@ -3,6 +3,7 @@
 #carouselExampleIndicators {
     max-width: 100%; /* Cambia este valor según tus necesidades */
     margin: auto;
+    margin-top: 4rem;
     max-height: 200px;  /* Centra el carrusel en la página */
   }
   

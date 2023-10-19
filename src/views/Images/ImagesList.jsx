@@ -30,10 +30,10 @@ const ImagesList = () => {
   }
 
 return (
+
   <div className="container">
   <div className="row contendor-gallery">
     <h1 className="h1-Gallery">Image Gallery</h1>
-    
 
    
       {images.map((image) => (

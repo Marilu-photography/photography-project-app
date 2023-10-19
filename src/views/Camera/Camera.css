@@ -1,12 +1,8 @@
 
-/* .Camera {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.Camera {
+    margin-top: 4rem;
     
-} */
+}
 
 .contenedor{
     display: flex;
@@ -21,4 +17,120 @@
     height: 1px;
     background-color:black;
     margin: 0;
+}
+
+.filters-container {
+    width: 250px;
+    position: sticky;
+    top: -10rem;
+    left: 1rem;
+    padding: 10px;
+   border: 1px solid rgb(194, 194, 194);
+    margin-right: 80px;
+}
+
+.filters-container h3 {
+color: rgb(251,173,25);
+background-color: black;
+padding: 10px;
+}
+
+
+.camera-product-container {
+    width: 1300px;
+    margin: 0 auto; 
+    box-sizing: border-box;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 10px; 
+  }
+  
+  .checkbox-label input {
+    margin-right: 10px;
+  }
+
+  input[type="checkbox"]:checked {
+    color: rgb(0, 0, 0); 
+    background-color: yellow !important;; 
+  }
+
+  .btn-filter {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-size: 15px;
+  } 
+  .btn-filter:hover {
+    background-color: rgb(251,173,25);
+    color: black;
+  }
+
+  .filter-list-container {
+    flex-direction: row;
+  }
+
+
+  @media screen and (max-width: 768px) {
+
+    body {
+      font-size: 16px; 
+    }
+
+    
+
+    .filter-list-container {
+      flex-direction: column;
+      
+      width: 90vw;
+    }
+  
+    .filters-container {
+      position:initial;
+      width: 100%;
+      margin: 0 auto;
+      align-items: center !important;
+      display: none !important;
+      
+    }
+hr {
+  width: 100% !important;
+  align-items: center !important;
+}
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 10px 0px!important;
+    }
+
+    .camera-product-container {
+      width: 100%;
+      margin: 0 auto; 
+      box-sizing: border-box;
+      justify-content: center;
+      align-items: center !important;
+      
+    }
+
+    .camera-cards-container {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .camera-cards-container .card {
+    width: 80vw!important;
+    margin: 0px !important;
+   }
+   
+   .btn-filter {
+    width: 40%;
+   }
+
+
 }

@@ -74,7 +74,7 @@ const UserProfile = () => {
   return (
     <>
       {user && user.isAdmin === false ? (
-        <div>
+        <div className="userContent">
           <UserProfilePage user={user} getUser={getUser} />
         </div>
       ) : 
