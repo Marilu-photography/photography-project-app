@@ -124,7 +124,7 @@ const ProductCardDetail = ({ product }) => {
           <div className="row mb-3">
             <div className="col-lg-6 d-flex align-items-center flex-column img-product-container">
               <div className="img-product">
-                <img src={images[currentImageIndex]} className="card-img-top" alt={name} />
+                <img src={images[currentImageIndex]} className="card-img-top-product" alt={name} />
               </div>
               <div className="thumbnails">
                 {images.map((image, index) => (

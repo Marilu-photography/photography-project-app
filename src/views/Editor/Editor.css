@@ -1,19 +1,92 @@
+.editor-output {
+  width: 85%;
+  height: auto;
+}
+
+
 .editor-output img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .container {
-      display: flex;
-      border: 1px solid #ccc;
-    }
-    
-    .col-md-4 {
-      flex: 1;
-      border-right: 1px solid #ccc;
-      padding: 20px;
-    }
-    
-    .col-md-4:last-child {
-      border-right: none;
-    }
+  width: 50vw;
+  height: auto;
+}
+
+.container {
+  display: flex;
+  border: 1px solid #ccc;
+}
+
+
+
+.col-md-4 {
+  flex: 1;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+}
+
+.col-md-4:last-child {
+  border-right: none;
+}
+
+.editor-options {
+  background-color:#f8f9fa;
+  height: 100vh;
+  width: 15%;
+}
+
+.editor-inputs {
+  padding-left: 50px;
+}
+
+.editor-inputs h5 {
+  color: rgb(251, 173, 25);
+  margin-bottom: 20px;
+}
+
+.btn-back-arrow {
+  margin-top: 20px;
+  margin-left: 20px;
+  border: none;
+  background-color: transparent;
+}
+
+.btn-back-arrow svg {
+  color:rgb(251, 173, 25);
+  width: 40px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.imputs-btn {
+  width: 100%;
+  background-color: transparent !important;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  font-size: 18px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.imputs-btn:hover {
+
+  background-color: rgb(251, 173, 25) !important;
+  border: none;
+  border-bottom: 1px solid rgb(251, 173, 25);
+  text-align: left;
+  font-size: 18px;
+  transition: 0.5s;
+
+}
+
+.imputs-btn.active {
+
+  background-color: rgb(251, 173, 25) !important;
+  border: none;
+  border-bottom: none;
+  text-align: left;
+  font-size: 18px;
+  transition: 0.5s;
+
+}
+

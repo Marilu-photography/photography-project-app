@@ -16,6 +16,10 @@ import { getImage } from "../../services/ImagesServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { text } from "@cloudinary/url-gen/qualifiers/source";
 import { editImage } from "../../services/ImagesServices";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { ArrowDownShort } from "react-bootstrap-icons";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -30,8 +34,11 @@ const EditorTool = () => {
   const [textFont, setTextFont] = useState("arial");
   const [textSize, setTextSize] = useState(100);
   const [textColor, setTextColor] = useState("#000000");
-  const [author, setAuthor] = useState(null); 
+  const [author, setAuthor] = useState(null);
   const navigate = useNavigate();
+
+  
+
 
   useEffect(() => {
     getImage(id)
@@ -41,7 +48,6 @@ const EditorTool = () => {
         const imageName = fileName.split(".")[0];
         setImage(`marilu-photography/${imageName}`);
         setAuthor(res.author);
-        console.log("entra aqui", res);
         setLoading(false);
       })
       .catch((error) => {
@@ -139,74 +145,49 @@ const EditorTool = () => {
 
   const handleSave = () => {
     const editedImageUrl = renderImage().toURL();
-      editImage(id, {editedImageUrl})
+    editImage(id, { editedImageUrl })
       .then((res) => {
-          console.log(res)
-          navigate(`/profile/${author}`)
-          
+        console.log(res)
+        navigate(`/profile/${author}`)
+
       })
       .catch((error) => {
-          console.error(error)
+        console.error(error)
       })
 
-    }
+  }
 
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="editor-options">
-              <div className="my-3">
+  const handleNavigation = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div className="EditorTool">
+      <div className="row">
+        <div className="col-md-3 editor-options">
+          <div>
+            <button className="btn-back-arrow" onClick={handleNavigation}><ArrowLeftCircle style={{ width: "50px" }} /></button>
+          </div>
+          <div className="editor-inputs">
+            <h5>Select Action</h5>
+            <div className="my-3 ">
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-generative-replace">Use AI to edit your image</Tooltip>}
+              >
                 <button
-                  className={`btn ${
-                    activeButton === "generativeReplace"
-                      ? "btn-primary"
-                      : "btn-secondary"
-                  }`}
+                  className={` imputs-btn ${activeButton === "generativeReplace"
+                    ? "active"
+                    : ""
+                    }`}
                   onClick={() => handleButtonClick("generativeReplace")}
                 >
-                  Generative Replace
+                  <span>Generative Replace</span>
+                  <span><ArrowDownShort style={{ width: "20px" }} /></span>
                 </button>
-              </div>
-              <div className="my-3">
-                <button
-                  className={`btn ${
-                    activeButton === "grayscale"
-                      ? "btn-primary"
-                      : "btn-secondary"
-                  }`}
-                  onClick={() => handleButtonClick("grayscale")}
-                >
-                  Grayscale
-                </button>
-              </div>
-              <div className="my-3">
-                <button
-                  className={`btn ${
-                    activeButton === "textOverlay"
-                      ? "btn-primary"
-                      : "btn-secondary"
-                  }`}
-                  onClick={() => handleButtonClick("textOverlay")}
-                >
-                  Text Overlay
-                </button>
-              </div>
-
-              <div className="my-3">
-                <button
-                  className={`btn ${
-                    activeButton === "pad" ? "btn-primary" : "btn-secondary"
-                  }`}
-                  onClick={() => handleButtonClick("pad")}
-                >
-                  Generative Background
-                </button>
-              </div>
+              </OverlayTrigger>
             </div>
-          </div>
-          <div className={`col-md-4 ${activeButton ? "" : "d-none"}`}>
-            <div className="editor-inputs">
+            <div>
               {activeButton === "generativeReplace" && (
                 <>
                   <input
@@ -228,14 +209,42 @@ const EditorTool = () => {
                   </button>
                 </>
               )}
-              {activeButton === "grayscale" && (
-                <>
-                  <p>No values needed, just click Apply.</p>
-                  <button onClick={() => effectSubmitsMap["grayscale"]()}>
-                    Apply
-                  </button>
-                </>
-              )}
+            </div>
+
+            <div className="my-3">
+            <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-generative-replace">Apply grayscale to your image</Tooltip>}
+              >
+              <button
+                className={`imputs-btn ${activeButton === "grayscale"
+                  ? "active"
+                  : ""
+                  }`}
+                onClick={() => effectSubmitsMap["grayscale"]()}
+              >
+                Grayscale
+              </button>
+              </OverlayTrigger>
+            </div>
+            <div className="my-3">
+            <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-generative-replace">Add text to your image</Tooltip>}
+              >
+              <button
+                className={`imputs-btn ${activeButton === "textOverlay"
+                  ? "active"
+                  : ""
+                  }`}
+                onClick={() => handleButtonClick("textOverlay")}
+              >
+                <span>Text Layer</span>
+                <span><ArrowDownShort style={{ width: "20px" }} /></span>
+              </button>
+              </OverlayTrigger>
+            </div>
+            <div>
               {activeButton === "textOverlay" && (
                 <>
                   <input
@@ -267,6 +276,23 @@ const EditorTool = () => {
                   </button>
                 </>
               )}
+            </div>
+            <div className="my-3 ">
+            <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-generative-replace">Resizes the image to fill the specified width and height while, padding is added reach the required size.</Tooltip>}
+              >
+              <button
+                className={`imputs-btn ${activeButton === "pad" ? "active" : ""
+                  }`}
+                onClick={() => handleButtonClick("pad")}
+              >
+                <span> Generative Background</span>
+                <span><ArrowDownShort style={{ width: "20px" }} /></span>
+              </button>
+              </OverlayTrigger>
+            </div>
+            <div>
               {activeButton === "pad" && (
                 <>
                   <input
@@ -289,15 +315,17 @@ const EditorTool = () => {
               )}
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="editor-output">
-              <AdvancedImage cldImg={renderImage()} />
-              <button onClick={handleSave} to={`/profile/${id}`}>Guardar</button>
-            </div>
+        </div>
+        <div className="col-md-9">
+          <div className="editor-output">
+            <div><AdvancedImage cldImg={renderImage()} /></div>
+            <div><button onClick={handleSave} to={`/profile/${id}`}>Guardar</button></div>
+            
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 export default EditorTool;
