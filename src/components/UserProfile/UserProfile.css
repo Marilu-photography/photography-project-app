@@ -8,6 +8,7 @@
 
 .tab-content{
     display: flex;
+    width: 100% !important;
     
 }
 
@@ -40,6 +41,14 @@
     
 }
 
+.img-cont {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (max-width: 600px) {
 
     .avatar-profile{
@@ -60,4 +69,7 @@
         display: block;
         width: 89% !important;
 }
+
+
+
 }

@@ -172,7 +172,7 @@ const UserProfilePage = ({ user, getUser }) => {
                   <div className="img-preview row g-2">
                     {images && images.length > 0 ? (
                       images.map((image) => (
-                        <div key={image._id} className="col-lg-4 col-md-6 col-sm-12">
+                        <div key={image._id} className="img-cont col-lg-4 col-md-6 col-sm-12">
                           <ImagesCard
                             image={image}
                             currentUser={currentUser}

@@ -144,7 +144,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                             </ul>
                             <div className="tab-content mb-5" id="myTabContent">
                                 <div className={`tab-pane fade ${activeTab === "productsList" ? "active show" : ""}`} id="productsList" role="tabpanel" aria-labelledby="productsList-tab">
-                                    <table className="mt-3 text-center " style={{ width: '100%' }}>
+                                    <table className="mt-3 text-center product-table">
                                         <thead className="products-list-head">
                                             <tr>
                                                 <th>Image</th>

@@ -222,3 +222,14 @@
   object-fit: contain;
   height: 100%;
  }
+
+ .description-box-container {
+   margin-left: 100px;
+   margin-right: 100px;
+   width: 100%;
+ }
+
+ .global-detail-container {
+  margin-left: 100px;
+  margin-right: 100px;
+ }

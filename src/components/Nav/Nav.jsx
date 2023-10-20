@@ -76,7 +76,7 @@ const Nav = (product) => {
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <NavLink to="/" className="navbar-brand text-warning">
-          MariLu
+          <img src="\img\onClick-logo.png" alt="" />
         </NavLink>
         <button
           className="navbar-toggler"

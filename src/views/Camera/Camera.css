@@ -20,8 +20,7 @@
 }
 
 .filters-container {
-    width: 250px;
-    position: sticky;
+    width: 350px;
     top: -10rem;
     left: 1rem;
     padding: 10px;
@@ -37,7 +36,7 @@ padding: 10px;
 
 
 .camera-product-container {
-    width: 1300px;
+    width: 100%;
     margin: 0 auto; 
     box-sizing: border-box;
   }

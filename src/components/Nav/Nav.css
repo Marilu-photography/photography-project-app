@@ -116,6 +116,14 @@
   }
 
 
+  
+.navbar-brand img {
+    width: 50px;
+    height: auto;
+    margin-left: 20px;
+  }
+
+
   .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger7.svg') !important;
    

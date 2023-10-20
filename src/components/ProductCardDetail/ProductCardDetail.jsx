@@ -120,7 +120,7 @@ const ProductCardDetail = ({ product }) => {
 
   return (
     <>
-      <div className="container d-flex flex-column">
+      <div className="global-detail-container d-flex flex-column">
         <div className=" ProductCardDetail">
           <div className="row mb-3">
             <div className="col-lg-6 d-flex align-items-center flex-column img-product-container">
@@ -249,7 +249,7 @@ const ProductCardDetail = ({ product }) => {
 
       </div>
       <div className="my-5 d-flex reviews-area ">
-        <div className="container flex-column ">
+        <div className="description-box-container flex-column ">
           <div className="btn-detail">
             <ul className="nav nav-tabs border-0" role="tablist" id="myTab">
               <li className=" nav-item nav-btns ">

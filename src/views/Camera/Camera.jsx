@@ -275,8 +275,6 @@ const CameraList = () => {
           <div className="row d-flex camera-product-container">
             <div>
               <h1 className="h1-cameras"> Cameras</h1>
-              <hr className="hr-cameras" />
-
             </div>
 
             {displayProducts.length === 0 ? (
@@ -284,7 +282,7 @@ const CameraList = () => {
             ) : (
               <div className="row camera-cards-container">
                 {displayProducts.map((product) => (
-                  <div key={product._id} className="col-12 col-md-4 col-lg-4 mb-4">
+                  <div key={product._id} className="col-12 col-md-6 col-lg-6 mb-4">
                     <ProductsCard product={product} />
                   </div>
                 ))}

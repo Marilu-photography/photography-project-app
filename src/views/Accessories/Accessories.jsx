@@ -271,7 +271,6 @@ const AccessoriesList = () => {
             <div className="row d-flex camera-product-container">
               <div>
                 <h1 className="h1-cameras"> Accessories</h1>
-                <hr className="hr-cameras" />
               </div>
   
               {displayProducts.length === 0 ? (
@@ -281,7 +280,7 @@ const AccessoriesList = () => {
                   {displayProducts.map((product) => (
                     <div
                       key={product._id}
-                      className="col-12 col-md-4 col-lg-4 mb-4"
+                      className="col-12 col-md-6 col-lg-6 mb-4"
                     >
                       <ProductsCard product={product} />
                     </div>

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { success } from "../../services/ProductsServices";
 import { useAuthContext } from "../../contexts/AuthContext";
 import "./Cart.css";
-import { Trash3, BagCheck } from 'react-bootstrap-icons';
+import { Trash3, BagCheck, PlusCircle, DashCircle } from 'react-bootstrap-icons';
 
 
 function Cart() {
@@ -49,10 +49,10 @@ function Cart() {
 
   };
 
-  if (isEmpty) return <p>Your cart is empty</p>;
+
 
   return (
-    <div className="container flex flex-column cart-container">
+    <div className=" flex flex-column cart-container">
       <div className="row">
         <div className="Banner">
           <Link to="/editor">
@@ -78,7 +78,10 @@ function Cart() {
               </tr>
             </thead>
             <tbody>
-              {items.map((item) => (
+              {isEmpty ? 
+              <h6>Your cart is empty</h6>
+              :
+               (items.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>
@@ -89,20 +92,23 @@ function Cart() {
                     />
                   </td>
                   <td>{item.price} €</td>
-                  <td>
+                  <td >
+                    <div className="quantity-col">
                     <button
                       className="sum"
                       onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                     >
-                      -
+                      <DashCircle />
                     </button>
                     {item.quantity}
                     <button
                       className="sum"
                       onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                     >
-                      +
+                      <PlusCircle />
                     </button>
+                    </div>
+                    
                   </td>
                   <td>
                     <button
@@ -113,14 +119,15 @@ function Cart() {
                     </button>
                   </td>
                 </tr>
-              ))}
+              ))
+              )}
             </tbody>
           </table>
         </div>
         <div className="col-md-3 tb-movil">
           <div className="total-box">
             <h3>Total: {cartTotal.toFixed(2)} €</h3>
-            <div className="btn-cart-total">
+            <div className="btn-cart-total mb-4">
             <Button className="btn btn-checkout" onClick={handleCheckout}>
               <BagCheck className="icon-checkout" />
             </Button>
