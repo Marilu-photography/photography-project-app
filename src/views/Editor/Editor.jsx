@@ -44,6 +44,7 @@ const EditorTool = () => {
   const navigate = useNavigate();
   const [isApplyingFilter, setIsApplyingFilter] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
+  const [isGrayscale, setIsGrayscale] = useState(false);
 
   useEffect(() => {
     getImage(id)
@@ -76,6 +77,14 @@ const EditorTool = () => {
 
   const handleApplyFilter = (filterFunction) => {
     setIsApplyingFilter(true);
+    // setFromText("");
+    // setToText("");
+    // setTextOverlay("");
+    // setTextFont("arial");
+    // setTextSize(100);
+    // setTextColor("#000000");
+    // setIsGrayscale(false);
+
 
     setTimeout(() => {
       filterFunction();
@@ -106,7 +115,7 @@ const EditorTool = () => {
 
   const effectSubmitsMap = {
     generativeReplace: () => {
-      if (fromText && toText) {
+      if (fromText && toText !== "") {
         setActions([
           ...actions,
           { name: "generativeReplace", value: [fromText, toText] },
@@ -114,6 +123,7 @@ const EditorTool = () => {
       }
     },
     grayscale: () => {
+      setIsGrayscale(true);
       setActions([...actions, { name: "grayscale" }]);
     },
     pad: () => {
@@ -423,7 +433,7 @@ const EditorTool = () => {
                   </>
                 )}
               </div>
-              <div className="d-flex justify-content-between mt-5">
+              <div className="d-flex justify-content-between my-5">
                 <button
                   className="action-btn"
                   onClick={handleSave}
@@ -441,11 +451,11 @@ const EditorTool = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-9">
-            <div className="editor-output d-flex align-items-center justify-content-center mt-5">
-              <div>
-                <AdvancedImage cldImg={renderImage()} />
-              </div>
+          <div className="col-md-9 img-container-tool">
+          <div className="editor-output d-flex align-items-center justify-content-center mt-5">
+            <div className="image-container" style={{ position: "fixed", top: "5rem", bottom: "0" }}>
+              <AdvancedImage cldImg={renderImage()} />
+            </div>
             </div>
           </div>
         </div>
