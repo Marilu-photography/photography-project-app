@@ -6,6 +6,7 @@ import { PencilSquare } from "react-bootstrap-icons";
 import { Trash3 } from "react-bootstrap-icons";
 import { deleteProduct } from "../../services/ProductsServices";
 import { updateOrderStatus } from "../../services/OrdersServices";
+import { Check2Circle } from "react-bootstrap-icons";
 
 const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOrder }) => {
     const { username, name, surname, avatar, images } = user;
@@ -67,11 +68,11 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                 <div className="col col-lg-9 col-xl-7">
                     <div>
                         <div
-                            className="rounded-top text-white d-flex flex-row"
+                            className="banner-negro rounded-top text-white d-flex flex-row"
                             style={{ backgroundColor: "#000", height: "200px" }}
                         >
                             <div
-                                className="ms-4 mt-5 d-flex flex-column align-items-center"
+                                className="avatar-admin ms-4 mt-5 d-flex flex-column align-items-center"
                                 style={{ width: "300px" }}
                             >
                                 <img
@@ -106,7 +107,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                             </div>
                         </div>
                         <div
-                            className="px-4 py-5 text-black"
+                            className="banner-blanco px-4 py-5 text-black"
                             style={{ backgroundColor: "#f8f9fa" }}
                         >
                         </div>
@@ -153,7 +154,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody className="t-body">
 
                                             {sortedProducts.map((product) => (
                                                 <tr key={product._id} className="product-item" >
@@ -203,19 +204,19 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                                                     <tr className="order-item" >
                                                         <td>{order.orderNumber}</td>
                                                         <td>
-                                                            <button className="order-name-btn" onClick={() => handleOrderClick(order._id)} >
+                                                            <button className="btn-orders-status order-name-btn" onClick={() => handleOrderClick(order._id)} >
                                                                 {order.orderName}
                                                             </button>
                                                         </td>
                                                         <td className="text-center">{order.status}</td>
                                                         <td className="action-row">
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Prepared")}disabled={order.status !== "Paid"}>
+                                                            <button className="btn btn-orders-status" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Prepared")}disabled={order.status !== "Paid"}>
                                                                 Prepared
                                                             </button>
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Sent")} disabled={order.status !== "Prepared"}>
+                                                            <button className="btn btn-orders-status " data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Sent")} disabled={order.status !== "Prepared"}>
                                                                 Sent
                                                             </button>
-                                                            <button className="btn btn-primary mb-3" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Delivered")} disabled={order.status !== "Sent"}>
+                                                            <button className="btn btn-orders-status" data-mdb-ripple-color="dark" onClick={() => handleUpdateStatus(order._id, "Delivered")} disabled={order.status !== "Sent"}>
                                                                 Delivered
                                                             </button>
                                                         </td>
@@ -227,9 +228,47 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                                                                     <h3>Order Details</h3>
                                                                     <p>User Name: {order.user.username}</p>
                                                                     <h4>Products:</h4>
-                                                                    <ul >
-                                                                        {order.items.map((item) => (
-                                                                           
+                                                                    <ul>
+                                    {order.items.map((item) => (
+                                      <li className="li-product-order"
+                                        key={
+                                          item.product
+                                            ? item.product._id
+                                            : item.image._id
+                                        }
+                                      > <Check2Circle className="check-order" color="#fbad19" size={20} />
+                                        {item.product ? (
+                                          <img
+                                            src={item.product.images[0]}
+                                            alt="Product Image"
+                                            style={{ width: '50px', height: '50px' }}
+                                          />
+                                        ) : (
+                                          <img
+                                            src={item.image.images[0]}
+                                            alt="Image"
+                                            style={{ width: '50px', height: '50px' }}
+                                          />
+                                        )}
+                                        <strong> Name: </strong>{" "}
+                                        {item.product
+                                          ? item.product.name
+                                          : item.image.name}
+                                        <br />
+                                        <strong> Price: </strong>{" "}
+                                        {item.product
+                                          ? item.product.price
+                                          : item.image.price} <strong> || </strong>
+                                        
+                                        <strong> Quantity: </strong> {item.quantity}
+                                        
+                                      </li>
+                                    ))}
+                                  </ul>
+
+
+                                                                    {/* <ul >
+                                                                        {order.items.map((item) => (   
                                                                             
                                                                             <li key={ item.product ? item.product._id : item.image._id}>
                                                                                 Name: { item.product ? item.product.name : item.image.name}<br />
@@ -241,7 +280,7 @@ const AdminProfile = ({ user, products, setProducts, orders, setOrders, updateOr
                                                                             
                                                                         )
                                                                         )}
-                                                                        </ul>
+                                                                        </ul> */}
                                                                    
                                                                 </div>
                                                             </td>
