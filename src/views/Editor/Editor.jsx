@@ -22,6 +22,10 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { SketchPicker } from "react-color";
 import { Download } from "react-bootstrap-icons";
+import { AspectRatio } from "react-bootstrap-icons";
+import { Sliders2Vertical } from "react-bootstrap-icons";
+import { Fonts } from "react-bootstrap-icons";
+import { CircleSquare } from "react-bootstrap-icons";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -205,9 +209,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${
-                      activeButton === "generativeReplace" ? "active" : ""
-                    }`}
+                    className={` imputs-btn ${activeButton === "generativeReplace" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>Generative Replace</span>
@@ -266,9 +269,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "grayscale" ? "active" : ""
-                    }`}
+                    className={`imputs-btn ${activeButton === "grayscale" ? "active" : ""
+                      }`}
                     onClick={() =>
                       handleApplyFilter(() => effectSubmitsMap["grayscale"]())
                     }
@@ -287,9 +289,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "textOverlay" ? "active" : ""
-                    }`}
+                    className={`imputs-btn ${activeButton === "textOverlay" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>Text Layer</span>
@@ -375,9 +376,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "pad" ? "active" : ""
-                    }`}
+                    className={`imputs-btn ${activeButton === "pad" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span> Generative Background</span>
@@ -450,6 +450,7 @@ const EditorTool = () => {
           </div>
         </div>
       </div>
+      {/* MOBILE       */}
       <div className="EditorTool-mobile hide-on-desk">
         <div className="row">
           <div className="col-md-3 editor-options">
@@ -458,9 +459,12 @@ const EditorTool = () => {
                 <ArrowLeftCircle style={{ width: "50px" }} />
               </button>
             </div>
-
             <div className="col-md-9">
-              <div className="editor-output d-flex flex-column align-items-center justify-content-center mt-5">
+              <div className="editor-output d-flex flex-column align-items-center justify-content-center">
+                <div className="mb-3 text-center">
+                  <h1>PhotoIA</h1>
+                  <h2>Edit your photos like a professional with just one click.</h2>
+                </div>
                 <div>
                   <AdvancedImage cldImg={renderImage()} />
                 </div>
@@ -486,235 +490,230 @@ const EditorTool = () => {
 
             <div className="editor-inputs">
               <h5>Select Action</h5>
-              <div className="d-flex">
-              <div className="my-3 ">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    <Tooltip id="tooltip-generative-replace">
-                      Use AI to edit your image in the first place
-                    </Tooltip>
-                  }
-                >
+              <div className="d-flex justify-content-between">
+                <div className="my-3 ">
+
                   <button
-                    className={` imputs-btn ${
-                      activeButton === "generativeReplace" ? "active" : ""
-                    }`}
+                    className={` imputs-btn-mbl ${activeButton === "generativeReplace" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
-                    <span>Generative Replace</span>
-                    <span>
-                      <ArrowDownShort style={{ width: "20px" }} />
-                    </span>
+                    <span><CircleSquare /></span>
                   </button>
-                </OverlayTrigger>
-              </div>
-              <div>
-                {activeButton === "generativeReplace" && (
-                  <>
-                    <div className="input-container">
-                      <label>From</label>
-                      <input
-                        className="editor-input"
-                        type="text"
-                        placeholder="e.g. dog"
-                        value={fromText}
-                        onChange={(e) => setFromText(e.target.value)}
-                      />
-                    </div>
-                    <div className="input-container">
-                      <label>To</label>
-                      <input
-                        className="editor-input"
-                        type="text"
-                        placeholder="e.g. cat"
-                        value={toText}
-                        onChange={(e) => setToText(e.target.value)}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <button
-                        className="apply-edition-btn"
-                        onClick={() =>
-                          handleApplyFilter(() =>
-                            effectSubmitsMap["generativeReplace"]()
-                          )
-                        }
-                      >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
 
-              <div className="my-3">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    <Tooltip id="tooltip-generative-replace">
-                      Apply grayscale to your image
-                    </Tooltip>
-                  }
-                >
+                </div>
+
+                <div className="my-3">
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "grayscale" ? "active" : ""
-                    }`}
+                    className={`imputs-btn-mbl ${activeButton === "grayscale" ? "active" : ""
+                      }`}
                     onClick={() =>
-                      handleApplyFilter(() => effectSubmitsMap["grayscale"]())
+                      handleButtonClick("grayscale")
                     }
                   >
-                    Grayscale
+                    <Sliders2Vertical />
                   </button>
-                </OverlayTrigger>
-              </div>
-              <div className="my-3">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    <Tooltip id="tooltip-generative-replace">
-                      Add text to your image
-                    </Tooltip>
-                  }
-                >
+                </div>
+                <div className="my-3">
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "textOverlay" ? "active" : ""
-                    }`}
+                    className={`imputs-btn-mbl ${activeButton === "textOverlay" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
-                    <span>Text Layer</span>
-                    <span>
-                      <ArrowDownShort style={{ width: "20px" }} />
-                    </span>
+                    <span><Fonts /></span>
                   </button>
-                </OverlayTrigger>
+                </div>
+                <div className="my-3 ">
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "pad" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("pad")}
+                  >
+                    <span> <AspectRatio /></span>
+                  </button>
+                </div>
               </div>
+            </div>
+            <div className="editor-inputs">
               <div>
+                {/*  GENERADOR IA INICIO */}
+                <div>
+                  {activeButton === "generativeReplace" && (
+                    <>
+                      <h4>Generative Replace</h4>
+                      <p>Use AI to edit your image in the first place</p>
+                      <div className="input-container">
+
+                        <label>From</label>
+                        <input
+                          className="editor-input"
+                          type="text"
+                          placeholder="e.g. dog"
+                          value={fromText}
+                          onChange={(e) => setFromText(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-container">
+                        <label>To</label>
+                        <input
+                          className="editor-input"
+                          type="text"
+                          placeholder="e.g. cat"
+                          value={toText}
+                          onChange={(e) => setToText(e.target.value)}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn"
+                          onClick={() =>
+                            handleApplyFilter(() =>
+                              effectSubmitsMap["generativeReplace"]()
+                            )
+                          }
+                        >
+                          {isApplyingFilter ? "Applying..." : "Apply"}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  GENERADOR IA FIN */}
+                {/*  B&N INICIO */}
+                <div className="w-100">
+                  {activeButton === "grayscale" && (
+                    <>
+                      <h4>Grayscale</h4>
+                      <p>Apply grayscale to your image</p>
+                      <div className="d-flex justify-content-center ">
+                        <button
+                          className="apply-edition-btn"
+                          onClick={() =>
+                            handleApplyFilter(() =>
+                              effectSubmitsMap["grayscale"]()
+                            )
+                          }
+                        >
+                          {isApplyingFilter ? "Applying..." : "Apply"}
+                        </button>
+                      </div>
+
+                    </>
+                  )
+                  }
+                </div>
+
+                {/*  B&N FIN */}
+                {/*  TEXTO INICIO */}
                 {activeButton === "textOverlay" && (
                   <>
                     <div className="input-container">
-                      <label>Text</label>
-                      <input
-                        className="editor-input"
-                        type="text"
-                        placeholder="e.g. Your watermark"
-                        value={textOverlay}
-                        onChange={(e) => setTextOverlay(e.target.value)}
-                      />
-                    </div>
-                    <div className="input-container d-flex flex-column">
-                      <label>Font</label>
-                      <select
-                        className="editor-select"
-                        value={textFont}
-                        onChange={(e) => setTextFont(e.target.value)}
-                      >
-                        <option value="Arial">Arial</option>
-                        <option value="Courier New">Courier New</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Roboto">Roboto</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                        <option value="Trebuchet MS">Trebuchet MS</option>
-                        <option value="Open Sans">Open Sans</option>
-                        <option value="Verdana">Verdana</option>
-                      </select>
-                    </div>
-                    <div className="input-container">
-                      <label>Font Size</label>
-                      <input
-                        className="editor-input"
-                        type="number"
-                        placeholder="Font Size"
-                        value={textSize}
-                        onChange={(e) => setTextSize(e.target.value)}
-                      />
-                    </div>
-                    <div className="input-container">
-                      <label>Font Color</label>
-                      <div className="d-flex justify-content-center mt-2">
-                        <SketchPicker
-                          color={textColor}
-                          onChangeComplete={(color) => setTextColor(color.hex)}
+                      <div>
+                        <h4>Text Layer</h4>
+                        <p>Add text to your image</p>
+                        <label>Text</label>
+                        <input
+                          className="editor-input"
+                          type="text"
+                          placeholder="e.g. Your watermark"
+                          value={textOverlay}
+                          onChange={(e) => setTextOverlay(e.target.value)}
                         />
                       </div>
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <button
-                        className="apply-edition-btn"
-                        onClick={() =>
-                          handleApplyFilter(() =>
-                            effectSubmitsMap["textOverlay"]()
-                          )
-                        }
-                      >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-              <div className="my-3 ">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    <Tooltip id="tooltip-generative-replace">
-                      Resizes the image to fill the specified width and height
-                      while, padding is added reach the required size.
-                    </Tooltip>
-                  }
-                >
-                  <button
-                    className={`imputs-btn ${
-                      activeButton === "pad" ? "active" : ""
-                    }`}
-                    onClick={() => handleButtonClick("pad")}
-                  >
-                    <span> Generative Background</span>
-                    <span>
-                      <ArrowDownShort style={{ width: "20px" }} />
-                    </span>
-                  </button>
-                </OverlayTrigger>
-              </div>
-              <div>
-                {activeButton === "pad" && (
-                  <>
-                    <div className="input-container">
-                      <label>Width</label>
-                      <input
-                        className="editor-input"
-                        type="number"
-                        placeholder="e.g. 1080px"
-                        value={fromText}
-                        onChange={(e) => setFromText(e.target.value)}
-                      />
-                    </div>
-                    <div className="input-container">
-                      <label>Height</label>
-                      <input
-                        className="editor-input"
-                        type="number"
-                        placeholder="e.g. 300px"
-                        value={toText}
-                        onChange={(e) => setToText(e.target.value)}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <button
-                        className="apply-edition-btn"
-                        onClick={() =>
-                          handleApplyFilter(() => effectSubmitsMap["pad"]())
-                        }
-                      >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
-                      </button>
+                      <div className="input-container d-flex flex-column">
+                        <label>Font</label>
+                        <select
+                          className="editor-select"
+                          value={textFont}
+                          onChange={(e) => setTextFont(e.target.value)}
+                        >
+                          <option value="Arial">Arial</option>
+                          <option value="Courier New">Courier New</option>
+                          <option value="Georgia">Georgia</option>
+                          <option value="Roboto">Roboto</option>
+                          <option value="Helvetica">Helvetica</option>
+                          <option value="Times New Roman">Times New Roman</option>
+                          <option value="Trebuchet MS">Trebuchet MS</option>
+                          <option value="Open Sans">Open Sans</option>
+                          <option value="Verdana">Verdana</option>
+                        </select>
+                      </div>
+                      <div className="input-container">
+                        <label>Font Size</label>
+                        <input
+                          className="editor-input"
+                          type="number"
+                          placeholder="Font Size"
+                          value={textSize}
+                          onChange={(e) => setTextSize(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-container">
+                        <label>Font Color</label>
+                        <div className="d-flex justify-content-center mt-2">
+                          <SketchPicker
+                            color={textColor}
+                            onChangeComplete={(color) => setTextColor(color.hex)}
+                          />
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn"
+                          onClick={() =>
+                            handleApplyFilter(() =>
+                              effectSubmitsMap["textOverlay"]()
+                            )
+                          }
+                        >
+                          {isApplyingFilter ? "Applying..." : "Apply"}
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
-              </div>
+                {/*  TEXTO FIN */}
+                {/*  GENERADOR FONDO INICIO */}
+                <div>
+                  {activeButton === "pad" && (
+                    <>
+                      <div className="input-container">
+                        <h4>Generative Background</h4>
+                        <p>Resizes the image to fill the specified width and height
+                          while, padding is added reach the required size.</p>
+                        <label>Width</label>
+                        <input
+                          className="editor-input"
+                          type="number"
+                          placeholder="e.g. 1080px"
+                          value={fromText}
+                          onChange={(e) => setFromText(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-container">
+                        <label>Height</label>
+                        <input
+                          className="editor-input"
+                          type="number"
+                          placeholder="e.g. 300px"
+                          value={toText}
+                          onChange={(e) => setToText(e.target.value)}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn"
+                          onClick={() =>
+                            handleApplyFilter(() => effectSubmitsMap["pad"]())
+                          }
+                        >
+                          {isApplyingFilter ? "Applying..." : "Apply"}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  GENERADOR FONDO FIN */}
               </div>
             </div>
           </div>
