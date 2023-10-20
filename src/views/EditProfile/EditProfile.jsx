@@ -158,7 +158,7 @@ const EditProfile = () => {
             onBlur={handleBlur}
             error={touched.avatar && errors.avatar}
           />
-        <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`} disabled={isSubmitting}>
+        <button  type="submit" className={` btn-${isSubmitting ? 'secondary' : 'btn-edit-profile'}`} disabled={isSubmitting}>
                 {isSubmitting ? "Submitting..." : "update"}
             </button>
         </form>

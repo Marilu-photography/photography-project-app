@@ -3,13 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import { Link } from 'react-router-dom';
 import './ModalR.css';
 import Login from '../../views/Login/Login';
-import ModalR from './ModalR';
+//import ModalR from './ModalR';
 
 
 
 const ModalL = (props) => {
     const [show, setShow] = useState(false);
-    const [showR, setShowR] = useState(false);
+    //const [showR, setShowR] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

@@ -1,0 +1,30 @@
+
+.edit-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.btn-btn-edit-profile {
+    border-radius: 0% !important;
+    background-color: black !important;
+    color: rgb(251, 173, 25)  !important;
+    border: none !important;
+    font-size: 18px !important;
+    padding: 7px !important;
+}
+
+.btn-btn-edit-profile:hover {
+    background-color: rgb(251, 173, 25) !important;
+    color: black !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .edit-user {
+        width: 90% !important;
+    }
+        
+    
+}

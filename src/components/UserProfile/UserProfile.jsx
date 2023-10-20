@@ -5,11 +5,13 @@ import { Button } from "react-bootstrap";
 import UploadModal from "../UploadModal/UploadModal";
 import { Link } from "react-router-dom";
 import { listOrders } from "../../services/OrdersServices";
+import "./UserProfile.css";
+import {Check2Circle} from 'react-bootstrap-icons';
 
 function formatDate(dateString) {
   const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 }
@@ -27,7 +29,7 @@ const UserProfilePage = ({ user, getUser }) => {
     setIsLoading(false);
     listOrders()
       .then((orders) => {
-        const userOrders = orders.filter(order => order.user._id === user.id);
+        const userOrders = orders.filter((order) => order.user._id === user.id);
         setOrders(userOrders);
         setIsLoading(false);
       })
@@ -39,13 +41,13 @@ const UserProfilePage = ({ user, getUser }) => {
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
-  }
+  };
 
   const handleOrderClick = (orderId) => {
-        setExpandedOrderId((prevExpandedOrderId) =>
-            prevExpandedOrderId === orderId ? null : orderId
-        );
-    };
+    setExpandedOrderId((prevExpandedOrderId) =>
+      prevExpandedOrderId === orderId ? null : orderId
+    );
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -66,7 +68,7 @@ const UserProfilePage = ({ user, getUser }) => {
                 <img
                   src={avatar}
                   alt={username}
-                  className="img-thumbnail mt-5 mb-2"
+                  className="avatar-profile img-thumbnail mt-5 mb-2"
                   style={{
                     width: "200px",
                     height: "200px",
@@ -75,7 +77,8 @@ const UserProfilePage = ({ user, getUser }) => {
                   }}
                 />
                 {currentUser && currentUser.id === user.id && (
-                  <div className="flex-row">
+                  <div className="btns-user-profile flex-row">
+                    
                     <Link
                       to={`/profile/${user.id}/edit`}
                       className="btn btn-outline-dark mb-3"
@@ -87,7 +90,7 @@ const UserProfilePage = ({ user, getUser }) => {
 
                     <Button
                       variant="outline-dark"
-                      className="mb-3"
+                      className="btn-upload mb-3"
                       style={{ width: "150px", zIndex: 1 }}
                       onClick={() => setShowModal(true)}
                     >
@@ -102,7 +105,7 @@ const UserProfilePage = ({ user, getUser }) => {
                   </div>
                 )}
               </div>
-              <div className="ms-1" style={{ marginTop: "120px" }}>
+              <div className="user-profile ms-1" style={{ marginTop: "120px" }}>
                 <h5>@{username}</h5>
                 <p>
                   {name} {surname}
@@ -124,7 +127,9 @@ const UserProfilePage = ({ user, getUser }) => {
               <ul className="nav nav-tabs border-0" id="myTab">
                 <li className="nav-item">
                   <a
-                    className={`nav-link text-uppercase ${activeTab === "recentPhotos" ? "active" : ""}`}
+                    className={`nav-link text-uppercase ${
+                      activeTab === "recentPhotos" ? "active" : ""
+                    }`}
                     onClick={() => handleTabClick("recentPhotos")}
                     id="recentPhotos-list-tab"
                     data-bs-toggle="tab"
@@ -139,7 +144,9 @@ const UserProfilePage = ({ user, getUser }) => {
                 {currentUser && currentUser.id === user.id && (
                   <li className="nav-item">
                     <a
-                      className={`nav-link text-uppercase ${activeTab === "myOrders" ? "active" : ""}`}
+                      className={`nav-link text-uppercase ${
+                        activeTab === "myOrders" ? "active" : ""
+                      }`}
                       onClick={() => handleTabClick("myOrders")}
                       id="my-orders-tab"
                       data-bs-toggle="tab"
@@ -150,14 +157,22 @@ const UserProfilePage = ({ user, getUser }) => {
                     >
                       My Orders
                     </a>
-                  </li>)}
+                  </li>
+                )}
               </ul>
-              <div className="tab-content mb-5" id="myTabContent">
-                <div className={`tab-pane fade ${activeTab === "recentPhotos" ? "active show" : ""}`} id="recentPhotos" role="tabpanel" aria-labelledby="recentPhotos-tab">
-                  <div className="row g-2">
+              <div className="tab-content  mb-5" id="myTabContent">
+                <div
+                  className={`tab-pane fade ${
+                    activeTab === "recentPhotos" ? "active show" : ""
+                  }`}
+                  id="recentPhotos"
+                  role="tabpanel"
+                  aria-labelledby="recentPhotos-tab"
+                >
+                  <div className="img-preview row g-2">
                     {images && images.length > 0 ? (
                       images.map((image) => (
-                        <div key={image._id} className="col">
+                        <div key={image._id} className="col-lg-4 col-md-6 col-sm-12">
                           <ImagesCard
                             image={image}
                             currentUser={currentUser}
@@ -171,8 +186,15 @@ const UserProfilePage = ({ user, getUser }) => {
                   </div>
                 </div>
 
-                <div className={`tab-pane fade ${activeTab === "myOrders" ? "active show" : ""}`} id="orders" role="tabpanel" aria-labelledby="myOrders-tab">
-                  <table className="mt-3" style={{ width: '100%' }}>
+                <div
+                  className={`tab-pane fade ${
+                    activeTab === "myOrders" ? "active show" : ""
+                  }`}
+                  id="orders"
+                  role="tabpanel"
+                  aria-labelledby="myOrders-tab"
+                >
+                  <table className="mt-3" style={{ width: "100%" }}>
                     <thead className="myOrders-list-head">
                       <tr className="text-center">
                         <th>Nº</th>
@@ -181,13 +203,16 @@ const UserProfilePage = ({ user, getUser }) => {
                         <th>Order Status</th>
                       </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                       {orders.map((order) => (
                         <Fragment key={order._id}>
-                          <tr className="order-item text-center" >
+                          <tr className="order-item text-center">
                             <td>{order.orderNumber}</td>
                             <td>
-                              <button className="order-name-btn" onClick={() => handleOrderClick(order._id)} >
+                              <button
+                                className="order-name-btn-profile"
+                                onClick={() => handleOrderClick(order._id)}
+                              >
                                 {order.orderName}
                               </button>
                             </td>
@@ -195,33 +220,53 @@ const UserProfilePage = ({ user, getUser }) => {
                             <td>{order.status}</td>
                           </tr>
                           {expandedOrderId === order._id && (
-                            <tr >
+                            <tr>
                               <td colSpan="3">
                                 <div className="expanded-user-order-details">
                                   <h5>Products:</h5>
-                                  <ul >
+                                  <ul>
                                     {order.items.map((item) => (
-
-
-                                      <li key={item.product ? item.product._id : item.image._id}>
-                                        Name: {item.product ? item.product.name : item.image.name}<br />
-                                        Price: {item.product ? item.product.price : item.image.price}<br />
-                                        Quantity: {item.quantity}<br />
-
-
+                                      <li className="li-product-order"
+                                        key={
+                                          item.product
+                                            ? item.product._id
+                                            : item.image._id
+                                        }
+                                      > <Check2Circle className="check-order" color="#fbad19" size={20} />
+                                        {item.product ? (
+                                          <img
+                                            src={item.product.images[0]}
+                                            alt="Product Image"
+                                            style={{ width: '50px', height: '50px' }}
+                                          />
+                                        ) : (
+                                          <img
+                                            src={item.image.url}
+                                            alt="Image"
+                                            style={{ width: '50px', height: '50px' }}
+                                          />
+                                        )}
+                                        <strong> Name: </strong>{" "}
+                                        {item.product
+                                          ? item.product.name
+                                          : item.image.name}
+                                        <br />
+                                        <strong> Price: </strong>{" "}
+                                        {item.product
+                                          ? item.product.price
+                                          : item.image.price} <strong> || </strong>
+                                        
+                                        <strong> Quantity: </strong> {item.quantity}
+                                        
                                       </li>
-
-                                    )
-                                    )}
+                                    ))}
                                   </ul>
-
                                 </div>
                               </td>
                             </tr>
                           )}
                         </Fragment>
-                      ))
-                      }
+                      ))}
                     </tbody>
                   </table>
                 </div>
