@@ -53,7 +53,7 @@ const UserProfilePage = ({ user, getUser }) => {
     return <p>Loading...</p>;
   }
   return (
-    <div>
+    <div className="UserProfile">
       <div className="row d-flex justify-content-center align-items-center h-100 mt-5">
         <div className="col col-lg-9 col-xl-7">
           <div>
