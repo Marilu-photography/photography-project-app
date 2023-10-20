@@ -27,7 +27,7 @@ const Nav = (product) => {
   //modales
   const [showModalR, setShowModalR] = useState(false);
   const [showModalL, setShowModalL] = useState(false);
-  const [showModalMessage, setShowModalMessage] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   // Función para cerrar ModalR y mostrar ModalMessage
   // const handleCloseModalR = () => {
@@ -38,6 +38,8 @@ const Nav = (product) => {
   // const handleShowModalL = () => {
   //   setShowModalL(true);
   // };
+
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -215,10 +217,10 @@ const Nav = (product) => {
             ) : (
               <>
                 <li></li>
-                {showModalMessage && (
+                {showMessage && (
                   <ModalMessage
-                    show={showModalMessage}
-                    onHide={() => setShowModalMessage(false)}
+                    show={showMessage}
+                    onHide={() => setShowMessage(false)}
                   />
                 )}
                 <li className="nav-item">
@@ -245,12 +247,12 @@ const Nav = (product) => {
           </ul>
         </div>
       </div>
-      {showModalMessage && (
+      {/* {showModalMessage && (
         <ModalMessage
           show={showModalMessage}
           onHide={() => setShowModalMessage(false)}
         />
-      )}
+      )} */}
     </nav>
   );
 };

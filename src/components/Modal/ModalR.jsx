@@ -40,7 +40,7 @@ const ModalR = (props) => {
         <p>Already have an account? <button className='btn-modal-link' onClick={handleLogInLink}>Login here</button></p>
          </Modal.Body>
       </Modal>
-      <ModalMessage show={showMessage} />
+      <ModalMessage show={showMessage} onHide={() => setShowMessage(false)} />
       <ModalLReg show={showLR} />
     </>
   );
