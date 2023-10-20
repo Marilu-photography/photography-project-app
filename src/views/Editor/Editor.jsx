@@ -26,7 +26,6 @@ import { AspectRatio } from "react-bootstrap-icons";
 import { Sliders2Vertical } from "react-bootstrap-icons";
 import { Fonts } from "react-bootstrap-icons";
 import { CircleSquare } from "react-bootstrap-icons";
-import { render } from "react-dom";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -78,13 +77,13 @@ const EditorTool = () => {
 
   const handleApplyFilter = (filterFunction) => {
     setIsApplyingFilter(true);
-    setFromText("");
-    setToText("");
-    setTextOverlay("");
-    setTextFont("arial");
-    setTextSize(100);
-    setTextColor("#000000");
-    setIsGrayscale(false);
+    // setFromText("");
+    // setToText("");
+    // setTextOverlay("");
+    // setTextFont("arial");
+    // setTextSize(100);
+    // setTextColor("#000000");
+    // setIsGrayscale(false);
 
 
     setTimeout(() => {
