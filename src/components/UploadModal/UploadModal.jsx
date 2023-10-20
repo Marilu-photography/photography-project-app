@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { createImage } from '../../services/ImagesServices';
 import { useAuthContext } from "../../contexts/AuthContext";
+import './UploadModal.css';
 
 
 function UploadModal({ show, onHide, getUser }) {
@@ -87,10 +88,10 @@ function UploadModal({ show, onHide, getUser }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+        <Button className='btn-close-img' onClick={onHide}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button className='btn-upload-img' onClick={handleSubmit}>
           Upload
         </Button>
       </Modal.Footer>

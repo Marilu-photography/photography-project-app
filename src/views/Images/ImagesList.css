@@ -6,6 +6,10 @@
 
 @media only screen and (max-width: 600px) {
 
+    .ImageList {
+        margin-top: -70px;
+        
+    }
     .contendor-gallery{
         width: 90% !important;
     }
@@ -23,3 +27,4 @@
     
 
 }
+
