@@ -5,6 +5,7 @@ import { activateUser, login as loginRequest } from '../../services/AuthServices
 import { useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import './Login.css';
 
 const initialValues = {
   email: "",
@@ -66,7 +67,7 @@ const Login = () => {
   return user ? (
     <Navigate to="/" />
   ) : (
-    <div className="Login">
+    <div className="Login-url">
       <h1>Login</h1>
 
       <form onSubmit={handleSubmit}>
