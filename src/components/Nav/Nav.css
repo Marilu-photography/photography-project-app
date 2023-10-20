@@ -145,6 +145,10 @@
     .search-form {
       width: 300px;
     }
+
+    .container-fluid {
+      padding-bottom: 17px;
+    }
     
   }
 

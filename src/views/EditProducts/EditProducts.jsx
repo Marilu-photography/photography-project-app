@@ -6,6 +6,7 @@ import { editProduct, getProductDetails, getProductList } from "../../services/P
 import InputGroup from "../../components/InputGroup/InputGroup";
 import { useNavigate, useParams } from "react-router-dom";
 import { Trash3 } from "react-bootstrap-icons";
+import "./EditProducts.css";
 
 
 const categories = ["Camera", "Lens", "Accessory"];
@@ -120,10 +121,12 @@ const EditProduct = () => {
 
   return (
     <>
+    <div className="edit-products-page">
       <h1>{isEditing ? "Edit Product" : "Create Product"}</h1>
-      <div className="create-Product">
+      <div className="edit-products">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <InputGroup
+            style={{ marginTop: '10px' }}
             label="Name"
             name="name"
             type="text"
@@ -156,7 +159,7 @@ const EditProduct = () => {
 
             }}
           />
-          <div>
+          <div className="Get-img">
             {product && values.images.map((image, index) => (
               <div key={index}>
               <img src={image} alt={image.name} style={{ width: "100px" }} />
@@ -182,8 +185,9 @@ const EditProduct = () => {
             onBlur={handleBlur}
             error={touched.description && errors.description}
           />
-          <label htmlFor="category">Category</label>
+          <label htmlFor="category" style={{ marginRight: '10px' }}>Category</label>
           <select
+          style={{ marginRight: '10px' }}
             id="category"
             name="category"
             onChange={handleChange}
@@ -198,12 +202,13 @@ const EditProduct = () => {
           {touched.category && errors.category && (
             <div style={{ color: 'red' }}>{errors.category}</div>
           )}
-          <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`} disabled={isSubmitting}>
+          <button type="submit" className={`btn-edit-product ${isSubmitting ? 'secondary' : 'btn-edit-product'}`} disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Edit Product"}
           </button>
 
         </form>
       </div>
+    </div>
     </>
   );
 };

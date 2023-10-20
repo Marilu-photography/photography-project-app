@@ -241,7 +241,7 @@ const UserProfilePage = ({ user, getUser }) => {
                                           />
                                         ) : (
                                           <img
-                                            src={item.image.url}
+                                            src={item.image.images[0]}
                                             alt="Image"
                                             style={{ width: '50px', height: '50px' }}
                                           />

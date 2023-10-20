@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { success } from "../../services/ProductsServices";
 import { useAuthContext } from "../../contexts/AuthContext";
 import "./Cart.css";
+import { Trash3, BagCheck } from 'react-bootstrap-icons';
 
 
 function Cart() {
@@ -67,7 +68,7 @@ function Cart() {
       <div className="row">
         <div className="col-md-9">
           <table className="table">
-            <thead>
+            <thead className="head-cart">
               <tr>
                 <th>Product</th>
                 <th>Image</th>
@@ -90,14 +91,14 @@ function Cart() {
                   <td>{item.price} €</td>
                   <td>
                     <button
-                      className="btn btn-secondary"
+                      className="sum"
                       onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                     >
                       -
                     </button>
                     {item.quantity}
                     <button
-                      className="btn btn-secondary"
+                      className="sum"
                       onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                     >
                       +
@@ -105,10 +106,10 @@ function Cart() {
                   </td>
                   <td>
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-Delete"
                       onClick={() => removeItem(item.id)}
                     >
-                      Remove
+                      <Trash3 className="icon-trash" />
                     </button>
                   </td>
                 </tr>
@@ -116,15 +117,17 @@ function Cart() {
             </tbody>
           </table>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 tb-movil">
           <div className="total-box">
             <h3>Total: {cartTotal.toFixed(2)} €</h3>
-            <Button variant="primary" onClick={handleCheckout}>
-              Checkout
+            <div className="btn-cart-total">
+            <Button className="btn btn-checkout" onClick={handleCheckout}>
+              <BagCheck className="icon-checkout" />
             </Button>
-            <Button variant="primary" onClick={emptyCart}>
-              delete
+            <Button className="btn-checkout-D" onClick={emptyCart}>
+            <Trash3 className="icon-trash" />
             </Button>
+            </div>
           </div>
         </div>
       </div>
