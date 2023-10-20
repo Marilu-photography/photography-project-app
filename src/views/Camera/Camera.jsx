@@ -201,8 +201,8 @@ const CameraList = () => {
   return (
     <div className="Camera mb-5">
       <div className="Banner">
-        <Link to="/editor">
-          <img src="/img/muestra.png" alt="muestra" className="muestra" />
+        <Link to="/tool-landing">
+          <img src="/img/eplantas-vs-com.png" alt="muestra" className="muestra" />
         </Link>
       </div>
       <div className="container contenedor product-container">

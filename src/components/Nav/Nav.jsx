@@ -126,7 +126,7 @@ const Nav = (product) => {
               </ul>
             </li>
             <form
-              className="d-flex search-form"
+              className="d-flex search-form mx-4"
               role="search"
               onSubmit={(e) => {
                 e.preventDefault();

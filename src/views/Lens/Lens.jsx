@@ -196,7 +196,7 @@ const LensList = () => {
   return (
     <div className="Lens mb-5">
       <div className="Banner">
-        <Link to="/editor">
+        <Link to="/tool-landing">
           <img src="/img/muestra.png" alt="muestra" className="muestra" />
         </Link>
       </div>

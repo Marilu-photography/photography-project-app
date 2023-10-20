@@ -55,7 +55,7 @@ function Cart() {
     <div className=" flex flex-column cart-container">
       <div className="row">
         <div className="Banner">
-          <Link to="/editor">
+          <Link to="/tool-landing">
             <img src='/img/muestra.png' alt="muestro" className="muestra" />
           </Link>
 

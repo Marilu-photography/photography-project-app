@@ -66,8 +66,8 @@ const message = ({ message }) => (
     return (
       <div className="row ProductDetails">
         <div className="Banner">
-          <Link to="/editor">
-            <img src="/img/muestra.png" alt="muestra" className="muestra" />
+          <Link to="/tool-landing">
+            <img src="/img/space-invaders.png" alt="muestra" className="muestra" />
           </Link>
         </div> 
         <div>
