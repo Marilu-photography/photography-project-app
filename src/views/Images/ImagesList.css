@@ -1,7 +1,12 @@
 
+
 .ImageList {
     margin-top: 4rem;
     margin-bottom: 4rem;
+}
+.h1-Gallery {
+    text-align: center;
+    margin: 25px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -20,9 +25,7 @@
     }
 
     .h1-Gallery{
-        font-size: 1.5em !important;
-        text-align: center !important;
-        margin-top: 17px!important;
+        font-size: 25px !important;
     }
     
 

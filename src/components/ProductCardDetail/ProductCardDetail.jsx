@@ -27,6 +27,7 @@ const ProductCardDetail = ({ product }) => {
     lensType,
     accessoryType,
     model,
+    brand,
   } = product;
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -209,6 +210,18 @@ const ProductCardDetail = ({ product }) => {
                   ) : (
                     ""
                   )}
+                  <>
+                  {brand !== null ? (
+                    <>
+                  <li className="li-detail px-3 py-2 mb-1">
+                    <strong>Brand: </strong>
+                    <span>{brand}</span>
+                  </li>
+                  </>
+                  ) : (
+                    ""
+                  )}
+                  </>
                 </ul>
                 {isAdmin && (
                   <>

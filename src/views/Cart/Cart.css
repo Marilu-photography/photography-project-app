@@ -2,3 +2,101 @@
     margin-top: 4rem;
 }
 
+.btn-cart-total {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn-checkout {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: black !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    border: transparent !important;
+}
+
+
+.btn-checkout:hover{
+    color: black !important;
+    background-color: #FBAD19 !important;
+}
+
+.btn-checkout-D {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: black !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    border: transparent !important;
+}
+
+.btn-checkout-D:hover{
+    color: white !important;
+    background-color: red !important;
+}
+
+.btn-Delete {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: red !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    
+}
+
+.btn-Delete:hover{
+    color: white !important;
+    background-color: black !important;
+}
+
+.total-box{
+    margin-top: 7px;
+}
+
+.sum{
+    margin: 10px;
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    font-size: 20px; 
+    background-color: black;
+    color: white; 
+    border: none; 
+    cursor: pointer;
+}
+
+.sum:hover{
+    background-color: #FBAD19;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .tb-movil{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .head-cart{
+        font-size: 13px;
+    }
+
+    .sum {
+    margin: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 11px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+}

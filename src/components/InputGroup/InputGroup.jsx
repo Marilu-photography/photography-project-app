@@ -1,6 +1,6 @@
 const InputGroup = ({ label, name, value, onChange, onBlur, error, type = "text", placeholder = "" }) => {
     return (
-      <div className="has-validation mb-3">
+      <div className="has-validation mb-4">
         <label htmlFor={name} className="form-label">{label}</label>
         <input
           type={type}

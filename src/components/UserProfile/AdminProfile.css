@@ -96,3 +96,70 @@
     border-bottom: 1px solid #dee2e6 !important;
     height: 50px;
 }   
+
+.btn-orders-status {
+    background: black !important;
+    border: none   !important;
+    color: white !important;
+    cursor: pointer !important;
+    border-radius: 0% !important;
+    margin-bottom: 1rem !important;
+}
+
+.btn-orders-status:hover {
+    background: rgb(251, 173, 25) !important;
+    color: black !important;
+}
+
+.btn-orders-status:focus {
+    background: rgb(251, 173, 25) !important;
+    color: black !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .tab-content {
+        display: block!important;
+        width: 105% !important;
+    }
+
+    .banner-negro {
+    
+    height: 200px !important;
+    width: 103% !important;
+    }
+
+    .avatar-admin{
+        margin-right: 50px !important;
+    }
+
+    .ms-1{
+        margin-right: 25px !important;
+    }
+
+    .banner-blanco {
+        width: 103% !important;
+    }
+
+    .products-list-head{
+        font-size: 12px !important;
+    }
+
+    .t-body{
+        font-size: 12px !important;
+    }
+
+    .text-center{
+        font-size: 12px !important;
+    }
+
+    .btn-orders-status{
+        font-size: 12px !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .action-row{
+        flex-direction: column;
+    }
+
+}

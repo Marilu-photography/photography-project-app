@@ -69,11 +69,11 @@ const message = ({ message }) => (
           <Link to="/editor">
             <img src="/img/muestra.png" alt="muestra" className="muestra" />
           </Link>
-        </div>
+        </div> 
         <div>
           <ProductCardDetail product={product} onCheckout={handleCheckout} />
         </div>
-      </div>
+      </div>       
     );
   };
   

@@ -3,6 +3,7 @@ import { productSchema } from "../../utils/product.schema";
 import { createProduct } from "../../services/ProductsServices";
 import InputGroup from "../../components/InputGroup/InputGroup";
 import { useNavigate } from "react-router-dom";
+import "./CreateProducts.css";
 
 const categories = ['Camera', 'Lens', 'Accessory'];
 
@@ -12,6 +13,8 @@ const initialValues = {
   images: [],
   description: "",
   category: "",
+  brand: "",
+  model: "",
 };
 
 const CreateProducts = () => {
@@ -46,6 +49,8 @@ const CreateProducts = () => {
       }
       formData.append('description', values.description);
       formData.append('category', values.category);
+      formData.append('brand', values.brand);
+      formData.append('model', values.model);
 
       createProduct(formData)
         .then(response => {
@@ -66,9 +71,10 @@ const CreateProducts = () => {
 
   return (
     <>
-      <h1>Create Products</h1>
-      <div className="create-Product">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <div className="create-product-header">
+      <h1 className="h1-create-product">Create Products</h1>
+      <div className="">
+        <form className="form-create" onSubmit={handleSubmit} encType="multipart/form-data">
           <InputGroup
             label="Name"
             name="name"
@@ -104,6 +110,7 @@ const CreateProducts = () => {
             }}
           />
           <InputGroup
+           style={{ marginTop: '10px' }}
             label="Description"
             name="description"
             type="text"
@@ -113,7 +120,27 @@ const CreateProducts = () => {
             onBlur={handleBlur}
             error={touched.description && errors.description}
           />
-          <label htmlFor="category">Category</label>
+          <InputGroup
+            label="Brand"
+            name="brand"
+            type="text"
+            placeholder="Enter brand"
+            value={values.brand}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.brand && errors.brand}
+          />
+          <InputGroup
+            label="Model"
+            name="model"
+            type="text"
+            placeholder="Enter model"
+            value={values.model}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.model && errors.model}
+          />
+          <label htmlFor="category" style={{ marginRight: '10px' }}>Category: </label>
           <select
             id="category"
             name="category"
@@ -129,13 +156,14 @@ const CreateProducts = () => {
           {touched.category && errors.category && (
             <div style={{ color: 'red' }}>{errors.category}</div>
           )}
-          <button type="submit" className={`btn btn-${isSubmitting ? 'secondary' : 'primary'}`} disabled={isSubmitting}>
+          <button type="submit" className={`btn-create btn-${isSubmitting ? 'secondary' : 'btn-create'}`} disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Create Product"}
           </button>
 
         </form>
 
       </div>
+    </div>
     </>
   )
 }

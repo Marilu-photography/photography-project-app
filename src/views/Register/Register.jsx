@@ -154,13 +154,13 @@ const Register = ( { onCloseModalR  }) => {
           placeholder="Repeat your password"
         />
         <InputGroup
-          label="profile picture"
+          label="Profile Picture"
           name="avatar"
           type="file"
           onChange={(event) => {
             setFieldValue("avatar", event.currentTarget.files[0]);
           }}
-          placeholder="Upload your profile picture"
+          placeholder="Upload your Profile Picture"
         />
 
         <button type="submit" className={`btnDetails btn-${isSubmitting ? 'btn-submitting' : 'btnDetails'}`}>

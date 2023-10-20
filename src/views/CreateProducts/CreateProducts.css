@@ -1,40 +1,44 @@
-.Register {
-  display: flex;
+
+.create-product-header {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
 }
 
+.form-create{
+    width: 100%;
+    margin: 0 auto;
+}
 
-.btnDetails {
-    width: 6.5em;
+.btn-create{
+    width: 9.5em;
     height: 2.3em;
     margin: 0.5em;
     background: black;
     text-align: center;
     color: white;
     border: none;
+    /* border-radius: 0.625em; */
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     position: relative;
     z-index: 1;
     overflow: hidden;
     text-decoration: none;
-     display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-   }
+}
 
-   .btn-submitting{
-     background: #FBAD19;
-   }
+.btn-create:hover {
+    color: black;
+    background-color: #FBAD19;
+}
 
-
-   @media only screen and (max-width: 600px) {
-    .btnDetails {
-        width: 100% !important; 
-        margin: 0 !important;
-      }
-   }
-  
+/* .h1-create-product {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+} */
