@@ -48,15 +48,16 @@ const Nav = (product) => {
       getSearch(searchQuery)
         .then((response) => {
           console.log("Resultados de búsqueda:", response);
+          setSearchQuery("");
           setGlobalSearchResults(response);
           setSearchResults(response);
-
           navigate(`/results/${searchQuery}`);
         })
         .catch((error) => {
           console.error("Error al realizar la búsqueda:", error);
         });
     }
+
   };
 
   useEffect(() => {
