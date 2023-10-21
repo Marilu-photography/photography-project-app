@@ -193,9 +193,9 @@ const AccessoriesList = () => {
     return (
       <div className="Accessories mb-5">
         <div className="Banner">
-          <Link to="/tool-landing">
-            <img src="/img/eplantas-vs-com.png" alt="muestra" className="muestra" />
-          </Link>
+        <Link to="https://lucebreiro.github.io/Palntas-vs-Comunismo/" target="_blank">
+          <img src="/img/eplantas-vs-com.png" alt="muestra" className="muestra" />
+        </Link>
         </div>
         <div className="container contenedor product-container">
           <div className="d-flex align-items-start filter-list-container">

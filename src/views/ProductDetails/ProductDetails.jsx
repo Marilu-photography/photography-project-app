@@ -66,7 +66,7 @@ const message = ({ message }) => (
     return (
       <div className="row ProductDetails">
         <div className="Banner">
-          <Link to="/tool-landing">
+          <Link to="https://marybonilla.github.io/Space-Invaders/index.html" target="_blank">
             <img src="/img/space-invaders.png" alt="muestra" className="muestra" />
           </Link>
         </div> 

@@ -201,7 +201,7 @@ const CameraList = () => {
   return (
     <div className="Camera mb-5">
       <div className="Banner">
-        <Link to="/tool-landing">
+        <Link to="https://lucebreiro.github.io/Palntas-vs-Comunismo/" target="_blank">
           <img src="/img/eplantas-vs-com.png" alt="muestra" className="muestra" />
         </Link>
       </div>
