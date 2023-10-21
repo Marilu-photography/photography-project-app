@@ -23,6 +23,7 @@ import EditProfile from "./views/EditProfile/EditProfile";
 import ActivateUser from "./views/MISC/ActivateUser";
 import Result from "./views/Result/Result";
 import ToolLanding from "./views/Tool-Landing/ToolLanding";
+import { useLayoutEffect } from "react";
 
 
 
@@ -32,6 +33,10 @@ function App() {
   const location = useLocation();
 
   const shouldShowNavAndFooter = !location.pathname.startsWith('/editor');
+
+  useLayoutEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'instant'});
+  }, [location.pathname]);
 
   return (
     <>
