@@ -15,8 +15,10 @@ body {
 
 header {
 
-  
- background-color: #242424;
+  background-image: url("/img/PhotoAI-5.png");
+  background-size: cover;
+  background-position: bottom;
+ /* background-color: #242424; */
   color: #fff;
   padding: 100px 0;
 }
