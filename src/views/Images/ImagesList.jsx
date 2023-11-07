@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { getImagesList } from "../../services/ImagesServices";
 import './ImagesList.css';
 import ImagesCard from "../../components/ImagesCard/imagesCard";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 
 const ImagesList = () => {
   const [images, setImagesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user: currentUser } = useAuthContext();
+
 
   useEffect(() => {
     getImagesList()
@@ -38,7 +41,7 @@ return (
    
       {images.map((image) => (
           <div key={image._id} className="col-12 col-lg-4 col-md-6 mb-4" >
-          <ImagesCard image={image} />
+          <ImagesCard image={image} currentUser={currentUser} />
           </div>
       ))}
     </div>

@@ -33,10 +33,6 @@ const ProductCardDetail = ({ product }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { user: currentUser } = useAuthContext();
   const [comments, setComments] = useState([]);
-  // const [newComment, setNewComment] = useState({
-  //   message: "",
-  //   score: 0,
-  // });
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
