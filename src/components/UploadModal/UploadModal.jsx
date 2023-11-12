@@ -32,6 +32,8 @@ function UploadModal({ show, onHide, getUser }) {
   const handleSubmit = () => {
     const formDataToSend = new FormData();
 
+  
+
     formDataToSend.append('images', formData.images[0]);
     formDataToSend.append('name', formData.name);
     formDataToSend.append('price', formData.price);
@@ -42,6 +44,12 @@ function UploadModal({ show, onHide, getUser }) {
         if (response) {
           onHide();
           getUser();
+          setFormData({
+            images: [],
+            name: '',
+            price: '',
+          });
+          
         }
       })
       .catch(error => {
