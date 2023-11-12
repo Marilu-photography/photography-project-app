@@ -5,6 +5,7 @@ import {
   generativeReplace,
   grayscale,
   sepia,
+  blur
 } from "@cloudinary/url-gen/actions/effect";
 import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
@@ -47,6 +48,8 @@ const EditorTool = () => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isGrayscale, setIsGrayscale] = useState(false);
   const [sepiaValue, setSepiaValue ] = useState("")
+  const [ blurValue, setBlurValue ] = useState("")
+  
   
   
 
@@ -109,41 +112,50 @@ const EditorTool = () => {
     },
     sepia: (sepiaValue) => {
       return sepia().level(sepiaValue)
-    } 
+    },
+    blur: (blurValue) => {
+      return blur().strength(blurValue)
+    }
   };
 
   const effectSubmitsMap = {
     generativeReplace: () => {
       if (fromText && toText !== "") {
         setActions([
-          ...actions,
           { name: "generativeReplace", value: [fromText, toText] },
         ]);
       }
     },
     grayscale: () => {
       setIsGrayscale(true);
-      setActions([...actions, { name: "grayscale" }]);
+      setActions([ { name: "grayscale" }]);
     },
     sepia: () => {
      if (sepiaValue) {
       setActions([
-        ...actions, 
+
         {name: "sepia", value: [sepiaValue]}
       ])
      }
     },
+    blur: () => {
+      if (blurValue) {
+       setActions([
+
+         {name: "blur", value: [blurValue]}
+       ])
+      }
+     },
     pad: () => {
       if (fromText && toText) {
-        setActions([...actions, { name: "pad", value: [fromText, toText] }]);
+        setActions([ { name: "pad", value: [fromText, toText] }]);
       }
     },
 
     textOverlay: () => {
       if (textOverlay && textFont && textSize && textColor) {
         setActions([
-          ...actions,
-          {
+          ...actions,          {
             name: "textOverlay",
             value: [textOverlay, textFont, textSize, textColor],
           },
@@ -181,6 +193,11 @@ const EditorTool = () => {
         const [level] = currentAction.value;
         result = result.effect(
           effectsMap["sepia"](...currentAction.value)
+        )
+      } else if (currentAction.name === "blur") {
+        const [strength] = currentAction.value;
+        result = result.effect(
+          effectsMap["blur"](...currentAction.value)
         )
       }
     });
@@ -312,9 +329,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "sepia" ? "active" : ""
+                    className={` imputs-btn ${activeButton === "effects" ? "active" : ""
                       }`}
-                    onClick={() => handleButtonClick("sepia")}
+                    onClick={() => handleButtonClick("effects")}
                   >
                     <span>Effects</span>
                     <span>
@@ -324,7 +341,7 @@ const EditorTool = () => {
                 </OverlayTrigger>
               </div>
               <div>
-                {activeButton === "sepia" && (
+                {activeButton === "effects" && (
                   <>
                     <div className="input-container">
                       <label>Sepia</label>
@@ -332,6 +349,7 @@ const EditorTool = () => {
                         className="editor-input"
                         type="range"
                         placeholder="50"
+                        min="1" max="100"
                         value={sepiaValue}
                         onChange={(e) => setSepiaValue(e.target.value)}
                       />
@@ -340,8 +358,32 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
+                          handleApplyFilter(() =>{
+                            effectSubmitsMap["sepia"]();
+                            setSepiaValue("")}
+                          )
+                        }
+                      >
+                        {isApplyingFilter ? "Applying..." : "Apply"}
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>Blur</label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="1" max="2000"
+                        value={blurValue}
+                        onChange={(e) => setBlurValue(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn"
+                        onClick={() =>
                           handleApplyFilter(() =>
-                            effectSubmitsMap["sepia"]()
+                            effectSubmitsMap["blur"]()
                           )
                         }
                       >
