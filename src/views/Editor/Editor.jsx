@@ -4,6 +4,7 @@ import { AdvancedImage } from "@cloudinary/react";
 import {
   generativeReplace,
   grayscale,
+  sepia,
 } from "@cloudinary/url-gen/actions/effect";
 import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
@@ -45,6 +46,9 @@ const EditorTool = () => {
   const [isApplyingFilter, setIsApplyingFilter] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isGrayscale, setIsGrayscale] = useState(false);
+  const [sepiaValue, setSepiaValue ] = useState("")
+  
+  
 
   useEffect(() => {
     getImage(id)
@@ -77,14 +81,6 @@ const EditorTool = () => {
 
   const handleApplyFilter = (filterFunction) => {
     setIsApplyingFilter(true);
-    // setFromText("");
-    // setToText("");
-    // setTextOverlay("");
-    // setTextFont("arial");
-    // setTextSize(100);
-    // setTextColor("#000000");
-    // setIsGrayscale(false);
-
 
     setTimeout(() => {
       filterFunction();
@@ -111,6 +107,9 @@ const EditorTool = () => {
 
       return overlayAction;
     },
+    sepia: (sepiaValue) => {
+      return sepia().level(sepiaValue)
+    } 
   };
 
   const effectSubmitsMap = {
@@ -125,6 +124,14 @@ const EditorTool = () => {
     grayscale: () => {
       setIsGrayscale(true);
       setActions([...actions, { name: "grayscale" }]);
+    },
+    sepia: () => {
+     if (sepiaValue) {
+      setActions([
+        ...actions, 
+        {name: "sepia", value: [sepiaValue]}
+      ])
+     }
     },
     pad: () => {
       if (fromText && toText) {
@@ -170,6 +177,11 @@ const EditorTool = () => {
         result = result.resize(
           pad().width(width).height(height).background(generativeFill())
         );
+      } else if (currentAction.name === "sepia") {
+        const [level] = currentAction.value;
+        result = result.effect(
+          effectsMap["sepia"](...currentAction.value)
+        )
       }
     });
 
@@ -289,6 +301,57 @@ const EditorTool = () => {
                   </button>
                 </OverlayTrigger>
               </div>
+
+              <div className="my-3 ">
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id="tooltip-generative-replace">
+                      Apply effects to your image
+                    </Tooltip>
+                  }
+                >
+                  <button
+                    className={` imputs-btn ${activeButton === "sepia" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("sepia")}
+                  >
+                    <span>Effects</span>
+                    <span>
+                      <ArrowDownShort style={{ width: "20px" }} />
+                    </span>
+                  </button>
+                </OverlayTrigger>
+              </div>
+              <div>
+                {activeButton === "sepia" && (
+                  <>
+                    <div className="input-container">
+                      <label>Sepia</label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        value={sepiaValue}
+                        onChange={(e) => setSepiaValue(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn"
+                        onClick={() =>
+                          handleApplyFilter(() =>
+                            effectSubmitsMap["sepia"]()
+                          )
+                        }
+                      >
+                        {isApplyingFilter ? "Applying..." : "Apply"}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+
               <div className="my-3">
                 <OverlayTrigger
                   placement="top"
