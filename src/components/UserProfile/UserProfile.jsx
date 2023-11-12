@@ -52,6 +52,10 @@ const UserProfilePage = ({ user, getUser }) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+
+  const sortedImages = [...images].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+
   return (
     <div className="UserProfile">
       <div className="row d-flex justify-content-center align-items-center h-100 mt-5">
@@ -171,7 +175,7 @@ const UserProfilePage = ({ user, getUser }) => {
                 >
                   <div className="img-preview row g-2">
                     {images && images.length > 0 ? (
-                      images.map((image) => (
+                      sortedImages.map((image) => (
                         <div key={image._id} className="img-cont col-lg-4 col-md-6 col-sm-12">
                           <ImagesCard
                             image={image}

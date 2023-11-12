@@ -5,7 +5,7 @@ import ImagesCard from "../../components/ImagesCard/imagesCard";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 
-const ImagesList = () => {
+const ImagesList = ({isHome}) => {
   const [images, setImagesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user: currentUser } = useAuthContext();
@@ -29,24 +29,30 @@ const ImagesList = () => {
   }
 
   if (!images.length) {
-    return <p>No products found 🥺</p>;
+    return <p>No images found 🥺</p>;
   }
 
-return (
 
-  <div className="container ImageList-gallery">
-  <div className="row contendor-gallery">
-    <h1 className="h1-Gallery">Image Gallery</h1>
+  const sortedImages = [...images].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-   
-      {images.map((image) => (
-          <div key={image._id} className="col-12 col-lg-4 col-md-6 mb-4" >
-          <ImagesCard image={image} currentUser={currentUser} />
+  const filteredImages = isHome ? sortedImages.slice(0, 6) : sortedImages;
+
+
+  return (
+
+    <div className="container ImageList-gallery">
+      <div className="row contendor-gallery">
+        <h1 className="h1-Gallery">Image Gallery</h1>
+
+        {filteredImages.map((image) => (
+          <div key={image._id} className="col-12 col-lg-4 col-md-6 mb-4">
+            <ImagesCard image={image} currentUser={currentUser} />
           </div>
-      ))}
+        ))}
+
+      </div>
     </div>
-    </div>
-  
-);
+
+  );
 };
 export default ImagesList;
