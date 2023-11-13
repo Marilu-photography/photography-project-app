@@ -5,7 +5,7 @@ import {
   generativeReplace,
   grayscale,
   sepia,
-  blur
+  blur,
 } from "@cloudinary/url-gen/actions/effect";
 import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
@@ -47,11 +47,9 @@ const EditorTool = () => {
   const [isApplyingFilter, setIsApplyingFilter] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isGrayscale, setIsGrayscale] = useState(false);
-  const [sepiaValue, setSepiaValue ] = useState("")
-  const [ blurValue, setBlurValue ] = useState("")
-  
-  
-  
+  const [sepiaValue, setSepiaValue] = useState("");
+  const [blurValue, setBlurValue] = useState("");
+  const [initialImageUrl, setInitialImageUrl] = useState(null);
 
   useEffect(() => {
     getImage(id)
@@ -59,6 +57,7 @@ const EditorTool = () => {
         const imageUrlData = res.images[0].split("/");
         const fileName = imageUrlData[imageUrlData.length - 1];
         const imageName = fileName.split(".")[0];
+        setInitialImageUrl(`marilu-photography/${imageName}`);
         setImage(`marilu-photography/${imageName}`);
         setAuthor(res.author);
         setLoading(false);
@@ -68,6 +67,13 @@ const EditorTool = () => {
         setLoading(false);
       });
   }, [id]);
+
+  const handleDiscardChanges = () => {
+    setActions([]);
+    setActiveButton(null);
+    setActiveFilter(null);
+    setImage(initialImageUrl);
+  };
 
   const handleButtonClick = (button) => {
     if (button === activeButton) {
@@ -82,12 +88,12 @@ const EditorTool = () => {
     document.location.reload(true);
   };
 
-  const handleApplyFilter = (filterFunction) => {
-    setIsApplyingFilter(true);
+  const handleApplyFilter = (actionName, filterFunction) => {
+    setIsApplyingFilter(actionName);
 
     setTimeout(() => {
       filterFunction();
-      setIsApplyingFilter(false);
+      setIsApplyingFilter(null);
     }, 1000);
   };
 
@@ -111,51 +117,47 @@ const EditorTool = () => {
       return overlayAction;
     },
     sepia: (sepiaValue) => {
-      return sepia().level(sepiaValue)
+      return sepia().level(sepiaValue);
     },
     blur: (blurValue) => {
-      return blur().strength(blurValue)
-    }
+      return blur().strength(blurValue);
+    },
   };
 
   const effectSubmitsMap = {
     generativeReplace: () => {
       if (fromText && toText !== "") {
         setActions([
+          ...actions,
           { name: "generativeReplace", value: [fromText, toText] },
         ]);
       }
     },
     grayscale: () => {
       setIsGrayscale(true);
-      setActions([ { name: "grayscale" }]);
+      setActions([...actions, { name: "grayscale" }]);
     },
     sepia: () => {
-     if (sepiaValue) {
-      setActions([
-
-        {name: "sepia", value: [sepiaValue]}
-      ])
-     }
+      if (sepiaValue) {
+        setActions([...actions, { name: "sepia", value: [sepiaValue] }]);
+      }
     },
     blur: () => {
       if (blurValue) {
-       setActions([
-
-         {name: "blur", value: [blurValue]}
-       ])
+        setActions([...actions, { name: "blur", value: [blurValue] }]);
       }
-     },
+    },
     pad: () => {
       if (fromText && toText) {
-        setActions([ { name: "pad", value: [fromText, toText] }]);
+        setActions([...actions, { name: "pad", value: [fromText, toText] }]);
       }
     },
 
     textOverlay: () => {
       if (textOverlay && textFont && textSize && textColor) {
         setActions([
-          ...actions,          {
+          ...actions,
+          {
             name: "textOverlay",
             value: [textOverlay, textFont, textSize, textColor],
           },
@@ -164,13 +166,8 @@ const EditorTool = () => {
     },
   };
 
-  const imageToRender = useMemo(
-    () => new CloudinaryImage(image, { cloudName: "dy2v6iwv8" }),
-    [image]
-  );
-
-  const renderImage = useCallback(() => {
-    let result = imageToRender;
+  const renderImage = useMemo(() => {
+    let result = new CloudinaryImage(image, { cloudName: "dy2v6iwv8" });
 
     actions.forEach((currentAction) => {
       if (currentAction.name === "generativeReplace") {
@@ -191,22 +188,24 @@ const EditorTool = () => {
         );
       } else if (currentAction.name === "sepia") {
         const [level] = currentAction.value;
-        result = result.effect(
-          effectsMap["sepia"](...currentAction.value)
-        )
+        result = result.effect(effectsMap["sepia"](...currentAction.value));
       } else if (currentAction.name === "blur") {
         const [strength] = currentAction.value;
-        result = result.effect(
-          effectsMap["blur"](...currentAction.value)
-        )
+        result = result.effect(effectsMap["blur"](...currentAction.value));
       }
     });
 
+    const handleRemoveFilter = (filterIndex) => {
+      const updatedActions = [...actions];
+      updatedActions.splice(filterIndex, 1);
+      setActions(updatedActions);
+    };
+
     return result;
-  }, [actions, imageToRender]);
+  }, [actions, image]);
 
   const handleSave = () => {
-    const editedImageUrl = renderImage().toURL();
+    const editedImageUrl = renderImage.toURL();
     editImage(id, { editedImageUrl })
       .then((res) => {
         console.log(res);
@@ -226,6 +225,12 @@ const EditorTool = () => {
     window.open(editedImageUrl, "_blank");
   };
 
+  const handleRemoveFilter = (filterName) => {
+    const updatedActions = actions.filter(
+      (action) => action.name !== filterName
+    );
+    setActions(updatedActions);
+  };
   return (
     <>
       <div className="EditorTool-desk hide-on-mobile">
@@ -248,8 +253,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "generativeReplace" ? "active" : ""
-                      }`}
+                    className={` imputs-btn ${
+                      activeButton === "generativeReplace" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>Generative Replace</span>
@@ -286,12 +292,20 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
-                          handleApplyFilter(() =>
+                          handleApplyFilter("generativeReplace", () =>
                             effectSubmitsMap["generativeReplace"]()
                           )
                         }
                       >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
+                        {isApplyingFilter === "generativeReplace"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="remove-filter-btn"
+                        onClick={() => handleRemoveFilter("generativeReplace")}
+                      >
+                        Remove
                       </button>
                     </div>
                   </>
@@ -308,8 +322,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${activeButton === "grayscale" ? "active" : ""
-                      }`}
+                    className={`imputs-btn ${
+                      activeButton === "grayscale" ? "active" : ""
+                    }`}
                     onClick={() =>
                       handleApplyFilter(() => effectSubmitsMap["grayscale"]())
                     }
@@ -329,8 +344,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "effects" ? "active" : ""
-                      }`}
+                    className={` imputs-btn ${
+                      activeButton === "effects" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("effects")}
                   >
                     <span>Effects</span>
@@ -349,7 +365,8 @@ const EditorTool = () => {
                         className="editor-input"
                         type="range"
                         placeholder="50"
-                        min="1" max="100"
+                        min="1"
+                        max="100"
                         value={sepiaValue}
                         onChange={(e) => setSepiaValue(e.target.value)}
                       />
@@ -358,13 +375,19 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
-                          handleApplyFilter(() =>{
+                          handleApplyFilter("sepia", () => {
                             effectSubmitsMap["sepia"]();
-                            setSepiaValue("")}
-                          )
+                            setSepiaValue("");
+                          })
                         }
                       >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
+                        {isApplyingFilter === "sepia" ? "Applying..." : "Apply"}
+                      </button>
+                      <button
+                        className="remove-filter-btn"
+                        onClick={() => handleRemoveFilter("sepia")}
+                      >
+                        Remove
                       </button>
                     </div>
                     <div className="input-container">
@@ -373,7 +396,8 @@ const EditorTool = () => {
                         className="editor-input"
                         type="range"
                         placeholder="50"
-                        min="1" max="2000"
+                        min="1"
+                        max="2000"
                         value={blurValue}
                         onChange={(e) => setBlurValue(e.target.value)}
                       />
@@ -382,12 +406,18 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
-                          handleApplyFilter(() =>
+                          handleApplyFilter("blur", () =>
                             effectSubmitsMap["blur"]()
                           )
                         }
                       >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
+                        {isApplyingFilter === "blur" ? "Applying..." : "Apply"}
+                      </button>
+                      <button
+                        className="remove-filter-btn"
+                        onClick={() => handleRemoveFilter("blur")}
+                      >
+                        Remove
                       </button>
                     </div>
                   </>
@@ -404,8 +434,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${activeButton === "textOverlay" ? "active" : ""
-                      }`}
+                    className={`imputs-btn ${
+                      activeButton === "textOverlay" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>Text Layer</span>
@@ -469,12 +500,20 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
-                          handleApplyFilter(() =>
+                          handleApplyFilter("textOverlay", () =>
                             effectSubmitsMap["textOverlay"]()
                           )
                         }
                       >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
+                        {isApplyingFilter === "textOverlay"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="remove-filter-btn"
+                        onClick={() => handleRemoveFilter("textOverlay")}
+                      >
+                        Remove
                       </button>
                     </div>
                   </>
@@ -491,8 +530,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${activeButton === "pad" ? "active" : ""
-                      }`}
+                    className={`imputs-btn ${
+                      activeButton === "pad" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span> Generative Background</span>
@@ -529,10 +569,18 @@ const EditorTool = () => {
                       <button
                         className="apply-edition-btn"
                         onClick={() =>
-                          handleApplyFilter(() => effectSubmitsMap["pad"]())
+                          handleApplyFilter("pad", () =>
+                            effectSubmitsMap["pad"]()
+                          )
                         }
                       >
-                        {isApplyingFilter ? "Applying..." : "Apply"}
+                        {isApplyingFilter === "pad" ? "Applying..." : "Apply"}
+                      </button>
+                      <button
+                        className="remove-filter-btn"
+                        onClick={() => handleRemoveFilter("pad")}
+                      >
+                        Remove
                       </button>
                     </div>
                   </>
@@ -546,7 +594,7 @@ const EditorTool = () => {
                 >
                   Save Image
                 </button>
-                <button className="action-btn" onClick={handleReloadPage}>
+                <button className="action-btn" onClick={handleDiscardChanges}>
                   Discard Changes
                 </button>
 
@@ -557,10 +605,13 @@ const EditorTool = () => {
             </div>
           </div>
           <div className="col-md-9 img-container-tool">
-          <div className="editor-output d-flex align-items-center justify-content-center mt-5">
-            <div className="image-container" style={{ position: "fixed", top: "5rem", bottom: "0" }}>
-              <AdvancedImage cldImg={renderImage()} />
-            </div>
+            <div className="editor-output d-flex align-items-center justify-content-center mt-5">
+              <div
+                className="image-container"
+                style={{ position: "fixed", top: "5rem", bottom: "0" }}
+              >
+                <AdvancedImage cldImg={renderImage} />
+              </div>
             </div>
           </div>
         </div>
@@ -578,10 +629,12 @@ const EditorTool = () => {
               <div className="editor-output d-flex flex-column align-items-center justify-content-center">
                 <div className="mb-3 text-center">
                   <h1>PhotoIA</h1>
-                  <h2>Edit your photos like a professional with just one click.</h2>
+                  <h2>
+                    Edit your photos like a professional with just one click.
+                  </h2>
                 </div>
                 <div>
-                  <AdvancedImage cldImg={renderImage()} />
+                  <AdvancedImage cldImg={renderImage} />
                 </div>
 
                 <div className="ations-btns my-3">
@@ -607,44 +660,51 @@ const EditorTool = () => {
               <h5>Select Action</h5>
               <div className="d-flex justify-content-between">
                 <div className="my-3 ">
-
                   <button
-                    className={` imputs-btn-mbl ${activeButton === "generativeReplace" ? "active" : ""
-                      }`}
+                    className={` imputs-btn-mbl ${
+                      activeButton === "generativeReplace" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
-                    <span><CircleSquare /></span>
+                    <span>
+                      <CircleSquare />
+                    </span>
                   </button>
-
                 </div>
 
                 <div className="my-3">
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "grayscale" ? "active" : ""
-                      }`}
-                    onClick={() =>
-                      handleButtonClick("grayscale")
-                    }
+                    className={`imputs-btn-mbl ${
+                      activeButton === "grayscale" ? "active" : ""
+                    }`}
+                    onClick={() => handleButtonClick("grayscale")}
                   >
                     <Sliders2Vertical />
                   </button>
                 </div>
                 <div className="my-3">
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "textOverlay" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "textOverlay" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
-                    <span><Fonts /></span>
+                    <span>
+                      <Fonts />
+                    </span>
                   </button>
                 </div>
                 <div className="my-3 ">
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "pad" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "pad" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("pad")}
                   >
-                    <span> <AspectRatio /></span>
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
                   </button>
                 </div>
               </div>
@@ -658,7 +718,6 @@ const EditorTool = () => {
                       <h4>Generative Replace</h4>
                       <p>Use AI to edit your image in the first place</p>
                       <div className="input-container">
-
                         <label>From</label>
                         <input
                           className="editor-input"
@@ -712,10 +771,8 @@ const EditorTool = () => {
                           {isApplyingFilter ? "Applying..." : "Apply"}
                         </button>
                       </div>
-
                     </>
-                  )
-                  }
+                  )}
                 </div>
 
                 {/*  B&N FIN */}
@@ -747,7 +804,9 @@ const EditorTool = () => {
                           <option value="Georgia">Georgia</option>
                           <option value="Roboto">Roboto</option>
                           <option value="Helvetica">Helvetica</option>
-                          <option value="Times New Roman">Times New Roman</option>
+                          <option value="Times New Roman">
+                            Times New Roman
+                          </option>
                           <option value="Trebuchet MS">Trebuchet MS</option>
                           <option value="Open Sans">Open Sans</option>
                           <option value="Verdana">Verdana</option>
@@ -768,7 +827,9 @@ const EditorTool = () => {
                         <div className="d-flex justify-content-center mt-2">
                           <SketchPicker
                             color={textColor}
-                            onChangeComplete={(color) => setTextColor(color.hex)}
+                            onChangeComplete={(color) =>
+                              setTextColor(color.hex)
+                            }
                           />
                         </div>
                       </div>
@@ -794,8 +855,11 @@ const EditorTool = () => {
                     <>
                       <div className="input-container">
                         <h4>Generative Background</h4>
-                        <p>Resizes the image to fill the specified width and height
-                          while, padding is added reach the required size.</p>
+                        <p>
+                          Resizes the image to fill the specified width and
+                          height while, padding is added reach the required
+                          size.
+                        </p>
                         <label>Width</label>
                         <input
                           className="editor-input"

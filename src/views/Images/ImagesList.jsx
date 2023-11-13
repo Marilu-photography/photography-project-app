@@ -9,7 +9,6 @@ const ImagesList = ({isHome}) => {
   const [images, setImagesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user: currentUser } = useAuthContext();
-  console.log(images)
 
 
   useEffect(() => {
