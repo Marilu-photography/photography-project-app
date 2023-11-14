@@ -1,12 +1,20 @@
 import { CloudinaryImage } from "@cloudinary/url-gen";
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { AdvancedImage } from "@cloudinary/react";
 import {
   generativeReplace,
   grayscale,
   sepia,
   blur,
+  negate,
+  pixelate,
 } from "@cloudinary/url-gen/actions/effect";
+import {
+  saturation,
+  contrast,
+  brightness,
+  gamma,
+} from "@cloudinary/url-gen/actions/adjust";
 import { pad } from "@cloudinary/url-gen/actions/resize";
 import { generativeFill } from "@cloudinary/url-gen/qualifiers/background";
 import "./Editor.css";
@@ -27,7 +35,7 @@ import { Download } from "react-bootstrap-icons";
 import { AspectRatio } from "react-bootstrap-icons";
 import { Sliders2Vertical } from "react-bootstrap-icons";
 import { Fonts } from "react-bootstrap-icons";
-import { CircleSquare } from "react-bootstrap-icons";
+import { CircleSquare, InfoCircle, Trash3 } from "react-bootstrap-icons";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -47,10 +55,17 @@ const EditorTool = () => {
   const [isApplyingFilter, setIsApplyingFilter] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isGrayscale, setIsGrayscale] = useState(false);
+  const [isNegate, setIsNegate] = useState(false);
   const [sepiaValue, setSepiaValue] = useState("");
   const [blurValue, setBlurValue] = useState("");
   const [initialImageUrl, setInitialImageUrl] = useState(null);
+  const [pixelateValue, setPixelateValue] = useState("");
+  const [saturationLevel, setSaturationLevel] = useState("");
+  const [contrastLevel, setContrastLevel] = useState("");
+  const [brightnessLevel, setBrightnessLevel] = useState("");
+  const [gammaLevel, setGammaLevel] = useState("");
 
+  //traer la imagen y poder usarla
   useEffect(() => {
     getImage(id)
       .then((res) => {
@@ -68,35 +83,7 @@ const EditorTool = () => {
       });
   }, [id]);
 
-  const handleDiscardChanges = () => {
-    setActions([]);
-    setActiveButton(null);
-    setActiveFilter(null);
-    setImage(initialImageUrl);
-  };
-
-  const handleButtonClick = (button) => {
-    if (button === activeButton) {
-      setActiveButton(null);
-    } else {
-      setActiveButton(button);
-    }
-  };
-  const handleReloadPage = () => {
-    setIsApplyingFilter(false);
-    setIsImageLoading(true);
-    document.location.reload(true);
-  };
-
-  const handleApplyFilter = (actionName, filterFunction) => {
-    setIsApplyingFilter(actionName);
-
-    setTimeout(() => {
-      filterFunction();
-      setIsApplyingFilter(null);
-    }, 1000);
-  };
-
+  // Lógica de los filtros que necesitan valores
   const effectsMap = {
     generativeReplace: (itemToReplace, newItem) => {
       return generativeReplace().from(itemToReplace).to(newItem);
@@ -122,8 +109,24 @@ const EditorTool = () => {
     blur: (blurValue) => {
       return blur().strength(blurValue);
     },
+    pixelate: (pixelateValue) => {
+      return pixelate().squareSize(pixelateValue);
+    },
+    saturation: (contrastLevel) => {
+      return contrast().level(contrastLevel);
+    },
+    contrast: (saturationLevel) => {
+      return saturation().level(saturationLevel);
+    },
+    brightness: (brightnessLevel) => {
+      return brightness().level(brightnessLevel);
+    },
+    gamma: (gammaLevel) => {
+      return gamma().level(gammaLevel);
+    },
   };
 
+  // Aplicar la logica de los filtros concatenando con los otros existentes
   const effectSubmitsMap = {
     generativeReplace: () => {
       if (fromText && toText !== "") {
@@ -137,6 +140,10 @@ const EditorTool = () => {
       setIsGrayscale(true);
       setActions([...actions, { name: "grayscale" }]);
     },
+    negate: () => {
+      setIsNegate(true);
+      setActions([...actions, { name: "negate" }]);
+    },
     sepia: () => {
       if (sepiaValue) {
         setActions([...actions, { name: "sepia", value: [sepiaValue] }]);
@@ -145,6 +152,11 @@ const EditorTool = () => {
     blur: () => {
       if (blurValue) {
         setActions([...actions, { name: "blur", value: [blurValue] }]);
+      }
+    },
+    pixelate: () => {
+      if (pixelateValue) {
+        setActions([...actions, { name: "pixelate", value: [pixelateValue] }]);
       }
     },
     pad: () => {
@@ -164,7 +176,35 @@ const EditorTool = () => {
         ]);
       }
     },
+    saturation: () => {
+      if (saturationLevel) {
+        setActions([
+          ...actions,
+          { name: "saturation", value: [saturationLevel] },
+        ]);
+      }
+    },
+    brightness: () => {
+      if (brightnessLevel) {
+        setActions([
+          ...actions,
+          { name: "brightness", value: [brightnessLevel] },
+        ]);
+      }
+    },
+    contrast: () => {
+      if (contrastLevel) {
+        setActions([...actions, { name: "contrast", value: [contrastLevel] }]);
+      }
+    },
+    gamma: () => {
+      if (gammaLevel) {
+        setActions([...actions, { name: "gamma", value: [gammaLevel] }]);
+      }
+    },
   };
+
+  //Renderizar los filtros en la imagen
 
   const renderImage = useMemo(() => {
     let result = new CloudinaryImage(image, { cloudName: "dy2v6iwv8" });
@@ -177,6 +217,8 @@ const EditorTool = () => {
         );
       } else if (currentAction.name === "grayscale") {
         result = result.effect(grayscale());
+      } else if (currentAction.name === "negate") {
+        result = result.effect(negate());
       } else if (currentAction.name === "textOverlay") {
         result = result.overlay(
           effectsMap["textOverlay"](...currentAction.value)
@@ -192,17 +234,70 @@ const EditorTool = () => {
       } else if (currentAction.name === "blur") {
         const [strength] = currentAction.value;
         result = result.effect(effectsMap["blur"](...currentAction.value));
+      } else if (currentAction.name === "pixelate") {
+        const [squareSize] = currentAction.value;
+        result = result.effect(effectsMap["pixelate"](...currentAction.value));
+      } else if (currentAction.name === "saturation") {
+        const [level] = currentAction.value;
+        result = result.adjust(
+          effectsMap["saturation"](...currentAction.value)
+        );
+      } else if (currentAction.name === "brightness") {
+        const [level] = currentAction.value;
+        result = result.adjust(
+          effectsMap["brightness"](...currentAction.value)
+        );
+      } else if (currentAction.name === "contrast") {
+        const [level] = currentAction.value;
+        result = result.adjust(effectsMap["contrast"](...currentAction.value));
+      } else if (currentAction.name === "gamma") {
+        const [level] = currentAction.value;
+        result = result.adjust(effectsMap["contrast"](...currentAction.value));
       }
     });
 
-    const handleRemoveFilter = (filterIndex) => {
-      const updatedActions = [...actions];
-      updatedActions.splice(filterIndex, 1);
-      setActions(updatedActions);
-    };
-
     return result;
   }, [actions, image]);
+
+  //ACIONES DE LOS BOTONES
+
+  //Volver hacia atrás
+
+  const handleNavigation = () => {
+    navigate(-1);
+  };
+
+  //Desplegar las secciones
+
+  const handleButtonClick = (button) => {
+    if (button === activeButton) {
+      setActiveButton(null);
+    } else {
+      setActiveButton(button);
+    }
+  };
+
+  //Botón aplicar filtros
+
+  const handleApplyFilter = (actionName, filterFunction) => {
+    setIsApplyingFilter(actionName);
+
+    setTimeout(() => {
+      filterFunction();
+      setIsApplyingFilter(null);
+    }, 1000);
+  };
+
+  //Botón quitar un filtro
+
+  const handleRemoveFilter = (filterName) => {
+    const updatedActions = actions.filter(
+      (action) => action.name !== filterName
+    );
+    setActions(updatedActions);
+  };
+
+  //Botón guardar imagen
 
   const handleSave = () => {
     const editedImageUrl = renderImage.toURL();
@@ -216,21 +311,22 @@ const EditorTool = () => {
       });
   };
 
-  const handleNavigation = () => {
-    navigate(-1);
+  //Botón descartar todos los filtros
+
+  const handleDiscardChanges = () => {
+    setActions([]);
+    setActiveButton(null);
+    setActiveFilter(null);
+    setImage(initialImageUrl);
   };
 
+  //Botón de descargar imagen
+
   const handleOpenInNewTab = () => {
-    const editedImageUrl = renderImage().toURL();
+    const editedImageUrl = renderImage.toURL();
     window.open(editedImageUrl, "_blank");
   };
 
-  const handleRemoveFilter = (filterName) => {
-    const updatedActions = actions.filter(
-      (action) => action.name !== filterName
-    );
-    setActions(updatedActions);
-  };
   return (
     <>
       <div className="EditorTool-desk hide-on-mobile">
@@ -290,11 +386,13 @@ const EditorTool = () => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="apply-edition-btn"
+                        className="apply-edition-btn m-2 m-2"
                         onClick={() =>
-                          handleApplyFilter("generativeReplace", () =>
-                            effectSubmitsMap["generativeReplace"]()
-                          )
+                          handleApplyFilter("generativeReplace", () => {
+                            effectSubmitsMap["generativeReplace"]();
+                            setFromText("");
+                            setToText("");
+                          })
                         }
                       >
                         {isApplyingFilter === "generativeReplace"
@@ -302,38 +400,222 @@ const EditorTool = () => {
                           : "Apply"}
                       </button>
                       <button
-                        className="remove-filter-btn"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("generativeReplace")}
                       >
-                        Remove
+                        <Trash3 />
                       </button>
                     </div>
                   </>
                 )}
               </div>
-
-              <div className="my-3">
+              <div className="my-3 ">
                 <OverlayTrigger
                   placement="top"
                   overlay={
                     <Tooltip id="tooltip-generative-replace">
-                      Apply grayscale to your image
+                      Apply adjustments to your image
                     </Tooltip>
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "grayscale" ? "active" : ""
+                    className={` imputs-btn ${
+                      activeButton === "adjusts" ? "active" : ""
                     }`}
-                    onClick={() =>
-                      handleApplyFilter(() => effectSubmitsMap["grayscale"]())
-                    }
+                    onClick={() => handleButtonClick("adjusts")}
                   >
-                    Grayscale
+                    <span>Ajusts</span>
+                    <span>
+                      <ArrowDownShort style={{ width: "20px" }} />
+                    </span>
                   </button>
                 </OverlayTrigger>
               </div>
-
+              <div>
+                {activeButton === "adjusts" && (
+                  <>
+                    <div className="input-container">
+                      <label>
+                        Saturation{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              Apply saturation to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="-100"
+                        max="100"
+                        value={saturationLevel}
+                        onChange={(e) => setSaturationLevel(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("saturation", () => {
+                            effectSubmitsMap["saturation"]();
+                            setSaturationLevel("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "saturation"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("saturation")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        Brightness{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-brightness-replace">
+                              Apply brightness to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="-99"
+                        max="100"
+                        value={brightnessLevel}
+                        onChange={(e) => setBrightnessLevel(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("brightness", () => {
+                            effectSubmitsMap["brightness"]();
+                            setBrightnessLevel("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "brightness"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("brightness")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        Contrast{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-contrast-replace">
+                              Apply contrast to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="-100"
+                        max="100"
+                        value={contrastLevel}
+                        onChange={(e) => setContrastLevel(e.target.value)}
+                        
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("contrast", () => {
+                            effectSubmitsMap["contrast"]();
+                            setContrastLevel("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "contrast"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btnn m-2"
+                        onClick={() => handleRemoveFilter("contrast")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        Gamma{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-gamma-replace">
+                              Apply gamma to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="-50"
+                        max="150"
+                        value={gammaLevel}
+                        onChange={(e) => setGammaLevel(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("gamma", () => {
+                            effectSubmitsMap["gamma"]();
+                            setGammaLevel("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "gamma" ? "Applying..." : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("gamma")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
               <div className="my-3 ">
                 <OverlayTrigger
                   placement="top"
@@ -360,7 +642,54 @@ const EditorTool = () => {
                 {activeButton === "effects" && (
                   <>
                     <div className="input-container">
-                      <label>Sepia</label>
+                      <p>
+                        Grayscale{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-grayscale-replace">
+                              Apply grayscale effect to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </p>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter(() =>
+                            effectSubmitsMap["grayscale"]()
+                          )
+                        }
+                      >
+                        {isApplyingFilter === "grayscale"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("grayscale")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        Sepia{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-sepia-replace">
+                              Apply sepia effect to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
                       <input
                         className="editor-input"
                         type="range"
@@ -373,7 +702,7 @@ const EditorTool = () => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="apply-edition-btn"
+                        className="apply-edition-btn m-2"
                         onClick={() =>
                           handleApplyFilter("sepia", () => {
                             effectSubmitsMap["sepia"]();
@@ -384,14 +713,26 @@ const EditorTool = () => {
                         {isApplyingFilter === "sepia" ? "Applying..." : "Apply"}
                       </button>
                       <button
-                        className="remove-filter-btn"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("sepia")}
                       >
-                        Remove
+                        <Trash3 />
                       </button>
                     </div>
                     <div className="input-container">
-                      <label>Blur</label>
+                      <label>
+                        Blur{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-blur-replace">
+                              Add blur to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
                       <input
                         className="editor-input"
                         type="range"
@@ -404,20 +745,99 @@ const EditorTool = () => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="apply-edition-btn"
+                        className="apply-edition-btn m-2"
                         onClick={() =>
-                          handleApplyFilter("blur", () =>
-                            effectSubmitsMap["blur"]()
-                          )
+                          handleApplyFilter("blur", () => {
+                            effectSubmitsMap["blur"]();
+                            setBlurValue("");
+                          })
                         }
                       >
                         {isApplyingFilter === "blur" ? "Applying..." : "Apply"}
                       </button>
                       <button
-                        className="remove-filter-btn"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("blur")}
                       >
-                        Remove
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <p>
+                        Negate{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-negate-replace">
+                              Apply negative effect to your image
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </p>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter(() => effectSubmitsMap["negate"]())
+                        }
+                      >
+                        {isApplyingFilter === "negate"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("negate")}
+                      >
+                        <Trash3 />
+                      </button>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        Pixelate{" "}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip-pixelate-replace">
+                              Apply pixelated effect to your image.
+                            </Tooltip>
+                          }
+                        >
+                          <InfoCircle style={{ width: "15px" }} />
+                        </OverlayTrigger>
+                      </label>
+                      <input
+                        className="editor-input"
+                        type="range"
+                        placeholder="50"
+                        min="1"
+                        max="200"
+                        value={pixelateValue}
+                        onChange={(e) => setPixelateValue(e.target.value)}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("pixelate", () => {
+                            effectSubmitsMap["pixelate"]();
+                            setPixelateValue("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "pixelate"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("pixelate")}
+                      >
+                        <Trash3 />
                       </button>
                     </div>
                   </>
@@ -498,11 +918,15 @@ const EditorTool = () => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="apply-edition-btn"
+                        className="apply-edition-btn m-2"
                         onClick={() =>
-                          handleApplyFilter("textOverlay", () =>
-                            effectSubmitsMap["textOverlay"]()
-                          )
+                          handleApplyFilter("textOverlay", () => {
+                            effectSubmitsMap["textOverlay"]();
+                            setTextOverlay("");
+                            setTextFont("arial");
+                            setTextSize(100);
+                            setTextColor("#000000");
+                          })
                         }
                       >
                         {isApplyingFilter === "textOverlay"
@@ -510,10 +934,10 @@ const EditorTool = () => {
                           : "Apply"}
                       </button>
                       <button
-                        className="remove-filter-btn"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("textOverlay")}
                       >
-                        Remove
+                        <Trash3 />
                       </button>
                     </div>
                   </>
@@ -567,20 +991,22 @@ const EditorTool = () => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="apply-edition-btn"
+                        className="apply-edition-btn m-2"
                         onClick={() =>
-                          handleApplyFilter("pad", () =>
-                            effectSubmitsMap["pad"]()
-                          )
+                          handleApplyFilter("pad", () => {
+                            effectSubmitsMap["pad"]();
+                            setFromText("");
+                            setToText("");
+                          })
                         }
                       >
                         {isApplyingFilter === "pad" ? "Applying..." : "Apply"}
                       </button>
                       <button
-                        className="remove-filter-btn"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("pad")}
                       >
-                        Remove
+                        <Trash3 />
                       </button>
                     </div>
                   </>
@@ -645,7 +1071,7 @@ const EditorTool = () => {
                   >
                     Save Image
                   </button>
-                  <button className="action-btn" onClick={handleReloadPage}>
+                  <button className="action-btn" onClick={handleDiscardChanges}>
                     Discard Changes
                   </button>
 

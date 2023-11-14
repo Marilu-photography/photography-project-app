@@ -191,6 +191,13 @@
   width: auto;
 }
 
+.editor-input-range:select{
+  color:rgb(251, 173, 25)!important
+}
+
+
+
+
 
 @media screen and (max-width: 768px) {
 
