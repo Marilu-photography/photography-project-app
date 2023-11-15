@@ -328,6 +328,7 @@ const EditorTool = () => {
     window.open(editedImageUrl, "_blank");
   };
 
+
   //variables del slider
   var settings = {
     dots: false,
@@ -336,6 +337,7 @@ const EditorTool = () => {
     slidesToShow: 2,
     slidesToScroll: 1
   };
+
 
   return (
     <>
@@ -456,6 +458,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {saturationLevel ? saturationLevel : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -465,6 +475,7 @@ const EditorTool = () => {
                         value={saturationLevel}
                         onChange={(e) => setSaturationLevel(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -501,6 +512,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {brightnessLevel ? brightnessLevel : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -510,6 +529,7 @@ const EditorTool = () => {
                         value={brightnessLevel}
                         onChange={(e) => setBrightnessLevel(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -546,6 +566,15 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {contrastLevel ? contrastLevel : 0}
+                            </Tooltip>
+                          }
+                        >
+                      
                       <input
                         className="editor-input"
                         type="range"
@@ -556,6 +585,7 @@ const EditorTool = () => {
                         onChange={(e) => setContrastLevel(e.target.value)}
 
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -592,6 +622,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {gammaLevel ? gammaLevel : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -601,6 +639,7 @@ const EditorTool = () => {
                         value={gammaLevel}
                         onChange={(e) => setGammaLevel(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -697,6 +736,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {sepiaValue ? sepiaValue : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -706,6 +753,7 @@ const EditorTool = () => {
                         value={sepiaValue}
                         onChange={(e) => setSepiaValue(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -740,6 +788,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {blurValue ? blurValue : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -749,6 +805,7 @@ const EditorTool = () => {
                         value={blurValue}
                         onChange={(e) => setBlurValue(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -816,6 +873,14 @@ const EditorTool = () => {
                           <InfoCircle style={{ width: "15px" }} />
                         </OverlayTrigger>
                       </label>
+                      <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {pixelateValue ? pixelateValue : 0}
+                            </Tooltip>
+                          }
+                        >
                       <input
                         className="editor-input"
                         type="range"
@@ -825,6 +890,7 @@ const EditorTool = () => {
                         value={pixelateValue}
                         onChange={(e) => setPixelateValue(e.target.value)}
                       />
+                      </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
@@ -1492,3 +1558,4 @@ const EditorTool = () => {
 };
 
 export default EditorTool;
+
