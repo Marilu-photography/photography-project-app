@@ -93,9 +93,9 @@
 .editor-input, .editor-select {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #ccc;
   width: 100%;
-  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  
 }
 
 .input-container {
@@ -193,6 +193,31 @@
 
 .editor-input-range:select{
   color:rgb(251, 173, 25)!important
+}
+
+
+input[type=range]{
+  -webkit-appearance: none;
+}
+
+
+/* Estilo para el track en WebKit */
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 5px;
+  background-color: #777; /* Color inicial del track */
+  border: none;
+  border-radius: 2px;
+}
+/* Estilo para el thumb en WebKit */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: black; /* Color inicial del thumb */
+  margin-top: -4px;
 }
 
 
