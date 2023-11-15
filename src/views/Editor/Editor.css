@@ -223,7 +223,6 @@ input[type=range]::-webkit-slider-thumb {
 
 
 
-
 @media screen and (max-width: 768px) {
 
   .hide-on-mobile {
@@ -232,6 +231,12 @@ input[type=range]::-webkit-slider-thumb {
 
   .hide-on-desk {
     display: block;
+  }
+
+  .editor-inputs {
+    width: 95vw;
+    margin: 10px;
+    padding: 10px;
   }
 
   .editor-output img {
@@ -248,10 +253,14 @@ input[type=range]::-webkit-slider-thumb {
 
   .imputs-btn-mbl {
     border: none;
-    background-color: rgb(251, 173, 25) !important;
+    background-color: #dcdcdc !important;
     border-radius: 50px;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .imputs-btn-mbl.active {
+    background-color: rgb(251, 173, 25)!important ;
   }
 
   .editor-inputs h5 {
@@ -262,6 +271,11 @@ input[type=range]::-webkit-slider-thumb {
   .btn-back-arrow svg {
     
     margin-bottom: none !important;
+  }
+
+  .slick-slide {
+    width: auto !important;
+  margin: 0px !important
   }
 
 }

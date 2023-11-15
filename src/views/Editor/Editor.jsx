@@ -36,6 +36,7 @@ import { AspectRatio } from "react-bootstrap-icons";
 import { Sliders2Vertical } from "react-bootstrap-icons";
 import { Fonts } from "react-bootstrap-icons";
 import { CircleSquare, InfoCircle, Trash3 } from "react-bootstrap-icons";
+import Slider from "react-slick";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -327,7 +328,16 @@ const EditorTool = () => {
     window.open(editedImageUrl, "_blank");
   };
 
-  
+
+  //variables del slider
+  var settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1
+  };
+
 
   return (
     <>
@@ -351,9 +361,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${
-                      activeButton === "generativeReplace" ? "active" : ""
-                    }`}
+                    className={` imputs-btn ${activeButton === "generativeReplace" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>Generative Replace</span>
@@ -421,9 +430,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${
-                      activeButton === "adjusts" ? "active" : ""
-                    }`}
+                    className={` imputs-btn ${activeButton === "adjusts" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("adjusts")}
                   >
                     <span>Ajusts</span>
@@ -575,7 +583,7 @@ const EditorTool = () => {
                         max="100"
                         value={contrastLevel}
                         onChange={(e) => setContrastLevel(e.target.value)}
-                        
+
                       />
                       </OverlayTrigger>
                     </div>
@@ -665,9 +673,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${
-                      activeButton === "effects" ? "active" : ""
-                    }`}
+                    className={` imputs-btn ${activeButton === "effects" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("effects")}
                   >
                     <span>Effects</span>
@@ -920,9 +927,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "textOverlay" ? "active" : ""
-                    }`}
+                    className={`imputs-btn ${activeButton === "textOverlay" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>Text Layer</span>
@@ -1020,9 +1026,8 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${
-                      activeButton === "pad" ? "active" : ""
-                    }`}
+                    className={`imputs-btn ${activeButton === "pad" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span> Generative Background</span>
@@ -1112,34 +1117,33 @@ const EditorTool = () => {
       <div className="EditorTool-mobile hide-on-desk">
         <div className="row">
           <div className="col-md-3 editor-options">
-            <div>
-              <button className="btn-back-arrow" onClick={handleNavigation}>
-                <ArrowLeftCircle style={{ width: "50px" }} />
-              </button>
+            <div className="d-flex justify-content-between">
+              <div>
+                <button className="btn-back-arrow" onClick={handleNavigation}>
+                  <ArrowLeftCircle style={{ width: "50px" }} />
+                </button>
+              </div>
+              <div className="ations-btns my-3 d-flex justify-content-end">
+                <button className="action-btn me-2" onClick={handleDiscardChanges}>
+                  Discard Changes
+                </button>
+                <button
+                  className="action-btn"
+                  onClick={handleSave}
+                  to={`/profile/${id}`}
+                >
+                  Save
+                </button>
+              </div>
+
             </div>
             <div className="col-md-9">
               <div className="editor-output d-flex flex-column align-items-center justify-content-center">
-                <div className="mb-3 text-center">
-                  <h1>PhotoIA</h1>
-                  <h2>
-                    Edit your photos like a professional with just one click.
-                  </h2>
-                </div>
                 <div>
                   <AdvancedImage cldImg={renderImage} />
                 </div>
 
                 <div className="ations-btns my-3">
-                  <button
-                    className="action-btn"
-                    onClick={handleSave}
-                    to={`/profile/${id}`}
-                  >
-                    Save Image
-                  </button>
-                  <button className="action-btn" onClick={handleDiscardChanges}>
-                    Discard Changes
-                  </button>
 
                   <button className="download-btn" onClick={handleOpenInNewTab}>
                     <Download />
@@ -1149,13 +1153,12 @@ const EditorTool = () => {
             </div>
 
             <div className="editor-inputs">
-              <h5>Select Action</h5>
-              <div className="d-flex justify-content-between">
-                <div className="my-3 ">
+              <Slider {...settings}>
+                <div className="mx-2 text-center">
+                  <h6>AI</h6>
                   <button
-                    className={` imputs-btn-mbl ${
-                      activeButton === "generativeReplace" ? "active" : ""
-                    }`}
+                    className={` imputs-btn-mbl ${activeButton === "generativeReplace" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>
@@ -1163,34 +1166,136 @@ const EditorTool = () => {
                     </span>
                   </button>
                 </div>
-
-                <div className="my-3">
+                <div className="mx-2 text-center">
+                  <h6>Saturation</h6>
                   <button
-                    className={`imputs-btn-mbl ${
-                      activeButton === "grayscale" ? "active" : ""
-                    }`}
-                    onClick={() => handleButtonClick("grayscale")}
+                    className={`imputs-btn-mbl ${activeButton === "saturation" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("saturation")}
                   >
                     <Sliders2Vertical />
                   </button>
                 </div>
-                <div className="my-3">
+                <div className="mx-2 text-center">
+                  <h6>Brightness</h6>
                   <button
-                    className={`imputs-btn-mbl ${
-                      activeButton === "textOverlay" ? "active" : ""
-                    }`}
-                    onClick={() => handleButtonClick("textOverlay")}
+                    className={`imputs-btn-mbl ${activeButton === "brightness" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("brightness")}
                   >
                     <span>
                       <Fonts />
                     </span>
                   </button>
                 </div>
-                <div className="my-3 ">
+                <div className="mx-2 text-center">
+                  <h6>Contrast</h6>
                   <button
-                    className={`imputs-btn-mbl ${
-                      activeButton === "pad" ? "active" : ""
-                    }`}
+                    className={`imputs-btn-mbl ${activeButton === "contrast" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("contrast")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Gamma</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "gamma" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("gamma")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Grayscale</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "grayscale" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("grayscale")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Sepia</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "sepia" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("sepia")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Blur</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "blur" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("blur")}
+                  >
+                    <span>
+                      <Fonts />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Negate</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "negate" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("negate")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Pixelate</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "pixelate" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("pixelate")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Text</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "textOverlay" ? "active" : ""
+                      }`}
+                    onClick={() => handleButtonClick("textOverlay")}
+                  >
+                    <span>
+                      {" "}
+                      <AspectRatio />
+                    </span>
+                  </button>
+                </div>
+                <div className="mx-2 text-center">
+                  <h6>Resize</h6>
+                  <button
+                    className={`imputs-btn-mbl ${activeButton === "pad" ? "active" : ""
+                      }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span>
@@ -1199,15 +1304,14 @@ const EditorTool = () => {
                     </span>
                   </button>
                 </div>
-              </div>
+              </Slider>
             </div>
             <div className="editor-inputs">
-              <div>
+              <div className="mt-4">
                 {/*  GENERADOR IA INICIO */}
                 <div>
                   {activeButton === "generativeReplace" && (
                     <>
-                      <h4>Generative Replace</h4>
                       <p>Use AI to edit your image in the first place</p>
                       <div className="input-container">
                         <label>From</label>
@@ -1231,20 +1335,79 @@ const EditorTool = () => {
                       </div>
                       <div className="d-flex justify-content-center">
                         <button
-                          className="apply-edition-btn"
+                          className="apply-edition-btn m-2"
                           onClick={() =>
-                            handleApplyFilter(() =>
-                              effectSubmitsMap["generativeReplace"]()
-                            )
+                            handleApplyFilter("generativeReplace", () => {
+                              effectSubmitsMap["generativeReplace"]();
+                              setFromText("");
+                              setToText("");
+                            })
                           }
                         >
-                          {isApplyingFilter ? "Applying..." : "Apply"}
+                          {isApplyingFilter === "generativeReplace"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("generativeReplace")}
+                        >
+                          <Trash3 />
                         </button>
                       </div>
                     </>
                   )}
                 </div>
                 {/*  GENERADOR IA FIN */}
+
+                {/*  saturacion */}
+                <div>
+                  {activeButton === "saturation" && (
+                    <>
+                      <p>Apply saturation to your image</p>
+                      <div className="input-container">
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="-100"
+                          max="100"
+                          value={saturationLevel}
+                          onChange={(e) => setSaturationLevel(e.target.value)}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("saturation", () => {
+                              effectSubmitsMap["saturation"]();
+                              setSaturationLevel("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "saturation"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("saturation")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+
+
+
+
+
+
+                    </>
+                  )}
+                </div>
+                {/*  saturacion */}
+
                 {/*  B&N INICIO */}
                 <div className="w-100">
                   {activeButton === "grayscale" && (
