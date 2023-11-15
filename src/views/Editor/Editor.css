@@ -188,7 +188,7 @@
 .image-container img {
 
   max-height: 80vh!important;
-  width: auto;
+  max-width: 60vw !important;
 }
 
 .editor-input-range:select{
@@ -200,6 +200,11 @@ input[type=range]{
   -webkit-appearance: none;
 }
 
+
+.apply-remove-btn {
+  border: none;
+  background-color: transparent;
+}
 
 /* Estilo para el track en WebKit */
 input[type=range]::-webkit-slider-runnable-track {
@@ -238,6 +243,17 @@ input[type=range]::-webkit-slider-thumb {
     margin: 10px;
     padding: 10px;
   }
+
+  .editor-inputs-mbl {
+    width:90vw;
+    margin: 0px 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
 
   .editor-output img {
     width: 90vw;

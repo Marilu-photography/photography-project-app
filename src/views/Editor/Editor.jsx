@@ -30,7 +30,7 @@ import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { ArrowDownShort } from "react-bootstrap-icons";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import { SketchPicker } from "react-color";
+import { SketchPicker, HuePicker } from "react-color";
 import { Download } from "react-bootstrap-icons";
 import { AspectRatio } from "react-bootstrap-icons";
 import { Sliders2Vertical } from "react-bootstrap-icons";
@@ -328,16 +328,14 @@ const EditorTool = () => {
     window.open(editedImageUrl, "_blank");
   };
 
-
   //variables del slider
   var settings = {
     dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
-
 
   return (
     <>
@@ -361,8 +359,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "generativeReplace" ? "active" : ""
-                      }`}
+                    className={` imputs-btn ${
+                      activeButton === "generativeReplace" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>Generative Replace</span>
@@ -430,8 +429,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "adjusts" ? "active" : ""
-                      }`}
+                    className={` imputs-btn ${
+                      activeButton === "adjusts" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("adjusts")}
                   >
                     <span>Ajusts</span>
@@ -459,22 +459,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {saturationLevel ? saturationLevel : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="-100"
-                        max="100"
-                        value={saturationLevel}
-                        onChange={(e) => setSaturationLevel(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {saturationLevel ? saturationLevel : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="-100"
+                          max="100"
+                          value={saturationLevel}
+                          onChange={(e) => setSaturationLevel(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -513,22 +513,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {brightnessLevel ? brightnessLevel : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="-99"
-                        max="100"
-                        value={brightnessLevel}
-                        onChange={(e) => setBrightnessLevel(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {brightnessLevel ? brightnessLevel : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="-99"
+                          max="100"
+                          value={brightnessLevel}
+                          onChange={(e) => setBrightnessLevel(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -567,24 +567,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {contrastLevel ? contrastLevel : 0}
-                            </Tooltip>
-                          }
-                        >
-                      
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="-100"
-                        max="100"
-                        value={contrastLevel}
-                        onChange={(e) => setContrastLevel(e.target.value)}
-
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {contrastLevel ? contrastLevel : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="-100"
+                          max="100"
+                          value={contrastLevel}
+                          onChange={(e) => setContrastLevel(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -623,22 +621,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {gammaLevel ? gammaLevel : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="-50"
-                        max="150"
-                        value={gammaLevel}
-                        onChange={(e) => setGammaLevel(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {gammaLevel ? gammaLevel : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="-50"
+                          max="150"
+                          value={gammaLevel}
+                          onChange={(e) => setGammaLevel(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -673,8 +671,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={` imputs-btn ${activeButton === "effects" ? "active" : ""
-                      }`}
+                    className={` imputs-btn ${
+                      activeButton === "effects" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("effects")}
                   >
                     <span>Effects</span>
@@ -737,22 +736,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {sepiaValue ? sepiaValue : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="1"
-                        max="100"
-                        value={sepiaValue}
-                        onChange={(e) => setSepiaValue(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {sepiaValue ? sepiaValue : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="1"
+                          max="100"
+                          value={sepiaValue}
+                          onChange={(e) => setSepiaValue(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -789,22 +788,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {blurValue ? blurValue : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="1"
-                        max="2000"
-                        value={blurValue}
-                        onChange={(e) => setBlurValue(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {blurValue ? blurValue : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="1"
+                          max="2000"
+                          value={blurValue}
+                          onChange={(e) => setBlurValue(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -874,22 +873,22 @@ const EditorTool = () => {
                         </OverlayTrigger>
                       </label>
                       <OverlayTrigger
-                          placement="top-end"
-                          overlay={
-                            <Tooltip id="tooltip-saturation-replace">
-                              {pixelateValue ? pixelateValue : 0}
-                            </Tooltip>
-                          }
-                        >
-                      <input
-                        className="editor-input"
-                        type="range"
-                        placeholder="50"
-                        min="1"
-                        max="200"
-                        value={pixelateValue}
-                        onChange={(e) => setPixelateValue(e.target.value)}
-                      />
+                        placement="top-end"
+                        overlay={
+                          <Tooltip id="tooltip-saturation-replace">
+                            {pixelateValue ? pixelateValue : 0}
+                          </Tooltip>
+                        }
+                      >
+                        <input
+                          className="editor-input"
+                          type="range"
+                          placeholder="50"
+                          min="1"
+                          max="200"
+                          value={pixelateValue}
+                          onChange={(e) => setPixelateValue(e.target.value)}
+                        />
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -927,8 +926,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${activeButton === "textOverlay" ? "active" : ""
-                      }`}
+                    className={`imputs-btn ${
+                      activeButton === "textOverlay" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>Text Layer</span>
@@ -982,7 +982,7 @@ const EditorTool = () => {
                     <div className="input-container">
                       <label>Font Color</label>
                       <div className="d-flex justify-content-center mt-2">
-                        <SketchPicker
+                        <HuePicker
                           color={textColor}
                           onChangeComplete={(color) => setTextColor(color.hex)}
                         />
@@ -1026,8 +1026,9 @@ const EditorTool = () => {
                   }
                 >
                   <button
-                    className={`imputs-btn ${activeButton === "pad" ? "active" : ""
-                      }`}
+                    className={`imputs-btn ${
+                      activeButton === "pad" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span> Generative Background</span>
@@ -1124,7 +1125,10 @@ const EditorTool = () => {
                 </button>
               </div>
               <div className="ations-btns my-3 d-flex justify-content-end">
-                <button className="action-btn me-2" onClick={handleDiscardChanges}>
+                <button
+                  className="action-btn me-2"
+                  onClick={handleDiscardChanges}
+                >
                   Discard Changes
                 </button>
                 <button
@@ -1135,7 +1139,6 @@ const EditorTool = () => {
                   Save
                 </button>
               </div>
-
             </div>
             <div className="col-md-9">
               <div className="editor-output d-flex flex-column align-items-center justify-content-center">
@@ -1144,7 +1147,6 @@ const EditorTool = () => {
                 </div>
 
                 <div className="ations-btns my-3">
-
                   <button className="download-btn" onClick={handleOpenInNewTab}>
                     <Download />
                   </button>
@@ -1157,8 +1159,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>AI</h6>
                   <button
-                    className={` imputs-btn-mbl ${activeButton === "generativeReplace" ? "active" : ""
-                      }`}
+                    className={` imputs-btn-mbl ${
+                      activeButton === "generativeReplace" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>
@@ -1169,8 +1172,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Saturation</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "saturation" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "saturation" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("saturation")}
                   >
                     <Sliders2Vertical />
@@ -1179,8 +1183,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Brightness</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "brightness" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "brightness" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("brightness")}
                   >
                     <span>
@@ -1191,8 +1196,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Contrast</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "contrast" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "contrast" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("contrast")}
                   >
                     <span>
@@ -1204,8 +1210,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Gamma</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "gamma" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "gamma" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("gamma")}
                   >
                     <span>
@@ -1217,8 +1224,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Grayscale</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "grayscale" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "grayscale" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("grayscale")}
                   >
                     <span>
@@ -1230,8 +1238,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Sepia</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "sepia" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "sepia" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("sepia")}
                   >
                     <span>
@@ -1243,8 +1252,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Blur</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "blur" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "blur" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("blur")}
                   >
                     <span>
@@ -1255,8 +1265,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Negate</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "negate" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "negate" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("negate")}
                   >
                     <span>
@@ -1268,8 +1279,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Pixelate</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "pixelate" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "pixelate" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("pixelate")}
                   >
                     <span>
@@ -1281,8 +1293,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Text</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "textOverlay" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "textOverlay" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>
@@ -1294,8 +1307,9 @@ const EditorTool = () => {
                 <div className="mx-2 text-center">
                   <h6>Resize</h6>
                   <button
-                    className={`imputs-btn-mbl ${activeButton === "pad" ? "active" : ""
-                      }`}
+                    className={`imputs-btn-mbl ${
+                      activeButton === "pad" ? "active" : ""
+                    }`}
                     onClick={() => handleButtonClick("pad")}
                   >
                     <span>
@@ -1306,7 +1320,7 @@ const EditorTool = () => {
                 </div>
               </Slider>
             </div>
-            <div className="editor-inputs">
+            <div className="editor-inputs-mbl">
               <div className="mt-4">
                 {/*  GENERADOR IA INICIO */}
                 <div>
@@ -1350,7 +1364,9 @@ const EditorTool = () => {
                         </button>
                         <button
                           className="apply-remove-btn m-2"
-                          onClick={() => handleRemoveFilter("generativeReplace")}
+                          onClick={() =>
+                            handleRemoveFilter("generativeReplace")
+                          }
                         >
                           <Trash3 />
                         </button>
@@ -1365,17 +1381,28 @@ const EditorTool = () => {
                   {activeButton === "saturation" && (
                     <>
                       <p>Apply saturation to your image</p>
+
                       <div className="input-container">
-                        <input
-                          className="editor-input"
-                          type="range"
-                          placeholder="50"
-                          min="-100"
-                          max="100"
-                          value={saturationLevel}
-                          onChange={(e) => setSaturationLevel(e.target.value)}
-                        />
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-saturation-replace">
+                              {saturationLevel ? saturationLevel : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="-100"
+                            max="100"
+                            value={saturationLevel}
+                            onChange={(e) => setSaturationLevel(e.target.value)}
+                          />
+                        </OverlayTrigger>
                       </div>
+
                       <div className="d-flex justify-content-center">
                         <button
                           className="apply-edition-btn m-2"
@@ -1397,33 +1424,193 @@ const EditorTool = () => {
                           <Trash3 />
                         </button>
                       </div>
-
-
-
-
-
-
                     </>
                   )}
                 </div>
                 {/*  saturacion */}
 
+                {/*  brillo */}
+                <div>
+                  {activeButton === "brightness" && (
+                    <>
+                      <p>Apply brightness to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-brightness-replace">
+                              {brightnessLevel ? brightnessLevel : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="-99"
+                            max="100"
+                            value={brightnessLevel}
+                            onChange={(e) => setBrightnessLevel(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("brightness", () => {
+                              effectSubmitsMap["brightness"]();
+                              setBrightnessLevel("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "brightness"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("brightness")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  brillo */}
+
+                {/*  contraste */}
+                <div>
+                  {activeButton === "contrast" && (
+                    <>
+                      <p>Apply contrast to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-contrast-replace">
+                              {contrastLevel ? contrastLevel : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="-100"
+                            max="100"
+                            value={contrastLevel}
+                            onChange={(e) => setContrastLevel(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("contrast", () => {
+                              effectSubmitsMap["contrast"]();
+                              setContrastLevel("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "contrast"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("contrast")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  contraste */}
+
+                {/*  gamma */}
+                <div>
+                  {activeButton === "gamma" && (
+                    <>
+                      <p>Apply gamma to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-gamma-replace">
+                              {gammaLevel ? gammaLevel : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="-50"
+                            max="150"
+                            value={gammaLevel}
+                            onChange={(e) => setGammaLevel(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("gamma", () => {
+                              effectSubmitsMap["gamma"]();
+                              setGammaLevel("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "gamma"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("gamma")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  gamma */}
+
                 {/*  B&N INICIO */}
                 <div className="w-100">
                   {activeButton === "grayscale" && (
                     <>
-                      <h4>Grayscale</h4>
                       <p>Apply grayscale to your image</p>
                       <div className="d-flex justify-content-center ">
                         <button
-                          className="apply-edition-btn"
+                          className="apply-edition-btn m-2"
                           onClick={() =>
                             handleApplyFilter(() =>
                               effectSubmitsMap["grayscale"]()
                             )
                           }
                         >
-                          {isApplyingFilter ? "Applying..." : "Apply"}
+                          {isApplyingFilter === "grayscale"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("grayscale")}
+                        >
+                          <Trash3 />
                         </button>
                       </div>
                     </>
@@ -1431,12 +1618,202 @@ const EditorTool = () => {
                 </div>
 
                 {/*  B&N FIN */}
+
+                {/*  sepia */}
+                <div>
+                  {activeButton === "sepia" && (
+                    <>
+                      <p>Apply sepia to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-sepia-replace">
+                              {sepiaValue ? sepiaValue : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="1"
+                            max="100"
+                            value={sepiaValue}
+                            onChange={(e) => setSepiaValue(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("sepia", () => {
+                              effectSubmitsMap["sepia"]();
+                              setSepiaValue("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "sepia"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("sepia")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  sepia */}
+
+                {/*  blur */}
+                <div>
+                  {activeButton === "blur" && (
+                    <>
+                      <p>Apply blur to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-blur-replace">
+                              {blurValue ? blurValue : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="1"
+                            max="2000"
+                            value={blurValue}
+                            onChange={(e) => setBlurValue(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("blur", () => {
+                              effectSubmitsMap["blur"]();
+                              setBlurValue("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "blur"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("blur")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  blur */}
+
+                {/*  negativo */}
+                <div className="w-100">
+                  {activeButton === "negate" && (
+                    <>
+                      <p>Apply negate to your image</p>
+                      <div className="d-flex justify-content-center ">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter(() =>
+                              effectSubmitsMap["negate"]()
+                            )
+                          }
+                        >
+                          {isApplyingFilter === "negate"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("negate")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/*  negativo */}
+
+                {/*  pixel */}
+                <div>
+                  {activeButton === "pixelate" && (
+                    <>
+                      <p>Apply pixelate to your image</p>
+
+                      <div className="input-container">
+                        <OverlayTrigger
+                          placement="top-end"
+                          overlay={
+                            <Tooltip id="tooltip-pixelate-replace">
+                              {pixelateValue ? pixelateValue : 0}
+                            </Tooltip>
+                          }
+                        >
+                          <input
+                            className="editor-input"
+                            type="range"
+                            placeholder="50"
+                            min="1"
+                            max="200"
+                            value={pixelateValue}
+                            onChange={(e) => setPixelateValue(e.target.value)}
+                          />
+                        </OverlayTrigger>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("pixelate", () => {
+                              effectSubmitsMap["pixelate"]();
+                              setPixelateValue("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "pixelate"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("pixelate")}
+                        >
+                          <Trash3 />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {/*  pixel */}
+
                 {/*  TEXTO INICIO */}
                 {activeButton === "textOverlay" && (
                   <>
                     <div className="input-container">
                       <div>
-                        <h4>Text Layer</h4>
                         <p>Add text to your image</p>
                         <label>Text</label>
                         <input
@@ -1480,7 +1857,7 @@ const EditorTool = () => {
                       <div className="input-container">
                         <label>Font Color</label>
                         <div className="d-flex justify-content-center mt-2">
-                          <SketchPicker
+                          <HuePicker
                             color={textColor}
                             onChangeComplete={(color) =>
                               setTextColor(color.hex)
@@ -1489,16 +1866,28 @@ const EditorTool = () => {
                         </div>
                       </div>
                       <div className="d-flex justify-content-center">
-                        <button
-                          className="apply-edition-btn"
-                          onClick={() =>
-                            handleApplyFilter(() =>
-                              effectSubmitsMap["textOverlay"]()
-                            )
-                          }
-                        >
-                          {isApplyingFilter ? "Applying..." : "Apply"}
-                        </button>
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("textOverlay", () => {
+                            effectSubmitsMap["textOverlay"]();
+                            setTextOverlay("");
+                            setTextFont("arial");
+                            setTextSize(100);
+                            setTextColor("#000000");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "textOverlay"
+                          ? "Applying..."
+                          : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("textOverlay")}
+                      >
+                        <Trash3 />
+                      </button>
                       </div>
                     </div>
                   </>
@@ -1509,7 +1898,6 @@ const EditorTool = () => {
                   {activeButton === "pad" && (
                     <>
                       <div className="input-container">
-                        <h4>Generative Background</h4>
                         <p>
                           Resizes the image to fill the specified width and
                           height while, padding is added reach the required
@@ -1535,14 +1923,24 @@ const EditorTool = () => {
                         />
                       </div>
                       <div className="d-flex justify-content-center">
-                        <button
-                          className="apply-edition-btn"
-                          onClick={() =>
-                            handleApplyFilter(() => effectSubmitsMap["pad"]())
-                          }
-                        >
-                          {isApplyingFilter ? "Applying..." : "Apply"}
-                        </button>
+                      <button
+                        className="apply-edition-btn m-2"
+                        onClick={() =>
+                          handleApplyFilter("pad", () => {
+                            effectSubmitsMap["pad"]();
+                            setFromText("");
+                            setToText("");
+                          })
+                        }
+                      >
+                        {isApplyingFilter === "pad" ? "Applying..." : "Apply"}
+                      </button>
+                      <button
+                        className="apply-remove-btn m-2"
+                        onClick={() => handleRemoveFilter("pad")}
+                      >
+                        <Trash3 />
+                      </button>
                       </div>
                     </>
                   )}
@@ -1558,4 +1956,3 @@ const EditorTool = () => {
 };
 
 export default EditorTool;
-
