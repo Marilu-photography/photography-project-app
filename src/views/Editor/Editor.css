@@ -135,6 +135,7 @@
   width: 80px;
   margin-top: 20px;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .apply-edition-btn:hover {
@@ -147,6 +148,8 @@
   border: none;
   color: rgb(255, 255, 255)!important;
   padding: 10px;
+  font-size: 14px;
+  margin: 0px 5px;
 }
 
 .action-btn:hover {

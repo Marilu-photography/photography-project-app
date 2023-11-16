@@ -26,7 +26,7 @@ import { getImage } from "../../services/ImagesServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { text } from "@cloudinary/url-gen/qualifiers/source";
 import { editImage } from "../../services/ImagesServices";
-import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { ArrowLeftCircle, CircleHalf } from "react-bootstrap-icons";
 import { ArrowDownShort } from "react-bootstrap-icons";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -37,6 +37,21 @@ import { Sliders2Vertical } from "react-bootstrap-icons";
 import { Fonts } from "react-bootstrap-icons";
 import { CircleSquare, InfoCircle, Trash3 } from "react-bootstrap-icons";
 import Slider from "react-slick";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircle,
+  faCircleHalfStroke,
+  faClone,
+  faCubes,
+  faDroplet,
+  faFont,
+  faMaximize,
+  faMinus,
+  faS,
+  faSun,
+  faSwatchbook,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 
 const EditorTool = () => {
   const { id } = useParams();
@@ -1084,7 +1099,7 @@ const EditorTool = () => {
                   </>
                 )}
               </div>
-              <div className="d-flex justify-content-between my-5">
+              <div className="d-flex justify-content-between">
                 <button
                   className="action-btn"
                   onClick={handleSave}
@@ -1165,8 +1180,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("generativeReplace")}
                   >
                     <span>
-                      <CircleSquare />
-                    </span>
+                    <FontAwesomeIcon icon={faClone} size="2x" />                    </span>
                   </button>
                 </div>
                 <div className="mx-2 text-center">
@@ -1177,7 +1191,7 @@ const EditorTool = () => {
                     }`}
                     onClick={() => handleButtonClick("saturation")}
                   >
-                    <Sliders2Vertical />
+                    <FontAwesomeIcon icon={faDroplet} size="2x" />
                   </button>
                 </div>
                 <div className="mx-2 text-center">
@@ -1189,7 +1203,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("brightness")}
                   >
                     <span>
-                      <Fonts />
+                      <FontAwesomeIcon icon={faSun} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1202,8 +1216,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("contrast")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                      <FontAwesomeIcon icon={faCircleHalfStroke} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1216,8 +1229,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("gamma")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                      <FontAwesomeIcon icon={faCircle} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1230,8 +1242,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("grayscale")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                      <FontAwesomeIcon icon={faSwatchbook} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1244,8 +1255,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("sepia")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                      <FontAwesomeIcon icon={faS} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1258,7 +1268,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("blur")}
                   >
                     <span>
-                      <Fonts />
+                      <FontAwesomeIcon icon={faWandMagicSparkles} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1271,8 +1281,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("negate")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                    <FontAwesomeIcon icon={faMinus} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1285,8 +1294,7 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("pixelate")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+                    <FontAwesomeIcon icon={faCubes} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1299,8 +1307,8 @@ const EditorTool = () => {
                     onClick={() => handleButtonClick("textOverlay")}
                   >
                     <span>
-                      {" "}
-                      <AspectRatio />
+
+                    <FontAwesomeIcon icon={faFont} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1314,7 +1322,7 @@ const EditorTool = () => {
                   >
                     <span>
                       {" "}
-                      <AspectRatio />
+                      <FontAwesomeIcon icon={faMaximize} size="2x" />
                     </span>
                   </button>
                 </div>
@@ -1866,28 +1874,28 @@ const EditorTool = () => {
                         </div>
                       </div>
                       <div className="d-flex justify-content-center">
-                      <button
-                        className="apply-edition-btn m-2"
-                        onClick={() =>
-                          handleApplyFilter("textOverlay", () => {
-                            effectSubmitsMap["textOverlay"]();
-                            setTextOverlay("");
-                            setTextFont("arial");
-                            setTextSize(100);
-                            setTextColor("#000000");
-                          })
-                        }
-                      >
-                        {isApplyingFilter === "textOverlay"
-                          ? "Applying..."
-                          : "Apply"}
-                      </button>
-                      <button
-                        className="apply-remove-btn m-2"
-                        onClick={() => handleRemoveFilter("textOverlay")}
-                      >
-                        <Trash3 />
-                      </button>
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("textOverlay", () => {
+                              effectSubmitsMap["textOverlay"]();
+                              setTextOverlay("");
+                              setTextFont("arial");
+                              setTextSize(100);
+                              setTextColor("#000000");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "textOverlay"
+                            ? "Applying..."
+                            : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("textOverlay")}
+                        >
+                          <Trash3 />
+                        </button>
                       </div>
                     </div>
                   </>
@@ -1923,24 +1931,24 @@ const EditorTool = () => {
                         />
                       </div>
                       <div className="d-flex justify-content-center">
-                      <button
-                        className="apply-edition-btn m-2"
-                        onClick={() =>
-                          handleApplyFilter("pad", () => {
-                            effectSubmitsMap["pad"]();
-                            setFromText("");
-                            setToText("");
-                          })
-                        }
-                      >
-                        {isApplyingFilter === "pad" ? "Applying..." : "Apply"}
-                      </button>
-                      <button
-                        className="apply-remove-btn m-2"
-                        onClick={() => handleRemoveFilter("pad")}
-                      >
-                        <Trash3 />
-                      </button>
+                        <button
+                          className="apply-edition-btn m-2"
+                          onClick={() =>
+                            handleApplyFilter("pad", () => {
+                              effectSubmitsMap["pad"]();
+                              setFromText("");
+                              setToText("");
+                            })
+                          }
+                        >
+                          {isApplyingFilter === "pad" ? "Applying..." : "Apply"}
+                        </button>
+                        <button
+                          className="apply-remove-btn m-2"
+                          onClick={() => handleRemoveFilter("pad")}
+                        >
+                          <Trash3 />
+                        </button>
                       </div>
                     </>
                   )}
