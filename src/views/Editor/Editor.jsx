@@ -615,7 +615,7 @@ const EditorTool = () => {
                           : "Apply"}
                       </button>
                       <button
-                        className="apply-remove-btnn m-2"
+                        className="apply-remove-btn m-2"
                         onClick={() => handleRemoveFilter("contrast")}
                       >
                         <Trash3 />
